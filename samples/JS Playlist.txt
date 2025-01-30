@@ -1,0 +1,14 @@
+// ==PREPROCESSOR==
+// @name "JS Playlist"
+// @author "Br3tt aka Falstaff"
+// @import "%fb2k_component_path%helpers.txt"
+// @import "%fb2k_component_path%samples\jsplaylist\inputbox.js"
+// @import "%fb2k_component_path%samples\jsplaylist\topbar.js"
+// @import "%fb2k_component_path%samples\jsplaylist\scrollbar.js"
+// @import "%fb2k_component_path%samples\jsplaylist\headerbar.js"
+// @import "%fb2k_component_path%samples\jsplaylist\playlist.js"
+// @import "%fb2k_component_path%samples\jsplaylist\playlistmanager.js"
+// @import "%fb2k_component_path%samples\jsplaylist\settings.js"
+// @import "%fb2k_component_path%samples\jsplaylist\callbacks.js"
+// @import "%fb2k_component_path%samples\jsplaylist\main.js"
+// ==/PREPROCESSOR==

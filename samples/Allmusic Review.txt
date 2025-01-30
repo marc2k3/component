@@ -1,0 +1,97 @@
+// ==PREPROCESSOR==
+// @name "Allmusic Review"
+// @author "marc2003"
+// @import "lodash"
+// @import "%fb2k_component_path%helpers.txt"
+// @import "%fb2k_component_path%samples\js\common.js"
+// @import "%fb2k_component_path%samples\js\panel.js"
+// @import "%fb2k_component_path%samples\js\allmusic.js"
+// ==/PREPROCESSOR==
+
+var panel = new _panel();
+var allmusic = new _allmusic(LM, TM, 0, 0);
+
+panel.item_focus_change();
+
+function on_colours_changed() {
+	panel.colours_changed();
+	window.Repaint();
+}
+
+function on_font_changed() {
+	panel.font_changed();
+	window.Repaint();
+}
+
+function on_http_request_done(task_id, success, response_text) {
+	allmusic.http_request_done(task_id, success, response_text);
+}
+
+function on_item_focus_change() {
+	if (panel.prefer_playing())
+		return;
+
+	panel.item_focus_change();
+}
+
+function on_key_down(k) {
+	allmusic.key_down(k);
+}
+
+function on_metadb_changed(handles, fromhook) {
+	if (fromhook)
+		return;
+
+	allmusic.metadb_changed();
+}
+
+function on_mouse_lbtn_up(x, y) {
+	allmusic.lbtn_up(x, y);
+}
+
+function on_mouse_move(x, y) {
+	allmusic.move(x, y);
+}
+
+function on_mouse_rbtn_up(x, y) {
+	return panel.rbtn_up(x, y, allmusic);
+}
+
+function on_mouse_wheel(s) {
+	allmusic.wheel(s);
+}
+
+function on_paint(gr) {
+	panel.paint(gr);
+	panel.draw_header(gr, allmusic.header_text());
+	allmusic.paint(gr);
+}
+
+function on_playback_dynamic_info_track(type) {
+	if (type == 0) {
+		// stream metadata doesn't contain album tags for
+		// lookups but we can update the artist in the title section
+		window.Repaint();
+	}
+}
+
+function on_playback_new_track() {
+	panel.item_focus_change();
+}
+
+function on_playback_stop(reason) {
+	if (reason != 2) {
+		panel.item_focus_change();
+	}
+}
+
+function on_playlist_switch() {
+	on_item_focus_change();
+}
+
+function on_size() {
+	panel.size();
+	allmusic.w = panel.w - (LM * 2);
+	allmusic.h = panel.h - TM;
+	allmusic.size();
+}
