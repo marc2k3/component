@@ -33,15 +33,6 @@ function on_size() {
 	brw.setSize();
 }
 
-function clamp(value, min, max) {
-	if (value < min)
-		return min;
-	else if (value > max)
-		return max;
-	else
-		return value;
-}
-
 function draw_header_bar(gr, text, x, y, w, h) {
 	if (!ppt.showHeaderBar)
 		return;
@@ -53,7 +44,7 @@ function draw_header_bar(gr, text, x, y, w, h) {
 }
 
 function update_extra_font_size(step) {
-	var tmp = clamp(ppt.extra_font_size + step, 0, 10);
+	var tmp = Clamp(ppt.extra_font_size + step, 0, 10);
 
 	if (ppt.extra_font_size != tmp) {
 		ppt.extra_font_size = tmp;
@@ -407,7 +398,7 @@ var images = {
 var ppt = {
 	enableDynamicColours : window.GetProperty("SMOOTH.DYNAMIC.COLOURS.ENABLED", false),
 	enableCustomColours: window.GetProperty("SMOOTH.CUSTOM.COLOURS.ENABLED", false),
-	extra_font_size: clamp(window.GetProperty("SMOOTH.EXTRA.FONT.SIZE", 0), 0, 10),
+	extra_font_size: Clamp(window.GetProperty("SMOOTH.EXTRA.FONT.SIZE", 0), 0, 10),
 	showHeaderBar: window.GetProperty("SMOOTH.SHOW.TOP.BAR", true),
 	autoFill: window.GetProperty("SMOOTH.AUTO.FILL", true),
 	wallpapermode: window.GetProperty("SMOOTH.WALLPAPER.MODE2", 0), // 0 none, 1 front cover 2 custom image

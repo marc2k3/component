@@ -64,6 +64,15 @@ function blendColours(c1, c2, factor) {
 	return (0xff000000 | (r << 16) | (g << 8) | (b));
 }
 
+function Clamp(value, min, max) {
+	if (value < min)
+		return min;
+	else if (value > max)
+		return max;
+	else
+		return value;
+}
+
 // Lunminance and DetermineTextColour are based on code from the foobar2000 SDK.
 function Luminance(colour) {
 	var r = getRed(colour);

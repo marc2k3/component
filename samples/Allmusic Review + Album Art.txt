@@ -88,7 +88,7 @@ function on_mouse_rbtn_up(x, y) {
 
 function on_mouse_wheel(s) {
 	if (utils.IsKeyPressed(VK_CONTROL)) {
-		var value = _clamp(albumart.properties.ratio.value - (s * 0.05), 0.2, 0.8);
+		var value = Clamp(albumart.properties.ratio.value - (s * 0.05), 0.2, 0.8);
 		if (value != albumart.properties.ratio.value) {
 			albumart.properties.ratio.value = value;
 			on_size();

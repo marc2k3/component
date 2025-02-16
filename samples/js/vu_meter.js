@@ -480,7 +480,7 @@ function on_paint(gr) {
 
 	for (var c = 0; c < channels.count; ++c) {
 		if (RMS_levels[c]) {
-			var rms_db = _clamp(to_db(RMS_levels[c]) + rms_db_offset, minDB, maxDB);
+			var rms_db = Clamp(to_db(RMS_levels[c]) + rms_db_offset, minDB, maxDB);
 
 			if (properties.meter_style.value == 0) { // smooth mode
 				var width = Math.round(bar_width * (rms_db - minDB) / dBrange);
@@ -497,7 +497,7 @@ function on_paint(gr) {
 		}
 
 		if (peak_bar_width > 0 && Peak_levels[c] > 0) {
-			var peak_db = _clamp(to_db(Peak_levels[c]), minDB, maxDB);
+			var peak_db = Clamp(to_db(Peak_levels[c]), minDB, maxDB);
 
 			if (peak_db > minDB) {
 				var peak_pos = Math.round(bar_width * (peak_db - minDB) / dBrange);

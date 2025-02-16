@@ -347,7 +347,7 @@ function _images() {
 
 	this.wheel = function (s) {
 		if (!this.is_bio_panel && utils.IsKeyPressed(VK_SHIFT) && this.properties.aspect.value == image.full) {
-			var value = _clamp(this.properties.blur_opacity.value + (s * 0.05), 0.2, 0.8);
+			var value = Clamp(this.properties.blur_opacity.value + (s * 0.05), 0.2, 0.8);
 
 			if (value != this.properties.blur_opacity.value) {
 				this.properties.blur_opacity.value = value;

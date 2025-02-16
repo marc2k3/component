@@ -165,7 +165,7 @@ function _vu_meter(x, y, w, h) {
 
 			for (var c = 0; c < this.channels.count; ++c) {
 				if (this.RMS_levels[c]) {
-					var rms_db = _clamp(this.to_db(this.RMS_levels[c]), this.minDB, this.maxDB);
+					var rms_db = Clamp(this.to_db(this.RMS_levels[c]), this.minDB, this.maxDB);
 
 					if (smooth_mode) {
 						var width = Math.round(bar_width * (rms_db - this.minDB) / this.dBrange);
@@ -182,7 +182,7 @@ function _vu_meter(x, y, w, h) {
 				}
 
 				if (this.peak_bar_width > 0 && this.Peak_levels[c] > 0) {
-					var peak_db = _clamp(this.to_db(this.Peak_levels[c]), this.minDB, this.maxDB);
+					var peak_db = Clamp(this.to_db(this.Peak_levels[c]), this.minDB, this.maxDB);
 
 					if (peak_db > this.minDB) {
 						var peak_pos = Math.round(bar_width * (peak_db - this.minDB) / this.dBrange);
@@ -209,7 +209,7 @@ function _vu_meter(x, y, w, h) {
 
 			for (var c = 0; c < this.channels.count; ++c) {
 				if (this.RMS_levels[c]) {
-					var rms_db = _clamp(this.to_db(this.RMS_levels[c]), this.minDB, this.maxDB);
+					var rms_db = Clamp(this.to_db(this.RMS_levels[c]), this.minDB, this.maxDB);
 
 					if (smooth_mode) {
 						var height = Math.round(bar_height * (rms_db - this.minDB) / this.dBrange);
@@ -229,7 +229,7 @@ function _vu_meter(x, y, w, h) {
 				}
 
 				if (this.peak_bar_width > 0 && this.Peak_levels[c] > 0) {
-					var peak_db = _clamp(this.to_db(this.Peak_levels[c]), this.minDB, this.maxDB);
+					var peak_db = Clamp(this.to_db(this.Peak_levels[c]), this.minDB, this.maxDB);
 
 					if (peak_db > this.minDB) {
 						var peak_pos = this.h - Math.round(bar_height * (peak_db - this.minDB) / this.dBrange);
