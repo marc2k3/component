@@ -405,7 +405,7 @@ function _images() {
 		source : new Property('2K3.IMAGES.SOURCE', 0), // 0 custom folder 1 last.fm
 		tf : new Property('2K3.IMAGES.CUSTOM.FOLDER.TF', '$directory_path(%path%)'),
 		cycle : new Property('2K3.IMAGES.CYCLE', 5),
-		aspect : new Property('2K3.IMAGES.ASPECT', this.is_bio_panel ? image.crop_top : image.full),
+		aspect : new Property('2K3.IMAGES.ASPECT', image.full),
 		limit : new Property('2K3.IMAGES.DOWNLOAD.LIMIT', 10),
 		auto_download : new Property('2K3.IMAGES.AUTO.DOWNLOAD', true),
 		double_click_mode : new Property('2K3.IMAGES.DOUBLE.CLICK.MODE', 1), // 0 external viewer 1 fb2k viewer 2 explorer

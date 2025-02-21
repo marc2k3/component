@@ -22,9 +22,9 @@ function _lastfm_bio(x, y, w, h) {
 	this.draw_header = function (gr, colour, x, y, w, h, draw_line) {
 		var flag_width = 0;
 
-		if (this.flag.length && panel.flag_font) {
-			flag_width = utils.CalcTextWidth(this.flag + ' ', panel.fonts.flag);
-			gr.WriteTextSimple(this.flag, panel.fonts.flag, colour, x, y, flag_width, h, DWRITE_TEXT_ALIGNMENT_LEADING, DWRITE_PARAGRAPH_ALIGNMENT_CENTER, DWRITE_WORD_WRAPPING_NO_WRAP, DWRITE_TRIMMING_GRANULARITY_CHARACTER);
+		if (this.flag.length && panel.fonts.twemoji) {
+			flag_width = utils.CalcTextWidth(this.flag + ' ', panel.fonts.twemoji);
+			gr.WriteTextSimple(this.flag, panel.fonts.twemoji, colour, x, y, flag_width, h, DWRITE_TEXT_ALIGNMENT_LEADING, DWRITE_PARAGRAPH_ALIGNMENT_CENTER, DWRITE_WORD_WRAPPING_NO_WRAP, DWRITE_TRIMMING_GRANULARITY_CHARACTER);
 		}
 
 		gr.WriteTextSimple(this.artist, panel.fonts.title, colour, x + flag_width, y, w - flag_width, h, DWRITE_TEXT_ALIGNMENT_LEADING, DWRITE_PARAGRAPH_ALIGNMENT_CENTER, DWRITE_WORD_WRAPPING_NO_WRAP, DWRITE_TRIMMING_GRANULARITY_CHARACTER);
@@ -46,15 +46,6 @@ function _lastfm_bio(x, y, w, h) {
 
 		var url = lastfm.base_url() + '&method=artist.getInfo&autocorrect=1&lang=' + this.langs[this.properties.lang.value] + '&artist=' + encodeURIComponent(this.artist);
 		utils.DownloadFileAsync(window.ID, url, this.filename);
-	}
-
-	this.get_extra = function () {
-		if (!_tagged(this.artist))
-			return;
-
-		var url = 'https://www.last.fm/music/' + encodeURIComponent(this.artist);
-		var task_id = utils.HTTPRequestAsync(window.ID, 0, url, this.headers);
-		this.filenames[task_id] = this.filename_extra;
 	}
 
 	this.http_request_done = function (id, success, response_text) {
@@ -150,23 +141,27 @@ function _lastfm_bio(x, y, w, h) {
 			var str = '';
 
 			var temp_artist = panel.tf(DEFAULT_ARTIST);
-			var temp_country = panel.tf(this.properties.country_tf.value)
+			var temp_flag = panel.tf(this.properties.country_tf.value)
 
-			if (this.artist == temp_artist && this.country == temp_country) {
+			if (this.artist == temp_artist && this.flag == temp_flag) {
 				return;
 			}
 
 			this.artist = temp_artist;
-			this.country = temp_country;
-			this.flag = this.country;
+			this.flag = temp_flag;
+			this.filename = _artistFolder(this.artist) + 'lastfm.artist.getInfo.' + this.langs[this.properties.lang.value] + '.json';
 
-			if (this.properties.extra.enabled) {
-				var arr = [];
-				arr.push(this.parse_extra());
-				arr.push(this.parse());
-				str = arr.filter(function (item) { return item.length > 0; }).join(CRLF);
+			if (utils.IsFile(this.filename)) {
+				var obj = _jsonParseFile(this.filename);
+				str = _.get(obj, 'artist.bio.content', '').trim();
+				str = _stripTags(str);
+				str = str.replace('Read more on Last.fm. User-contributed text is available under the Creative Commons By-SA License; additional terms may apply.', '');
+
+				if (_fileExpired(this.filename, ONE_DAY)) {
+					this.get();
+				}
 			} else {
-				str = this.parse();
+				this.get();
 			}
 
 			if (str != this.text) {
@@ -208,69 +203,6 @@ function _lastfm_bio(x, y, w, h) {
 		}
 	}
 
-	this.parse = function () {
-		this.filename = _artistFolder(this.artist) + 'lastfm.artist.getInfo.' + this.langs[this.properties.lang.value] + '.json';
-		var str = '';
-
-		if (utils.IsFile(this.filename)) {
-			var obj = _jsonParseFile(this.filename);
-			str = _.get(obj, 'artist.bio.content', '').trim();
-			str = _stripTags(str);
-			str = str.replace('Read more on Last.fm. User-contributed text is available under the Creative Commons By-SA License; additional terms may apply.', '');
-
-			if (_fileExpired(this.filename, ONE_DAY)) {
-				this.get();
-			}
-		} else {
-			this.get();
-		}
-
-		return str;
-	}
-
-	this.parse_extra = function () {
-		this.filename_extra = _artistFolder(this.artist) + 'lastfm.artist.extra.json';
-		var str = '';
-
-		if (utils.IsFile(this.filename_extra)) {
-			var obj = _jsonParseFile(this.filename_extra);
-			_.forEach(obj, function (value, name) {
-				str += name.trim() + ': ' + value.trim() + CRLF;
-
-				if (this.flag.empty() && (name == 'Born In' || name == 'Founded In')) {
-					this.parse_location(value.toLowerCase());
-				}
-			}, this);
-
-			if (_fileExpired(this.filename_extra, ONE_DAY)) {
-				this.get_extra();
-			}
-		} else {
-			this.get_extra();
-		}
-
-		return str;
-	}
-
-	this.parse_location = function (location) {
-		var locations = _stringToArray(location, ',');
-		var flag = utils.GetCountryFlag(_.last(locations));
-
-		if (flag.length) {
-			this.flag = flag;
-		} else {
-			var arr = _stringToArray(this.properties.flag_map.value, CRLF);
-
-			_.forEach(arr, function (item) {
-				var tmp = _stringToArray(item, '|');
-				if (tmp.length == 2 && _.includes(location, tmp[0].toLowerCase())) {
-					this.flag = utils.GetCountryFlag(tmp[1]);
-					return false;
-				}
-			}, this);
-		}
-	}
-
 	this.rbtn_up = function (x, y) {
 		panel.m.AppendMenuItem(EnableMenuIf(panel.metadb), 1100, 'Force update');
 		panel.m.AppendMenuSeparator();
@@ -284,12 +216,6 @@ function _lastfm_bio(x, y, w, h) {
 		panel.s10.CheckMenuRadioItem(1110, 1121, this.properties.lang.value + 1110);
 		panel.s10.AppendTo(panel.m, MF_STRING, 'Last.fm language');
 		panel.m.AppendMenuSeparator();
-		panel.s11.AppendMenuItem(MF_STRING, 1130, 'Title Format');
-		panel.s11.AppendMenuItem(EnableMenuIf(this.properties.extra.enabled), 1131, 'Last.fm replacements');
-		panel.s11.AppendTo(panel.m, MF_STRING, 'Country flags');
-		panel.m.AppendMenuSeparator();
-		panel.m.AppendMenuItem(CheckMenuIf(this.properties.extra.enabled), 1140, 'Show extra info');
-		panel.m.AppendMenuSeparator();
 		panel.m.AppendMenuItem(EnableMenuIf(utils.IsFile(this.filename)), 1999, 'Open containing folder');
 		panel.m.AppendMenuSeparator();
 	}
@@ -298,7 +224,6 @@ function _lastfm_bio(x, y, w, h) {
 		switch (idx) {
 		case 1100:
 			this.get();
-			this.get_extra();
 			break;
 		case 1101:
 			lastfm.update_api_key();
@@ -316,23 +241,6 @@ function _lastfm_bio(x, y, w, h) {
 		case 1120:
 		case 1121:
 			this.properties.lang.value = idx - 1110;
-			this.reset();
-			this.metadb_changed();
-			break;
-		case 1130:
-			this.properties.country_tf.value = utils.InputBox('Country names/codes found in file tags always take precedence over online content. You can specify the title format pattern to use here.', window.Name, this.properties.country_tf.value);
-			// this.reset() intentionally not used here
-			this.metadb_changed();
-			break;
-		case 1131:
-			try {
-				this.properties.flag_map.value = utils.TextBox('Sometimes the values returned from Last.fm are not recognised so mappings can be added here. Case is not important. Look at the example for how countries should be seperated from the country code with the pipe character.', window.Name, this.properties.flag_map.value);
-				this.reset();
-				this.metadb_changed();
-			} catch (e) {}
-			break;
-		case 1140:
-			this.properties.extra.toggle();
 			this.reset();
 			this.metadb_changed();
 			break;
@@ -408,13 +316,10 @@ function _lastfm_bio(x, y, w, h) {
 	this.filenames = {};
 	this.langs = ['en', 'de', 'es', 'fr', 'it', 'ja', 'pl', 'pt', 'ru', 'sv', 'tr', 'zh'];
 	this.flag = '';
-	this.country = '';
 
 	this.properties = {
 		lang : new Property('2K3.TEXT.BIO.LANG', 0),
-		extra : new Property('2K3.TEXT.BIO.EXTRA', true),
-		country_tf : new Property('2K3.TEXT.BIO.FLAG.TF', '$country_flag(%country%)'),
-		flag_map : new Property('2K3.TEXT.BIO.FLAG.MAP', 'korea, republic of|kr'),
+		country_tf : new Property('2K3.TEXT.BIO.COUNTRY.TF', '$country_flag(%country%)'),
 	};
 
 	this.headers = JSON.stringify({
