@@ -50,6 +50,7 @@ function _panel(options) {
 		this.fonts.normal = this.create_font(this.fonts.size.value);
 		this.fonts.title = this.create_font(this.fonts.size.value, 700);
 		this.fonts.fixed = CreateFontString('Consolas', this.fonts.size.value);
+		this.twemoji_font = utils.CheckFont('Twemoji Mozilla');
 
 		if (this.twemoji_font) {
 			this.fonts.twemoji = CreateFontString('Twemoji Mozilla', this.fonts.size.value);
@@ -198,7 +199,7 @@ function _panel(options) {
 	this.metadb_func = typeof on_metadb_changed == 'function';
 	this.fonts.sizes = [10, 12, 14, 16];
 	this.fonts.size = new Property('2K3.PANEL.FONTS.SIZE', 12);
-	this.twemoji_font = utils.CheckFont('Twemoji Mozilla');
+	this.twemoji_font = false;
 	this.row_height = 0;
 	this.scroll_step = 0;
 
