@@ -152,7 +152,7 @@ function _albumart(x, y, w, h) {
 			return;
 
 		if (this.is_review_panel) {
-			_drawImage(gr, this.bitmap.normal, this.x, this.y, this.w, this.h, this.properties.aspect.value == image.full ? image.full_top_align : this.properties.aspect.value, 1.0, RGB(150, 150, 150));
+			_drawImage(gr, this.bitmap.normal, this.x, this.y, this.w, this.h, image.top_align, 1.0, RGB(150, 150, 150));
 		} else {
 			_drawImage(gr, this.bitmap.normal, this.x, this.y, this.w, this.h, this.properties.aspect.value);
 		}
@@ -198,11 +198,15 @@ function _albumart(x, y, w, h) {
 		}
 
 		panel.m.AppendMenuSeparator();
-		panel.m.AppendMenuItem(MF_STRING, 1040, 'Crop (focus on centre)');
-		panel.m.AppendMenuItem(MF_STRING, 1041, 'Crop (focus on top)');
-		panel.m.AppendMenuItem(MF_STRING, 1042, 'Full');
-		panel.m.CheckMenuRadioItem(1040, 1042, this.properties.aspect.value + 1040);
-		panel.m.AppendMenuSeparator();
+
+		if (!this.is_review_panel) {
+			panel.m.AppendMenuItem(MF_STRING, 1040, 'Crop (focus on centre)');
+			panel.m.AppendMenuItem(MF_STRING, 1041, 'Crop (focus on top)');
+			panel.m.AppendMenuItem(MF_STRING, 1042, 'Centre');
+			panel.m.CheckMenuRadioItem(1040, 1042, this.properties.aspect.value + 1040);
+			panel.m.AppendMenuSeparator();
+		}
+
 		panel.m.AppendMenuItem(EnableMenuIf(utils.IsFile(this.path)), 1050, 'Open containing folder');
 		panel.m.AppendMenuSeparator();
 		panel.m.AppendMenuItem(EnableMenuIf(panel.metadb), 1060, 'Google image search');
@@ -310,7 +314,7 @@ function _albumart(x, y, w, h) {
 	};
 
 	this.properties = {
-		aspect : new Property('2K3.ARTREADER.ASPECT', image.full),
+		aspect : new Property('2K3.ARTREADER.ASPECT', image.centre),
 		id : new Property('2K3.ARTREADER.ID', 0),
 		double_click_mode : new Property('2K3.ARTREADER.DOUBLE.CLICK.MODE', 1), // 0 external viewer 1 fb2k viewer 2 explorer
 		mode : new Property('2K3.ARTREADER.MODE', 0), // 0 default, 1 custom

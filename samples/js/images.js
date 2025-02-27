@@ -134,12 +134,12 @@ function _images() {
 			if (this.bitmap.normal) {
 				this.draw_blurred_image(gr);
 				_drawOverlay(gr, 0, 0, panel.w, panel.h, 180);
-				_drawImage(gr, this.bitmap.normal, this.x, this.y, this.w, this.h, this.properties.aspect.value == image.full ? image.full_top_align : this.properties.aspect.value, 1.0, RGB(150, 150, 150));
+				_drawImage(gr, this.bitmap.normal, this.x, this.y, this.w, this.h, image.top_align, 1.0, RGB(150, 150, 150));
 			} else {
 				_drawOverlay(gr, 0, 0, panel.w, panel.h);
 			}
 		} else if (this.bitmap.normal) {
-			if (this.properties.aspect.value == image.full) {
+			if (this.properties.aspect.value == image.centre) {
 				this.draw_blurred_image(gr);
 				_drawImage(gr, this.bitmap.normal, this.x + 20, this.y + 20, this.w - 40, this.h - 40, this.properties.aspect.value, 1.0, RGB(150, 150, 150));
 			} else {
@@ -202,11 +202,13 @@ function _images() {
 		panel.s12.AppendTo(panel.m, MF_STRING, 'Cycle');
 		panel.m.AppendMenuSeparator();
 
-		panel.m.AppendMenuItem(MF_STRING, 1500, 'Crop (focus on centre)');
-		panel.m.AppendMenuItem(MF_STRING, 1501, 'Crop (focus on top)');
-		panel.m.AppendMenuItem(MF_STRING, 1502, 'Full');
-		panel.m.CheckMenuRadioItem(1500, 1502, this.properties.aspect.value + 1500);
-		panel.m.AppendMenuSeparator();
+		if (!this.is_bio_panel) {
+			panel.m.AppendMenuItem(MF_STRING, 1500, 'Crop (focus on centre)');
+			panel.m.AppendMenuItem(MF_STRING, 1501, 'Crop (focus on top)');
+			panel.m.AppendMenuItem(MF_STRING, 1502, 'Centre');
+			panel.m.CheckMenuRadioItem(1500, 1502, this.properties.aspect.value + 1500);
+			panel.m.AppendMenuSeparator();
+		}
 
 		if (this.image_index < this.image_paths.length) {
 			panel.m.AppendMenuItem(MF_STRING, 1530, 'Open image');
@@ -346,7 +348,7 @@ function _images() {
 	}
 
 	this.wheel = function (s) {
-		if (!this.is_bio_panel && utils.IsKeyPressed(VK_SHIFT) && this.properties.aspect.value == image.full) {
+		if (!this.is_bio_panel && utils.IsKeyPressed(VK_SHIFT) && this.properties.aspect.value == image.centre) {
 			var value = Clamp(this.properties.blur_opacity.value + (s * 0.05), 0.2, 0.8);
 
 			if (value != this.properties.blur_opacity.value) {
@@ -405,7 +407,7 @@ function _images() {
 		source : new Property('2K3.IMAGES.SOURCE', 0), // 0 custom folder 1 last.fm
 		tf : new Property('2K3.IMAGES.CUSTOM.FOLDER.TF', '$directory_path(%path%)'),
 		cycle : new Property('2K3.IMAGES.CYCLE', 5),
-		aspect : new Property('2K3.IMAGES.ASPECT', image.full),
+		aspect : new Property('2K3.IMAGES.ASPECT', image.centre),
 		limit : new Property('2K3.IMAGES.DOWNLOAD.LIMIT', 10),
 		auto_download : new Property('2K3.IMAGES.AUTO.DOWNLOAD', true),
 		double_click_mode : new Property('2K3.IMAGES.DOUBLE.CLICK.MODE', 1), // 0 external viewer 1 fb2k viewer 2 explorer

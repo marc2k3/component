@@ -141,14 +141,14 @@ function _drawImage(gr, img, dst_x, dst_y, dst_w, dst_h, mode, opacity, border) 
 
 		_drawImageOrBitmap(gr, img, dst_x, dst_y, dst_w, dst_h, src_x + 3, src_y + 3, src_w - 6, src_h - 6, opacity || 1);
 		break;
-	case mode == image.full:
-	case mode == image.full_top_align:
+	case mode == image.centre:
+	case mode == image.top_align:
 	default:
 		var s = Math.min(dst_w / img.Width, dst_h / img.Height);
 		var w = Math.floor(img.Width * s);
 		var h = Math.floor(img.Height * s);
 		dst_x += Math.round((dst_w - w) / 2);
-		dst_y = mode == image.full_top_align ? dst_y : dst_y + Math.round((dst_h - h) / 2);
+		dst_y = mode == image.top_align ? dst_y : dst_y + Math.round((dst_h - h) / 2);
 		dst_w = w;
 		dst_h = h;
 
@@ -430,8 +430,8 @@ folders.lastfm = folders.data + 'lastfm\\';
 var image = {
 	crop : 0,
 	crop_top : 1,
-	full : 2,
-	full_top_align : 3,
+	centre : 2,
+	top_align : 3,
 };
 
 var ha_links = [

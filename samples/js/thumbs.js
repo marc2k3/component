@@ -350,7 +350,7 @@ function _thumbs() {
 
 		switch (true) {
 		case this.properties.mode.value == 5: // off
-			if (this.properties.aspect.value == image.full) {
+			if (this.properties.aspect.value == image.centre) {
 				this.draw_blurred_image(gr);
 				this.image_xywh = _drawImage(gr, this.images[this.image_index], 20, 20, panel.w - 40, panel.h - 40, this.properties.aspect.value, 1.0, RGB(150, 150, 150));
 			} else {
@@ -364,14 +364,14 @@ function _thumbs() {
 
 			if (this.overlay) {
 				_drawOverlay(gr, this.x, this.y, this.w, this.h);
-				this.image_xywh = _drawImage(gr, this.images[this.image_index], 20, 20, panel.w - 40, panel.h - 40, image.full, 1.0, RGB(150, 150, 150));
+				this.image_xywh = _drawImage(gr, this.images[this.image_index], 20, 20, panel.w - 40, panel.h - 40, image.centre, 1.0, RGB(150, 150, 150));
 				this.close_btn.paint(gr, RGB(230, 230, 230));
 			} else {
 				this.image_xywh = [];
 			}
 			break;
 		case this.properties.mode.value == 1: // left
-			if (this.properties.aspect.value == image.full) {
+			if (this.properties.aspect.value == image.centre) {
 				this.draw_blurred_image(gr);
 				this.image_xywh = _drawImage(gr, this.images[this.image_index], this.properties.px.value + 20, 20, panel.w - this.properties.px.value - 40, panel.h - 40, this.properties.aspect.value, 1.0, RGB(150, 150, 150));
 			} else {
@@ -382,7 +382,7 @@ function _thumbs() {
 			gr.DrawImage(this.img, this.x, this.y, this.w, Math.min(this.img.Height - offset_px, this.h), 0, offset_px, this.w, Math.min(this.img.Height - offset_px, this.h));
 			break;
 		case this.properties.mode.value == 2: // right
-			if (this.properties.aspect.value == image.full) {
+			if (this.properties.aspect.value == image.centre) {
 				this.draw_blurred_image(gr);
 				this.image_xywh = _drawImage(gr, this.images[this.image_index], 20, 20, panel.w - this.properties.px.value - 40, panel.h - 40, this.properties.aspect.value, 1.0, RGB(150, 150, 150));
 			} else {
@@ -393,7 +393,7 @@ function _thumbs() {
 			gr.DrawImage(this.img, this.x, this.y, this.w, Math.min(this.img.Height - offset_px, this.h), 0, offset_px, this.w, Math.min(this.img.Height - offset_px, this.h));
 			break;
 		case this.properties.mode.value == 3: // top
-			if (this.properties.aspect.value == image.full) {
+			if (this.properties.aspect.value == image.centre) {
 				this.draw_blurred_image(gr);
 				this.image_xywh = _drawImage(gr, this.images[this.image_index], 20, this.properties.px.value + 20, panel.w - 40, panel.h - this.properties.px.value - 40, this.properties.aspect.value, 1.0, RGB(150, 150, 150));
 			} else {
@@ -404,7 +404,7 @@ function _thumbs() {
 			gr.DrawImage(this.img, this.x, this.y, Math.min(this.img.Width - offset_px, this.w), this.img.Height, offset_px, 0, Math.min(this.img.Width - offset_px, this.w), this.img.Height);
 			break;
 		case this.properties.mode.value == 4: // bottom
-			if (this.properties.aspect.value == image.full) {
+			if (this.properties.aspect.value == image.centre) {
 				this.draw_blurred_image(gr);
 				this.image_xywh = _drawImage(gr, this.images[this.image_index], 20, 20, panel.w - 40, panel.h - this.properties.px.value - 40, this.properties.aspect.value, 1.0, RGB(150, 150, 150));
 			} else {
@@ -494,7 +494,7 @@ function _thumbs() {
 			if (this.properties.mode.value != 0) {
 				panel.m.AppendMenuItem(MF_STRING, 1500, 'Crop (focus on centre)');
 				panel.m.AppendMenuItem(MF_STRING, 1501, 'Crop (focus on top)');
-				panel.m.AppendMenuItem(MF_STRING, 1502, 'Full');
+				panel.m.AppendMenuItem(MF_STRING, 1502, 'Centre');
 				panel.m.CheckMenuRadioItem(1500, 1502, this.properties.aspect.value + 1500);
 				panel.m.AppendMenuSeparator();
 			}
@@ -741,7 +741,7 @@ function _thumbs() {
 	}
 
 	this.wheel = function (s) {
-		if (utils.IsKeyPressed(VK_SHIFT) && this.properties.aspect.value == image.full) {
+		if (utils.IsKeyPressed(VK_SHIFT) && this.properties.aspect.value == image.centre) {
 			var value = Clamp(this.properties.blur_opacity.value + (s * 0.05), 0.2, 0.8);
 
 			if (value != this.properties.blur_opacity.value) {
