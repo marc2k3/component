@@ -507,7 +507,7 @@ function _thumbs() {
 
 			if (this.image_index < this.images.length) {
 				panel.m.AppendMenuItem(MF_STRING, 1530, 'Open image');
-				panel.m.AppendMenuItem(EnableMenuIf(), 1531, 'Delete image');
+				panel.m.AppendMenuItem(MF_STRING, 1531, 'Delete image');
 				panel.m.AppendMenuSeparator();
 			}
 
