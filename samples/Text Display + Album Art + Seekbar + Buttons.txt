@@ -11,8 +11,8 @@
 // ==/PREPROCESSOR==
 
 var panel = new _panel();
-var albumart = new _albumart(0, 0, 0, 0);
 var text = new _text_display(LM, 0, 0, 0, true);
+var albumart = new _albumart(0, 0, 0, 0);
 var seekbar = new _seekbar(0, 0, 0, 0);
 
 var colours = {

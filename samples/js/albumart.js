@@ -1,6 +1,6 @@
 function _albumart(x, y, w, h) {
 	this.want_blur = function () {
-		if (panel.display_objects.length) {
+		if (this.is_text_display_panel) {
 			var properties = panel.display_objects[0].properties;
 			return properties.albumart.enabled && properties.albumart_blur.enabled;
 		} else {
@@ -199,7 +199,7 @@ function _albumart(x, y, w, h) {
 
 		panel.m.AppendMenuSeparator();
 
-		if (!this.is_review_panel) {
+		if (!this.is_review_panel && !this.is_text_display_panel) {
 			panel.m.AppendMenuItem(MF_STRING, 1040, 'Crop (focus on centre)');
 			panel.m.AppendMenuItem(MF_STRING, 1041, 'Crop (focus on top)');
 			panel.m.AppendMenuItem(MF_STRING, 1042, 'Centre');
@@ -290,6 +290,7 @@ function _albumart(x, y, w, h) {
 		return true;
 	}
 
+	this.is_text_display_panel = panel.display_objects.length == 1;
 	this.is_review_panel = panel.text_objects.length == 1 && panel.text_objects[0].name == 'allmusic';
 
 	this.x = x;

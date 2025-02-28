@@ -10,8 +10,8 @@
 // ==/PREPROCESSOR==
 
 var panel = new _panel({ custom_background : true });
-var albumart = new _albumart(0, 0, 0, 0);
 var text = new _text_display(LM, 0, 0, 0);
+var albumart = new _albumart(0, 0, 0, 0);
 
 panel.item_focus_change();
 
