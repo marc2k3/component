@@ -115,11 +115,6 @@ function _allmusic(x, y, w, h) {
 
 			if (utils.IsFile(this.filename)) {
 				str = utils.ReadUTF8(this.filename).trim();
-				if (str.empty()) {
-					// empty files left by previous version can be removed
-					utils.RemovePath(this.filename);
-					this.get();
-				}
 			} else {
 				this.get();
 			}
