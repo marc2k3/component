@@ -378,23 +378,23 @@ function oPlaylistManager() {
 
 	this.contextMenu = function (x, y, id) {
 		var menu = window.CreatePopupMenu();
-		var newplaylist = window.CreatePopupMenu();
 		var restore = window.CreatePopupMenu();
 		var context_popup = window.CreatePopupMenu();
 		var context = fb.CreateContextMenuManager();
+		var history = [];
 
-		menu.AppendMenuItem(MF_STRING, 1, "Load Playlist...");
-		newplaylist.AppendMenuItem(MF_STRING, 2, "New Playlist");
-		newplaylist.AppendMenuItem(MF_STRING, 3, "New Autoplaylist");
-		newplaylist.AppendTo(menu, MF_STRING, "Add");
+		menu.AppendMenuItem(MF_STRING, 1, "Create new playlist");
+		menu.AppendMenuItem(MF_STRING, 2, "Load Playlist...");
 
 		var count = plman.RecyclerCount;
 		if (count > 0) {
-			var history = [];
+			menu.AppendMenuSeparator();
+
 			for (var i = 0; i < count; i++) {
 				history.push(i);
 				restore.AppendMenuItem(MF_STRING, 20 + i, plman.GetRecyclerName(i));
 			}
+
 			restore.AppendMenuSeparator();
 			restore.AppendMenuItem(MF_STRING, 4, "Clear history");
 			restore.AppendTo(menu, MF_STRING, "Restore...");
@@ -404,13 +404,12 @@ function oPlaylistManager() {
 			menu.AppendMenuSeparator();
 			var lock_name = plman.GetPlaylistLockName(id);
 
-			menu.AppendMenuItem(MF_STRING, 5, "Duplicate this playlist");
 			menu.AppendMenuItem(EnableMenuIf(playlist_can_rename(id)), 6, "Rename this playlist\tF2");
 			menu.AppendMenuItem(EnableMenuIf(playlist_can_remove(id)), 7, "Remove this playlist\tDel");
 			menu.AppendMenuSeparator();
+
 			if (plman.IsAutoPlaylist(id)) {
 				menu.AppendMenuItem(MF_STRING, 8, lock_name + " properties");
-				menu.AppendMenuItem(MF_STRING, 9, "Convert to a normal playlist");
 			} else {
 				var is_locked = plman.IsPlaylistLocked(id);
 				var is_mine = lock_name == "JScript Panel";
@@ -418,13 +417,16 @@ function oPlaylistManager() {
 				menu.AppendMenuItem(EnableMenuIf(is_mine || !is_locked), 10, "Edit playlist lock...");
 				menu.AppendMenuItem(EnableMenuIf(is_mine), 11, "Remove playlist lock");
 			}
+
 			var playlist_items = plman.GetPlaylistItems(id);
+
 			if (playlist_items.Count > 0) {
 				menu.AppendMenuSeparator();
 				context.InitContext(playlist_items);
 				context.BuildMenu(context_popup, 1000);
 				context_popup.AppendTo(menu, MF_STRING, 'Items');
 			}
+
 			playlist_items.Dispose();
 		}
 
@@ -435,15 +437,15 @@ function oPlaylistManager() {
 		case 0:
 			break;
 		case 1:
-			fb.LoadPlaylist();
-			break;
-		case 2:
 			var pl = plman.CreatePlaylist();
 			plman.ActivePlaylist = pl;
 			this.inputbox = new oInputbox(this.w - this.border - this.scrollbarWidth - scale(40), cPlaylistManager.rowHeight - 10, plman.GetPlaylistName(pl), "", "renamePlaylist()");
 			this.inputboxID = pl;
 			if (cPlaylistManager.inputbox_timeout) window.ClearTimeout(cPlaylistManager.inputbox_timeout);
 			cPlaylistManager.inputbox_timeout = window.SetTimeout(inputboxPlaylistManager_activate, 20);
+			break;
+		case 2:
+			fb.LoadPlaylist();
 			break;
 		case 3:
 			var pl = plman.CreateAutoPlaylist(plman.PlaylistCount, "", "");
@@ -456,9 +458,6 @@ function oPlaylistManager() {
 			break;
 		case 4:
 			plman.RecyclerPurge(history);
-			break;
-		case 5:
-			plman.ActivePlaylist = plman.DuplicatePlaylist(id, "Copy of " + plman.GetPlaylistName(id));
 			break;
 		case 6:
 			this.inputbox = new oInputbox(this.w - this.border - this.scrollbarWidth - scale(40), cPlaylistManager.rowHeight - 10, plman.GetPlaylistName(id), "", "renamePlaylist()");
@@ -475,10 +474,6 @@ function oPlaylistManager() {
 			break;
 		case 8:
 			plman.ShowAutoPlaylistUI(id);
-			break;
-		case 9:
-			plman.ActivePlaylist = plman.DuplicatePlaylist(id, plman.GetPlaylistName(id));
-			plman.RemovePlaylist(id);
 			break;
 		case 10:
 			plman.ShowPlaylistLockUI(id);

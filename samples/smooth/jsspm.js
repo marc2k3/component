@@ -554,11 +554,9 @@ function oBrowser() {
 
 			menu.AppendMenuItem(EnableMenuIf(playlist_can_rename(id)), 1, "Rename this playlist\tF2");
 			menu.AppendMenuItem(EnableMenuIf(playlist_can_remove(id)), 2, "Remove this playlist\tDel");
-			menu.AppendMenuItem(MF_STRING, 3, "Duplicate this playlist");
 			menu.AppendMenuSeparator();
 			if (plman.IsAutoPlaylist(id)) {
 				menu.AppendMenuItem(MF_STRING, 4, lock_name + " properties");
-				menu.AppendMenuItem(MF_STRING, 5, "Convert to a normal playlist");
 			} else {
 				var is_locked = plman.IsPlaylistLocked(id);
 				var is_mine = lock_name == "JScript Panel";
@@ -609,15 +607,8 @@ function oBrowser() {
 		case 2:
 			plman.RemovePlaylistSwitch(id);
 			break;
-		case 3:
-			plman.ActivePlaylist = plman.DuplicatePlaylist(id, "Copy of " + plman.GetPlaylistName(id));
-			break;
 		case 4:
 			plman.ShowAutoPlaylistUI(id);
-			break;
-		case 5:
-			plman.ActivePlaylist = plman.DuplicatePlaylist(id, plman.GetPlaylistName(id));
-			plman.RemovePlaylist(id);
 			break;
 		case 6:
 			plman.ShowPlaylistLockUI(id);
