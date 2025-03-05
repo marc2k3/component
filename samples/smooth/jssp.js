@@ -696,7 +696,7 @@ function oBrowser() {
 					var is_playing = loc.PlaylistIndex == g_active_playlist && loc.PlaylistItemIndex == playlistTrackId;
 					var is_selected = plman.IsPlaylistItemSelected(g_active_playlist, playlistTrackId);
 					var tags = this.rows[i].tags;
-					var artist = "", title = "";
+					var artist = "", title = "", right_text = "";
 					var rw = 0;
 
 					if (is_selected) {
@@ -713,27 +713,25 @@ function oBrowser() {
 						var arr = tfo.artist_title.Eval().split(" ^^ ");
 						artist = arr[0];
 						title = arr[1];
+						right_text = g_time;
 
 						this.nowplaying_y = ay;
 						if (playback.IsPaused) {
-							gr.WriteTextSimple(chars.pause, g_font_fluent_20, normal_text, ax, ay, ah, ah, 2, 2);
+							gr.WriteTextSimple(chars.pause, g_font_fluent_20, normal_text, ax + 5, ay, ah, ah, 2, 2);
 						} else {
-							gr.WriteTextSimple(chars.play, g_font_fluent_20, g_seconds % 2 == 0 ? normal_text : setAlpha(normal_text, 128), ax, ay, ah, ah, 2, 2);
+							gr.WriteTextSimple(chars.play, g_font_fluent_20, g_seconds % 2 == 0 ? normal_text : setAlpha(normal_text, 128), ax + 5, ay, ah, ah, 2, 2);
 						}
 					} else {
 						artist = tags.artist;
 						title = tags.title;
+						right_text = tags.length;
+
+						gr.WriteTextSimple(tags.tracknumber, g_font, normal_text, ax + 5, ay, ah, ah / 2, 2, 2, 1, 1);
 					}
 
-					if (is_playing) {
-						gr.WriteTextSimple(g_time, g_font, normal_text, ax, ay, aw - 5, ah / 2, 1, 2, 1, 1);
-					} else {
-						gr.WriteTextSimple(tags.tracknumber, g_font, normal_text, ax, ay, ah, ah / 2, 2, 2, 1, 1);
-						gr.WriteTextSimple(tags.length, g_font, normal_text, ax, ay, aw - 5, ah / 2, 1, 2, 1, 1);
-					}
-
-					gr.WriteTextSimple(title, g_font, normal_text, ax + ah, ay, aw - ah - rw - g_time_width - 10, ah / 2, 0, 2, 1, 1);
-					gr.WriteTextSimple(artist, g_font, fader_txt, ax + ah, ay + (ah / 2) - 2, aw - ah - rw - g_time_width - 10, ah / 2, 0, 2, 1, 1);
+					gr.WriteTextSimple(title, g_font, normal_text, ax + ah + 10, ay, aw - ah - rw - g_time_width - 10, ah / 2, 0, 2, 1, 1);
+					gr.WriteTextSimple(artist, g_font, fader_txt, ax + ah + 10, ay + (ah / 2) - 2, aw - ah - rw - g_time_width - 10, ah / 2, 0, 2, 1, 1);
+					gr.WriteTextSimple(right_text, g_font, normal_text, ax, ay, aw - 5, ah / 2, 1, 2, 1, 1);
 					break;
 				}
 			}
