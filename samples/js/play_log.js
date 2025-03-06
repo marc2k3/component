@@ -129,7 +129,7 @@ function _play_log(x, y, w, h) {
 			break;
 		case 1201:
 			var tmp = Number(utils.InputBox('Enter limit', window.Name, this.properties.limit.value));
-			this.properties.limit.value =  tmp >= 0 ? tmp : this.properties.limit.default_;
+			this.properties.limit.value = tmp >= 0 ? tmp : this.properties.limit.default_;
 			this.text = this.get_lines().join(CRLF);
 			_save(this.filename, this.text);
 			this.create_layout();

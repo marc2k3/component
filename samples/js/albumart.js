@@ -303,7 +303,7 @@ function _albumart(x, y, w, h) {
 	this.image_index = 0;
 	this.path = null;
 	this.hover = false;
-	this.ids =  ['front', 'back', 'disc', 'icon', 'artist'];
+	this.ids = ['front', 'back', 'disc', 'icon', 'artist'];
 	this.types = ['embedded', 'default', 'stub'];
 	this.custom_id = -1;
 	this.custom_type = -1;

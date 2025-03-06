@@ -411,7 +411,7 @@ function update_wallpaper() {
 		img.StackBlur(properties.wallpaperblurvalue);
 	}
 
-	images.wallpaper =  img.CreateBitmap();
+	images.wallpaper = img.CreateBitmap();
 	img.Dispose();
 }
 

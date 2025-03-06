@@ -107,7 +107,7 @@ function generate_filename(cachekey, art_id) {
 	var prefix = art_id == 4 ? "artist" : "front";
 	return CACHE_FOLDER + prefix + cachekey + ".jpg";
 }
-0
+
 function get_art(metadb, cachekey, art_id) {
 	var filename = generate_filename(cachekey, art_id);
 	var img = images.cache[filename];
@@ -130,7 +130,7 @@ function get_art(metadb, cachekey, art_id) {
 }
 
 function drawImage(gr, img, dst_x, dst_y, dst_w, dst_h, auto_fill, border, opacity) {
-	if (!img || !dst_w || !dst_h) 
+	if (!img || !dst_w || !dst_h)
 		return;
 
 	if (auto_fill) {
@@ -165,7 +165,7 @@ function drawImage(gr, img, dst_x, dst_y, dst_w, dst_h, auto_fill, border, opaci
 function drawBackground(gr) {
 	gr.Clear(g_colour_background);
 
-	if (!ppt.wallpapermode || !g_wallpaperImg) 
+	if (!ppt.wallpapermode || !g_wallpaperImg)
 		return;
 
 	if (g_wallpaperImg.Width / g_wallpaperImg.Height < brw.w / brw.h) {
