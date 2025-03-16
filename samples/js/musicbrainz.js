@@ -169,11 +169,12 @@ function _musicbrainz(x, y, w, h) {
 			this.text_width = this.w - this.spacer_w - 10;
 
 			for (var i = 0; i < Math.min(this.count, this.rows); i++) {
-				if (this.data[i + this.offset].url == 'SECTION_HEADER') {
-					this.draw_row(gr, this.data[i + this.offset].name, panel.colours.highlight, this.x, this.y + _scale(12) + (i * panel.row_height), this.text_width, panel.row_height);
+				var item = this.data[i + this.offset];
+				if (item.url == 'SECTION_HEADER') {
+					this.draw_row(gr, item.name, panel.colours.highlight, this.x, this.y + _scale(12) + (i * panel.row_height), this.text_width, panel.row_height);
 				} else {
-					this.draw_row(gr, this.data[i + this.offset].name, panel.colours.text, this.x, this.y + _scale(12) + (i * panel.row_height), this.text_width, panel.row_height);
-					this.draw_row(gr, this.data[i + this.offset].date, panel.colours.highlight, this.x, this.y + _scale(12) + (i * panel.row_height), this.w, panel.row_height, DWRITE_TEXT_ALIGNMENT_TRAILING);
+					this.draw_row(gr, item.name, panel.colours.text, this.x, this.y + _scale(12) + (i * panel.row_height), this.text_width, panel.row_height);
+					this.draw_row(gr, item.date, panel.colours.highlight, this.x, this.y + _scale(12) + (i * panel.row_height), this.w, panel.row_height, DWRITE_TEXT_ALIGNMENT_TRAILING);
 				}
 			}
 		} else { // links

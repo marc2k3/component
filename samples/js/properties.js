@@ -242,11 +242,12 @@ function _properties(mode, x, y, w, h) {
 		this.text_width = this.w - this.clickable_text_x;
 
 		for (var i = 0; i < Math.min(this.count, this.rows); i++) {
-			if (this.data[i + this.offset].value == 'SECTION_HEADER') {
-				this.draw_row(gr, this.data[i + this.offset].name, panel.colours.highlight, this.x, this.y + _scale(12) + (i * panel.row_height), this.w, panel.row_height);
+			var item = this.data[i + this.offset];
+			if (item.value == 'SECTION_HEADER') {
+				this.draw_row(gr, item.name, panel.colours.highlight, this.x, this.y + _scale(12) + (i * panel.row_height), this.w, panel.row_height);
 			} else {
-				this.draw_row(gr, this.data[i + this.offset].name, panel.colours.text, this.x, this.y + _scale(12) + (i * panel.row_height), this.clickable_text_x - 10, panel.row_height);
-				this.draw_row(gr, this.data[i + this.offset].value, panel.colours.highlight, this.x + this.clickable_text_x, this.y + _scale(12) + (i * panel.row_height), this.text_width, panel.row_height);
+				this.draw_row(gr, item.name, panel.colours.text, this.x, this.y + _scale(12) + (i * panel.row_height), this.clickable_text_x - 10, panel.row_height);
+				this.draw_row(gr, item.value, panel.colours.highlight, this.x + this.clickable_text_x, this.y + _scale(12) + (i * panel.row_height), this.text_width, panel.row_height);
 			}
 		}
 

@@ -179,11 +179,12 @@ function _lastfm_info(x, y, w, h) {
 			var unit_width = (this.w - lastfm_charts_bar_x - _scale(50)) / this.data[0].playcount;
 
 			for (var i = 0; i < Math.min(this.count, this.rows); i++) {
-				var bar_width = Math.ceil(unit_width * this.data[i + this.offset].playcount);
-				this.draw_row(gr, this.data[i + this.offset].rank + '.', panel.colours.highlight, this.x, this.y + _scale(12) + (i * panel.row_height), this.clickable_text_x - 5, panel.row_height, DWRITE_TEXT_ALIGNMENT_TRAILING);
-				this.draw_row(gr, this.data[i + this.offset].name, panel.colours.text, this.x + this.clickable_text_x, this.y + _scale(12) + (i * panel.row_height), this.text_width, panel.row_height);
+				var item = this.data[i + this.offset];
+				var bar_width = Math.ceil(unit_width * item.playcount);
+				this.draw_row(gr, item.rank + '.', panel.colours.highlight, this.x, this.y + _scale(12) + (i * panel.row_height), this.clickable_text_x - 5, panel.row_height, DWRITE_TEXT_ALIGNMENT_TRAILING);
+				this.draw_row(gr, item.name, panel.colours.text, this.x + this.clickable_text_x, this.y + _scale(12) + (i * panel.row_height), this.text_width, panel.row_height);
 				gr.FillRectangle(lastfm_charts_bar_x, this.y + _scale(13) + (i * panel.row_height), bar_width, panel.row_height - 3, panel.colours.highlight);
-				this.draw_row(gr, _formatNumber(this.data[i + this.offset].playcount, ','), panel.colours.text, lastfm_charts_bar_x + bar_width + 5, this.y + _scale(12) + (i * panel.row_height), _scale(60), panel.row_height);
+				this.draw_row(gr, _formatNumber(item.playcount, ','), panel.colours.text, lastfm_charts_bar_x + bar_width + 5, this.y + _scale(12) + (i * panel.row_height), _scale(60), panel.row_height);
 			}
 			break;
 		default: // other
