@@ -188,7 +188,7 @@ function GetNowPlayingColours() {
 }
 
 function Property(name, default_) {
-	Object.defineProperty(this, _.isBoolean(default_) ? 'enabled' : 'value', {
+	Object.defineProperty(this, typeof default_ == 'boolean' ? 'enabled' : 'value', {
 		get : function () {
 			return this.val;
 		},
