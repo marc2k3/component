@@ -40,7 +40,7 @@ function _console(x, y, w, h) {
 				this.colour_string = JSON.stringify(colours);
 			}
 
-			this.text_layout = utils.CreateTextLayout(str, panel.fonts.normal);
+			this.text_layout = utils.CreateTextLayout(str, this.font_string);
 		}
 
 		this.update();
@@ -51,7 +51,14 @@ function _console(x, y, w, h) {
 	}
 
 	this.font_changed = function () {
+		this.update_font();
 		this.console_refresh();
+		window.Repaint();
+	}
+
+	this.update_font = function () {
+		var name = JSON.parse(window.GetUIFont(FontType.console)).Name;
+		this.font_string = CreateFontString(name, panel.fonts.size.value);
 	}
 
 	this.header_text = function () {
@@ -176,12 +183,14 @@ function _console(x, y, w, h) {
 	this.my = 0;
 	this.offset = 0;
 	this.text = '';
-
+	this.font_string = '';
 	this.colour_string = '';
 
 	this.properties = {
 		timestamp : new Property('2K3.TEXT.CONSOLE.TIMESTAMP', true)
 	};
+
+	this.update_font();
 
 	this.up_btn = new _sb(chars.up, this.x, this.y, _scale(12), _scale(12), _.bind(function () { return this.offset < 0; }, this), _.bind(function () { this.wheel(1); }, this));
 	this.down_btn = new _sb(chars.down, this.x, this.y, _scale(12), _scale(12), _.bind(function () { return this.offset > this.ha - this.text_height; }, this), _.bind(function () { this.wheel(-1); }, this));
