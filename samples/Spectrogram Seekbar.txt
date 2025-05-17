@@ -8,7 +8,7 @@
 // @import "%fb2k_component_path%samples\js\seekbar.js"
 // ==/PREPROCESSOR==
 
-var ffmpeg_exe = fb.ProfilePath + 'ffmpeg.exe';
+var ffmpeg_exe = utils.Env('%windir%') + '\\ffmpeg.exe';
 var spectrogram_cache = folders.data + 'spectrogram_cache\\';
 
 var panel = new _panel();
