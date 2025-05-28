@@ -103,7 +103,7 @@ function _albumart(x, y, w, h) {
 			}
 		}
 
-		this.reset_images();
+		this.reset_bitmaps();
 
 		if (img) {
 			this.tooltip = 'Original dimensions: ' + img.Width + 'x' + img.Height + 'px';
@@ -158,7 +158,7 @@ function _albumart(x, y, w, h) {
 		}
 	}
 
-	this.reset_images = function () {
+	this.reset_bitmaps = function () {
 		if (this.bitmap.normal) {
 			this.bitmap.normal.Dispose();
 			this.bitmap.normal = null;
