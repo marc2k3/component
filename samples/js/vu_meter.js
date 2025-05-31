@@ -18,6 +18,7 @@ var rms_block_dbs = [0.3125, 0.625, 1.25, 2.5];
 var RMS_levels = [], Peak_levels = [], Peak_falldown = [];
 var ChannelNames = [ "FL", "FR", "FC", "LFE", "BL", "BR", "FCL", "FCR", "BC", "SL", "SR", "TC", "TFL", "TFC", "TFR", "TBL", "TBC", "TBR" ];
 var ww = 0, wh = 0, timer_id = 0, rms_db_offset = 0, dBrange = 0;
+var text_layouts = {};
 
 var channels = {
 	count : 2,
@@ -445,7 +446,12 @@ function on_paint(gr) {
 	// labels
 	if (show_ch_labels) {
 		for (var c = 0; c < channels.count; ++c) {
-			gr.WriteTextSimple(channel_name(c), font_t, colours.text, 0, bar_pad_top + (bar_height * c), bar_pad_left, bar_height, 2, 2);
+			var name = channel_name(c);
+			if (!text_layouts[name]) {
+				text_layouts[name] = utils.CreateTextLayout(name, font_t, 2, 2);
+			}
+
+			gr.WriteTextLayout(text_layouts[name], colours.text, 0, bar_pad_top + (bar_height * c), bar_pad_left, bar_height);
 		}
 	}
 
@@ -465,8 +471,13 @@ function on_paint(gr) {
 		gr.FillRectangle(bar_pad_left, y, bar_width, 1, colours.text);
 
 		for (var i = minDB, j = 0; i <= maxDB; i += db_spacing, j++) {
+			var name = i + "dB";
+			if (!text_layouts[name]) {
+				text_layouts[name] = utils.CreateTextLayout(name, font_t, 0, 2);
+			}
+
 			var x = bar_pad_left + (bar_width * j / (dBrange / db_spacing));
-			gr.WriteTextSimple(i + "dB", font_t, colours.text, x - (bar_pad_left / 2), y, _scale(100), wh - y, 0, 2);
+			gr.WriteTextLayout(text_layouts[name], colours.text, x - (bar_pad_left / 2), y, _scale(100), wh - y);
 			gr.DrawLine(x, y - _scale(2), x, y + _scale(2), 1, colours.text);
 		}
 	}
