@@ -95,6 +95,27 @@ function _vu_meter(x, y, w, h) {
 		}
 	}
 
+	this.update_bar_colour = function (horizontal) {
+		if (this.solid_colour)
+			return;
+
+		if (horizontal) {
+			if (this.brush.Start[1] == 0 && this.brush.End[0] == this.w)
+				return;
+
+			this.brush.Start[1] = 0;
+			this.brush.End[0] = this.w;
+		} else {
+			if (this.brush.Start[1] == this.h && this.brush.End[0] == 0)
+				return;
+
+			this.brush.Start[1] = this.h;
+			this.brush.End[0] = 0;
+		}
+
+		this.colours.bar = JSON.stringify(this.brush);
+	}
+
 // callbacks begin
 	this.colours_changed = function () {
 		if (this.properties.colour_mode.value == 0) { // UI
@@ -147,12 +168,7 @@ function _vu_meter(x, y, w, h) {
 		var smooth_mode = this.properties.meter_style.value == 0;
 
 		if (this.w > this.h) { // horizontal
-			this.brush.Start = [0, 0];
-			this.brush.End = [this.w, 0];
-
-			if (!this.solid_colour) {
-				this.colours.bar = JSON.stringify(this.brush);
-			}
+			this.update_bar_colour(true);
 
 			var bar_width = this.w;
 			var bar_height = Math.floor(this.h / this.channels.count);
@@ -191,12 +207,7 @@ function _vu_meter(x, y, w, h) {
 				}
 			}
 		} else { // vertical
-			this.brush.Start = [0, this.h];
-			this.brush.End = [0, 0];
-
-			if (!this.solid_colour) {
-				this.colours.bar = JSON.stringify(this.brush);
-			}
+			this.update_bar_colour(false);
 
 			var bar_width = Math.floor(this.w / this.channels.count);
 			var bar_height = this.h;
