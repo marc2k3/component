@@ -1,10 +1,7 @@
 // ==PREPROCESSOR==
 // @name "Status Bar"
 // @author "marc2003"
-// @import "lodash"
 // @import "%fb2k_component_path%helpers.txt"
-// @import "%fb2k_component_path%samples\js\common.js"
-// @import "%fb2k_component_path%samples\js\volume.js"
 // ==/PREPROCESSOR==
 
 var ww = 0;
