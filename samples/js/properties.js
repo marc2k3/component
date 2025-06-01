@@ -207,7 +207,7 @@ function _properties(mode, x, y, w, h) {
 		if (!this.containsXY(x, y))
 			return false;
 
-		this.index = Math.floor((y - this.y - _scale(12)) / panel.row_height) + this.offset;
+		this.index = Math.floor((y - this.y - Scale(12)) / panel.row_height) + this.offset;
 		this.in_range = this.index >= this.offset && this.index < this.offset + Math.min(this.rows, this.count);
 
 		switch (true) {
@@ -244,10 +244,10 @@ function _properties(mode, x, y, w, h) {
 		for (var i = 0; i < Math.min(this.count, this.rows); i++) {
 			var item = this.data[i + this.offset];
 			if (item.value == 'SECTION_HEADER') {
-				this.draw_row(gr, item.name, panel.colours.highlight, this.x, this.y + _scale(12) + (i * panel.row_height), this.w, panel.row_height);
+				this.draw_row(gr, item.name, panel.colours.highlight, this.x, this.y + Scale(12) + (i * panel.row_height), this.w, panel.row_height);
 			} else {
-				this.draw_row(gr, item.name, panel.colours.text, this.x, this.y + _scale(12) + (i * panel.row_height), this.clickable_text_x - 10, panel.row_height);
-				this.draw_row(gr, item.value, panel.colours.highlight, this.x + this.clickable_text_x, this.y + _scale(12) + (i * panel.row_height), this.text_width, panel.row_height);
+				this.draw_row(gr, item.name, panel.colours.text, this.x, this.y + Scale(12) + (i * panel.row_height), this.clickable_text_x - 10, panel.row_height);
+				this.draw_row(gr, item.value, panel.colours.highlight, this.x + this.clickable_text_x, this.y + Scale(12) + (i * panel.row_height), this.text_width, panel.row_height);
 			}
 		}
 
@@ -290,11 +290,11 @@ function _properties(mode, x, y, w, h) {
 	this.size = function () {
 		this.index = 0;
 		this.offset = 0;
-		this.rows = Math.floor((this.h - _scale(24)) / panel.row_height);
-		this.up_btn.x = this.x + Math.round((this.w - _scale(12)) * 0.5);
+		this.rows = Math.floor((this.h - Scale(24)) / panel.row_height);
+		this.up_btn.x = this.x + Math.round((this.w - Scale(12)) * 0.5);
 		this.down_btn.x = this.up_btn.x;
 		this.up_btn.y = this.y;
-		this.down_btn.y = this.y + this.h - _scale(12);
+		this.down_btn.y = this.y + this.h - Scale(12);
 	}
 
 	this.update = function () {
@@ -381,6 +381,6 @@ function _properties(mode, x, y, w, h) {
 		}
 	}
 
-	this.up_btn = new _sb(chars.up, this.x, this.y, _scale(12), _scale(12), _.bind(function () { return this.offset > 0; }, this), _.bind(function () { this.wheel(1); }, this));
-	this.down_btn = new _sb(chars.down, this.x, this.y, _scale(12), _scale(12), _.bind(function () { return this.offset < this.count - this.rows; }, this), _.bind(function () { this.wheel(-1); }, this));
+	this.up_btn = new _sb(chars.up, this.x, this.y, Scale(12), Scale(12), _.bind(function () { return this.offset > 0; }, this), _.bind(function () { this.wheel(1); }, this));
+	this.down_btn = new _sb(chars.down, this.x, this.y, Scale(12), Scale(12), _.bind(function () { return this.offset < this.count - this.rows; }, this), _.bind(function () { this.wheel(-1); }, this));
 }

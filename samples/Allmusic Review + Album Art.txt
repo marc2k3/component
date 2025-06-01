@@ -9,7 +9,7 @@
 // @import "%fb2k_component_path%samples\js\allmusic.js"
 // ==/PREPROCESSOR==
 
-var margin = _scale(12);
+var margin = Scale(12);
 
 var panel = new _panel();
 var allmusic = new _allmusic(0, 0, 0, 0);

@@ -46,11 +46,11 @@ function _list_base(x, y, w, h) {
 	this.size = function () {
 		this.index = 0;
 		this.offset = 0;
-		this.rows = Math.floor((this.h - _scale(24)) / panel.row_height);
-		this.up_btn.x = this.x + Math.round((this.w - _scale(12)) * 0.5);
+		this.rows = Math.floor((this.h - Scale(24)) / panel.row_height);
+		this.up_btn.x = this.x + Math.round((this.w - Scale(12)) * 0.5);
 		this.down_btn.x = this.up_btn.x;
 		this.up_btn.y = this.y;
-		this.down_btn.y = this.y + this.h - _scale(12);
+		this.down_btn.y = this.y + this.h - Scale(12);
 	}
 
 	this.wheel = function (s) {
@@ -87,6 +87,6 @@ function _list_base(x, y, w, h) {
 	this.count = 0;
 	this.data = [];
 
-	this.up_btn = new _sb(chars.up, this.x, this.y, _scale(12), _scale(12), _.bind(function () { return this.offset > 0; }, this), _.bind(function () { this.wheel(1); }, this));
-	this.down_btn = new _sb(chars.down, this.x, this.y, _scale(12), _scale(12), _.bind(function () { return this.offset < this.count - this.rows; }, this), _.bind(function () { this.wheel(-1); }, this));
+	this.up_btn = new _sb(chars.up, this.x, this.y, Scale(12), Scale(12), _.bind(function () { return this.offset > 0; }, this), _.bind(function () { this.wheel(1); }, this));
+	this.down_btn = new _sb(chars.down, this.x, this.y, Scale(12), Scale(12), _.bind(function () { return this.offset < this.count - this.rows; }, this), _.bind(function () { this.wheel(-1); }, this));
 }

@@ -140,7 +140,7 @@ function oPlaylistManager() {
 			var cy = this.y + cPlaylistManager.rowHeight + row_idx * ch;
 			this.playlists[i].y = cy;
 			var txt_color = g_colour_text;
-			var is_hovering = g_drag_drop_playlist_manager_hover && i == this.hoverId && playlist_can_add_items(playlistIndex);
+			var is_hovering = g_drag_drop_playlist_manager_hover && i == this.hoverId && PlaylistCanAddItems(playlistIndex);
 
 			// draw selected bg if active or being hovered over
 			if (playlistIndex == g_active_playlist || is_hovering) {
@@ -404,8 +404,8 @@ function oPlaylistManager() {
 			menu.AppendMenuSeparator();
 			var lock_name = plman.GetPlaylistLockName(id);
 
-			menu.AppendMenuItem(EnableMenuIf(playlist_can_rename(id)), 6, "Rename this playlist\tF2");
-			menu.AppendMenuItem(EnableMenuIf(playlist_can_remove(id)), 7, "Remove this playlist\tDel");
+			menu.AppendMenuItem(EnableMenuIf(PlaylistCanRename(id)), 6, "Rename this playlist\tF2");
+			menu.AppendMenuItem(EnableMenuIf(PlaylistCanRemove(id)), 7, "Remove this playlist\tDel");
 			menu.AppendMenuSeparator();
 
 			if (plman.IsAutoPlaylist(id)) {

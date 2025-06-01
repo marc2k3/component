@@ -2,7 +2,7 @@ function _panel(options) {
 	this.create_font = function (size, weight) {
 		return JSON.stringify({
 			Name : this.fonts.name,
-			Size : _scale(size),
+			Size : Scale(size),
 			Weight : weight || 400,
 			Style : 0,
 			Stretch : 5
@@ -56,8 +56,8 @@ function _panel(options) {
 			this.fonts.twemoji = CreateFontString('Twemoji Mozilla', this.fonts.size.value);
 		}
 
-		this.row_height = _scale(this.fonts.size.value + 4);
-		this.scroll_step = _scale(this.fonts.size.value) * 4;
+		this.row_height = Scale(this.fonts.size.value + 4);
+		this.scroll_step = Scale(this.fonts.size.value) * 4;
 		_.invoke(this.text_objects, 'font_changed');
 		_.invoke(this.list_objects, 'font_changed');
 		_.invoke(this.display_objects, 'refresh', true);

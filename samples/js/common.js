@@ -39,7 +39,7 @@ function _button(x, y, w, h, normal, hover, fn, tiptext) {
 	this.normal = normal;
 	this.hover = hover || normal;
 	this.current = normal;
-	this.font = JSON.stringify({Name:'Segoe Fluent Icons',Size:this.h - _scale(10)});
+	this.font = JSON.stringify({Name:'Segoe Fluent Icons',Size:this.h - Scale(10)});
 }
 
 function _buttons() {
@@ -93,7 +93,7 @@ function _buttons() {
 
 	this.change_font = function (name) {
 		_.forEach(this.buttons, function (item) {
-			item.font = JSON.stringify({Name:name,Size:item.h - _scale(10)});
+			item.font = JSON.stringify({Name:name,Size:item.h - Scale(10)});
 		});
 	}
 
@@ -377,10 +377,6 @@ function _sb(ch, x, y, w, h, v, fn) {
 	this.font = JSON.stringify({Name:'Segoe Fluent Icons',Size:h});
 }
 
-function _scale(size) {
-	return Math.round(size * DPI / 72);
-}
-
 function _stringToArray(str, sep) {
 	if (typeof str != 'string' || typeof sep != 'string')
 		return [];
@@ -414,10 +410,10 @@ var CRLF = '\r\n';
 var ONE_DAY = 86400;
 var DEFAULT_ARTIST = '$meta(artist,0)';
 var N = window.Name + ':';
-var LM = _scale(5);
-var TM = _scale(22);
+var LM = Scale(5);
+var TM = Scale(22);
 
-var tooltip = window.CreateTooltip('Segoe UI', _scale(12));
+var tooltip = window.CreateTooltip('Segoe UI', Scale(12));
 tooltip.SetMaxWidth(800);
 
 var folders = {};

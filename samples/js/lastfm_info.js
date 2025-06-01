@@ -139,7 +139,7 @@ function _lastfm_info(x, y, w, h) {
 		if (!this.containsXY(x, y))
 			return false;
 
-		this.index = Math.floor((y - this.y - _scale(12)) / panel.row_height) + this.offset;
+		this.index = Math.floor((y - this.y - Scale(12)) / panel.row_height) + this.offset;
 		this.in_range = this.index >= this.offset && this.index < this.offset + Math.min(this.rows, this.count);
 		switch (true) {
 		case this.up_btn.move(x, y):
@@ -164,7 +164,7 @@ function _lastfm_info(x, y, w, h) {
 
 	this.paint = function (gr) {
 		if (lastfm.api_key.empty()) {
-			gr.WriteTextSimple('Use the right click menu to set your own Last.fm API key.', panel.fonts.normal, panel.colours.text, this.x, this.y + _scale(12), this.w, this.h);
+			gr.WriteTextSimple('Use the right click menu to set your own Last.fm API key.', panel.fonts.normal, panel.colours.text, this.x, this.y + Scale(12), this.w, this.h);
 			return;
 		}
 
@@ -176,15 +176,15 @@ function _lastfm_info(x, y, w, h) {
 			this.clickable_text_x = this.spacer_w + 5;
 			this.text_width = Math.round(this.w * 0.5);
 			var lastfm_charts_bar_x = this.x + this.clickable_text_x + this.text_width + 10;
-			var unit_width = (this.w - lastfm_charts_bar_x - _scale(50)) / this.data[0].playcount;
+			var unit_width = (this.w - lastfm_charts_bar_x - Scale(50)) / this.data[0].playcount;
 
 			for (var i = 0; i < Math.min(this.count, this.rows); i++) {
 				var item = this.data[i + this.offset];
 				var bar_width = Math.ceil(unit_width * item.playcount);
-				this.draw_row(gr, item.rank + '.', panel.colours.highlight, this.x, this.y + _scale(12) + (i * panel.row_height), this.clickable_text_x - 5, panel.row_height, DWRITE_TEXT_ALIGNMENT_TRAILING);
-				this.draw_row(gr, item.name, panel.colours.text, this.x + this.clickable_text_x, this.y + _scale(12) + (i * panel.row_height), this.text_width, panel.row_height);
-				gr.FillRectangle(lastfm_charts_bar_x, this.y + _scale(13) + (i * panel.row_height), bar_width, panel.row_height - 3, panel.colours.highlight);
-				this.draw_row(gr, _formatNumber(item.playcount, ','), panel.colours.text, lastfm_charts_bar_x + bar_width + 5, this.y + _scale(12) + (i * panel.row_height), _scale(60), panel.row_height);
+				this.draw_row(gr, item.rank + '.', panel.colours.highlight, this.x, this.y + Scale(12) + (i * panel.row_height), this.clickable_text_x - 5, panel.row_height, DWRITE_TEXT_ALIGNMENT_TRAILING);
+				this.draw_row(gr, item.name, panel.colours.text, this.x + this.clickable_text_x, this.y + Scale(12) + (i * panel.row_height), this.text_width, panel.row_height);
+				gr.FillRectangle(lastfm_charts_bar_x, this.y + Scale(13) + (i * panel.row_height), bar_width, panel.row_height - 3, panel.colours.highlight);
+				this.draw_row(gr, _formatNumber(item.playcount, ','), panel.colours.text, lastfm_charts_bar_x + bar_width + 5, this.y + Scale(12) + (i * panel.row_height), Scale(60), panel.row_height);
 			}
 			break;
 		default: // other
@@ -192,7 +192,7 @@ function _lastfm_info(x, y, w, h) {
 			this.text_width = this.w;
 
 			for (var i = 0; i < Math.min(this.count, this.rows); i++) {
-				this.draw_row(gr, this.data[i + this.offset].name, panel.colours.text, this.x, this.y + _scale(12) + (i * panel.row_height), this.text_width, panel.row_height);
+				this.draw_row(gr, this.data[i + this.offset].name, panel.colours.text, this.x, this.y + Scale(12) + (i * panel.row_height), this.text_width, panel.row_height);
 			}
 			break;
 		}
@@ -316,11 +316,11 @@ function _lastfm_info(x, y, w, h) {
 	this.size = function () {
 		this.index = 0;
 		this.offset = 0;
-		this.rows = Math.floor((this.h - _scale(24)) / panel.row_height);
-		this.up_btn.x = this.x + Math.round((this.w - _scale(12)) * 0.5);
+		this.rows = Math.floor((this.h - Scale(24)) / panel.row_height);
+		this.up_btn.x = this.x + Math.round((this.w - Scale(12)) * 0.5);
 		this.down_btn.x = this.up_btn.x;
 		this.up_btn.y = this.y;
-		this.down_btn.y = this.y + this.h - _scale(12);
+		this.down_btn.y = this.y + this.h - Scale(12);
 	}
 
 	this.update = function () {
@@ -517,6 +517,6 @@ function _lastfm_info(x, y, w, h) {
 		this.update();
 	}
 
-	this.up_btn = new _sb(chars.up, this.x, this.y, _scale(12), _scale(12), _.bind(function () { return this.offset > 0; }, this), _.bind(function () { this.wheel(1); }, this));
-	this.down_btn = new _sb(chars.down, this.x, this.y, _scale(12), _scale(12), _.bind(function () { return this.offset < this.count - this.rows; }, this), _.bind(function () { this.wheel(-1); }, this));
+	this.up_btn = new _sb(chars.up, this.x, this.y, Scale(12), Scale(12), _.bind(function () { return this.offset > 0; }, this), _.bind(function () { this.wheel(1); }, this));
+	this.down_btn = new _sb(chars.down, this.x, this.y, Scale(12), Scale(12), _.bind(function () { return this.offset < this.count - this.rows; }, this), _.bind(function () { this.wheel(-1); }, this));
 }

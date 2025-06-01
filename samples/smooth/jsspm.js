@@ -9,7 +9,7 @@ function on_drag_drop(action, x, y, mask) {
 		action.Effect = 0;
 	} else {
 		if (g_drag_drop_target_id > -1) {
-			if (playlist_can_add_items(g_drag_drop_target_id)) {
+			if (PlaylistCanAddItems(g_drag_drop_target_id)) {
 				plman.UndoBackup(g_drag_drop_target_id);
 				action.Playlist = g_drag_drop_target_id;
 				action.Base = plman.GetPlaylistItemCount(g_drag_drop_target_id);
@@ -47,7 +47,7 @@ function on_drag_over(action, x, y, mask) {
 		g_drag_drop_target_id = -1;
 		brw.on_mouse("drag_over", x, y);
 		if (g_drag_drop_target_id > -1) {
-			action.Effect = playlist_can_add_items(g_drag_drop_target_id) ? 1 : 0;
+			action.Effect = PlaylistCanAddItems(g_drag_drop_target_id) ? 1 : 0;
 		} else {
 			action.Effect = 1;
 		}
@@ -76,7 +76,7 @@ function on_key_down(vkey) {
 			switch (vkey) {
 			case VK_F2:
 				if (brw.selectedRow > -1) {
-					if (playlist_can_rename(brw.selectedRow)) {
+					if (PlaylistCanRename(brw.selectedRow)) {
 						brw.showSelectedPlaylist();
 						brw.rename_playlist(brw.selectedRow);
 					}
@@ -366,7 +366,7 @@ function oBrowser() {
 					}
 				}
 
-				if (i == g_drag_drop_target_id && playlist_can_add_items(i)) {
+				if (i == g_drag_drop_target_id && PlaylistCanAddItems(i)) {
 					gr.DrawRectangle(ax + 1, ay + 1, aw - 2, ah - 2, 2.0, g_colour_text & 0xa0ffffff);
 				}
 
@@ -552,8 +552,8 @@ function oBrowser() {
 		if (id > -1) {
 			var lock_name = plman.GetPlaylistLockName(id);
 
-			menu.AppendMenuItem(EnableMenuIf(playlist_can_rename(id)), 1, "Rename this playlist\tF2");
-			menu.AppendMenuItem(EnableMenuIf(playlist_can_remove(id)), 2, "Remove this playlist\tDel");
+			menu.AppendMenuItem(EnableMenuIf(PlaylistCanRename(id)), 1, "Rename this playlist\tF2");
+			menu.AppendMenuItem(EnableMenuIf(PlaylistCanRemove(id)), 2, "Remove this playlist\tDel");
 			menu.AppendMenuSeparator();
 			if (plman.IsAutoPlaylist(id)) {
 				menu.AppendMenuItem(MF_STRING, 4, lock_name + " properties");

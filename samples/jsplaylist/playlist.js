@@ -1062,8 +1062,8 @@ function oList(object_name) {
 		var sub = window.CreatePopupMenu();
 		var context = fb.CreateContextMenuManager();
 
-		var can_remove_flag = EnableMenuIf(playlist_can_remove_items(g_active_playlist));
-		var can_paste_flag = EnableMenuIf(playlist_can_add_items(g_active_playlist) && fb.CheckClipboardContents());
+		var can_remove_flag = EnableMenuIf(PlaylistCanRemoveItems(g_active_playlist));
+		var can_paste_flag = EnableMenuIf(PlaylistCanAddItems(g_active_playlist) && fb.CheckClipboardContents());
 		var colour_flag = EnableMenuIf(properties.enableCustomColours);
 
 		menu.AppendMenuItem(MF_STRING, 1, "Panel Settings...");

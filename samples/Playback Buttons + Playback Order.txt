@@ -17,7 +17,7 @@ var colours = {
 
 var panel = new _panel();
 var buttons = new _buttons();
-var bs = _scale(24);
+var bs = Scale(24);
 
 var pbo_chars = [chars.repeat_off, chars.repeat_all, chars.repeat_one, chars.random, chars.shuffle, chars.album, chars.folder];
 var pbo_names = playback.GetOrderNames().toArray();

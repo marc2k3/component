@@ -28,12 +28,12 @@ var tfo = {
 
 var font = CreateFontString('Segoe UI', 12);
 var buttons = new _buttons();
-var bs = _scale(24);
+var bs = Scale(24);
 var bottom_y = 0;
 
 buttons.update = function () {
 	var x = (panel.w - (bs * 7)) / 2
-	var y = seekbar.y + _scale(12);
+	var y = seekbar.y + Scale(12);
 	this.buttons.stop = new _button(x, y, bs, bs, { char : chars.stop, colour: playback.StopAfterCurrent ? colours.contrast : colours.white}, null, function () { playback.Stop(); }, 'Stop');
 	this.buttons.previous = new _button(x + bs, y, bs, bs, { char : chars.prev, colour:colours.white }, null, function () { playback.Previous(); }, 'Previous');
 	this.buttons.play = new _button(x + (bs * 2), y, bs, bs, { char : !playback.IsPlaying || playback.IsPaused ? chars.play : chars.pause, colour:colours.white}, null, function () { playback.PlayOrPause(); }, !playback.IsPlaying || playback.IsPaused ? 'Play' : 'Pause');
@@ -120,15 +120,15 @@ function on_paint(gr) {
 	text.paint(gr);
 	buttons.paint(gr);
 
-	gr.FillRoundedRectangle(seekbar.x, seekbar.y, seekbar.w, seekbar.h, _scale(2), _scale(2), colours.slider_background);
+	gr.FillRoundedRectangle(seekbar.x, seekbar.y, seekbar.w, seekbar.h, Scale(2), Scale(2), colours.slider_background);
 
 	if (playback.IsPlaying) {
-		var time_width = seekbar.x - _scale(12);
-		gr.WriteText(tfo.playback_time.Eval(), font, colours.white, 0, bottom_y, time_width, _scale(12), 1, 2);
-		gr.WriteText(tfo.length.Eval(), font, colours.white, seekbar.x + seekbar.w + _scale(12), bottom_y, time_width, _scale(12), 0, 2);
+		var time_width = seekbar.x - Scale(12);
+		gr.WriteText(tfo.playback_time.Eval(), font, colours.white, 0, bottom_y, time_width, Scale(12), 1, 2);
+		gr.WriteText(tfo.length.Eval(), font, colours.white, seekbar.x + seekbar.w + Scale(12), bottom_y, time_width, Scale(12), 0, 2);
 
 		if (playback.Length > 0) {
-			gr.FillEllipse(seekbar.x + seekbar.pos(), seekbar.y + _scale(3), _scale(6), _scale(6), colours.white);
+			gr.FillEllipse(seekbar.x + seekbar.pos(), seekbar.y + Scale(3), Scale(6), Scale(6), colours.white);
 		}
 	}
 }
@@ -207,11 +207,11 @@ function on_size() {
 	panel.size();
 	text.size();
 
-	seekbar.x = _scale(60);
-	seekbar.y = panel.h - bs - _scale(18);
+	seekbar.x = Scale(60);
+	seekbar.y = panel.h - bs - Scale(18);
 	seekbar.w = panel.w - (seekbar.x * 2);
-	seekbar.h = _scale(6);
+	seekbar.h = Scale(6);
 
-	bottom_y = seekbar.y - _scale(4);
+	bottom_y = seekbar.y - Scale(4);
 	buttons.update();
 }

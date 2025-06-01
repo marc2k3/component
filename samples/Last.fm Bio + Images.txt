@@ -10,7 +10,7 @@
 // @import "%fb2k_component_path%samples\js\lastfm_bio.js"
 // ==/PREPROCESSOR==
 
-var margin = _scale(12);
+var margin = Scale(12);
 
 var panel = new _panel();
 var lastfm = new _lastfm();

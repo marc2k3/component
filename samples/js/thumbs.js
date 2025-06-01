@@ -860,7 +860,7 @@ function _thumbs() {
 		'Referer' : 'https://www.last.fm',
 	});
 
-	this.close_btn = new _sb(chars.close, 0, 0, _scale(10), _scale(10), _.bind(function () { return this.properties.mode.value == 0 && this.overlay; }, this), _.bind(function () { this.enable_overlay(false); }, this));
+	this.close_btn = new _sb(chars.close, 0, 0, Scale(10), Scale(10), _.bind(function () { return this.properties.mode.value == 0 && this.overlay; }, this), _.bind(function () { this.enable_overlay(false); }, this));
 	this.create_mask();
 	utils.CreateFolder(folders.artists);
 	window.SetInterval(this.interval_func, 1000);

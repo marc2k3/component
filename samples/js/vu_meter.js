@@ -412,10 +412,10 @@ function on_paint(gr) {
 
 	var show_ch_labels = true;
 	var show_db_labels = true;
-	var bar_pad_left = _scale(20);
-	var bar_pad_right = _scale(20);
-	var bar_pad_top = _scale(4);
-	var bar_pad_bottom = _scale(24);
+	var bar_pad_left = Scale(20);
+	var bar_pad_right = Scale(20);
+	var bar_pad_top = Scale(4);
+	var bar_pad_bottom = Scale(24);
 	var bar_width = ww - bar_pad_left - bar_pad_right;
 	var bar_height = Math.floor((wh - bar_pad_top - bar_pad_bottom) / channels.count);
 
@@ -462,12 +462,12 @@ function on_paint(gr) {
 			db_spacing = 1;
 		}
 
-		if (ww * db_spacing / dBrange < _scale(64)) {
-			db_spacing = ((_scale(64) * dBrange) / ww);
+		if (ww * db_spacing / dBrange < Scale(64)) {
+			db_spacing = ((Scale(64) * dBrange) / ww);
 			db_spacing -= (db_spacing % 5);
 		}
 
-		var y = bar_pad_top + (bar_height * channels.count) + _scale(4);
+		var y = bar_pad_top + (bar_height * channels.count) + Scale(4);
 		gr.FillRectangle(bar_pad_left, y, bar_width, 1, colours.text);
 
 		for (var i = minDB, j = 0; i <= maxDB; i += db_spacing, j++) {
@@ -477,8 +477,8 @@ function on_paint(gr) {
 			}
 
 			var x = bar_pad_left + (bar_width * j / (dBrange / db_spacing));
-			gr.WriteTextLayout(text_layouts[name], colours.text, x - (bar_pad_left / 2), y, _scale(100), wh - y);
-			gr.DrawLine(x, y - _scale(2), x, y + _scale(2), 1, colours.text);
+			gr.WriteTextLayout(text_layouts[name], colours.text, x - (bar_pad_left / 2), y, Scale(100), wh - y);
+			gr.DrawLine(x, y - Scale(2), x, y + Scale(2), 1, colours.text);
 		}
 	}
 

@@ -13,7 +13,7 @@ var seekbar = new _seekbar(0, 0, 0, 0);
 var buttons = new _buttons();
 var font = CreateFontString("Segoe UI", 12);
 var is_dark = window.IsDark;
-var bs = _scale(24);
+var bs = Scale(24);
 
 var tfo = {
 	playback_time : fb.TitleFormat('[%playback_time%]'),
@@ -29,7 +29,7 @@ var colours = {
 
 buttons.update = function () {
 	var x = (panel.w - bs * 4) / 2;
-	var y = panel.h - _scale(6) - bs;
+	var y = panel.h - Scale(6) - bs;
 	var button_colour = is_dark ? colours.light : colours.dark;
 
 	this.buttons.stop = new _button(x, y, bs, bs, { char : chars.stop, colour: playback.StopAfterCurrent ? colours.slider_contrast : button_colour}, null, function () { playback.Stop(); }, 'Stop');
@@ -82,15 +82,15 @@ function on_mouse_wheel(s) {
 function on_paint(gr) {
 	gr.Clear(is_dark ? colours.dark : colours.light);
 	buttons.paint(gr);
-	gr.FillRoundedRectangle(seekbar.x, seekbar.y, seekbar.w, seekbar.h, _scale(2), _scale(2), colours.slider_background);
+	gr.FillRoundedRectangle(seekbar.x, seekbar.y, seekbar.w, seekbar.h, Scale(2), Scale(2), colours.slider_background);
 
 	if (playback.IsPlaying) {
-		var time_width = seekbar.x - _scale(12);
-		gr.WriteText(tfo.playback_time.Eval(), font, is_dark ? colours.light : colours.dark, 0, 0, time_width, _scale(28), 1, 2);
-		gr.WriteText(tfo.length.Eval(), font, is_dark ? colours.light : colours.dark, seekbar.x + seekbar.w + _scale(12), 0, time_width, _scale(28), 0, 2);
+		var time_width = seekbar.x - Scale(12);
+		gr.WriteText(tfo.playback_time.Eval(), font, is_dark ? colours.light : colours.dark, 0, 0, time_width, Scale(28), 1, 2);
+		gr.WriteText(tfo.length.Eval(), font, is_dark ? colours.light : colours.dark, seekbar.x + seekbar.w + Scale(12), 0, time_width, Scale(28), 0, 2);
 
 		if (playback.Length > 0) {
-			gr.FillEllipse(seekbar.x + seekbar.pos(), seekbar.y + _scale(3), _scale(6), _scale(6), colours.slider_contrast);
+			gr.FillEllipse(seekbar.x + seekbar.pos(), seekbar.y + Scale(3), Scale(6), Scale(6), colours.slider_contrast);
 		}
 	}
 }
@@ -126,8 +126,8 @@ function on_playlist_stop_after_current_changed() {
 function on_size() {
 	panel.size();
 	buttons.update();
-	seekbar.x = _scale(60);
-	seekbar.y = _scale(12);
+	seekbar.x = Scale(60);
+	seekbar.y = Scale(12);
 	seekbar.w = panel.w - (seekbar.x * 2);
-	seekbar.h = _scale(6);
+	seekbar.h = Scale(6);
 }

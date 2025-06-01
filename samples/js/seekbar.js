@@ -100,7 +100,7 @@ function _seekbar(x, y, w, h, spectrogram_mode) {
 	}
 
 	this.repaint_rect = function () {
-		window.RepaintRect(this.x - _scale(75), this.y - _scale(10), this.w + _scale(150), this.h + _scale(20));
+		window.RepaintRect(this.x - Scale(75), this.y - Scale(10), this.w + Scale(150), this.h + Scale(20));
 	}
 
 	this.x = x;
@@ -187,7 +187,7 @@ function _seekbar(x, y, w, h, spectrogram_mode) {
 
 		this.paint = function (gr) {
 			if (this.working) {
-				gr.WriteTextSimple(chars.working, JSON.stringify({Name:'Segoe Fluent Icons',Size:this.h - _scale(16)}), this.properties.marker_colour.value, this.x, this.y, this.w, this.h, 2, 2);
+				gr.WriteTextSimple(chars.working, JSON.stringify({Name:'Segoe Fluent Icons',Size:this.h - Scale(16)}), this.properties.marker_colour.value, this.x, this.y, this.w, this.h, 2, 2);
 			} else if (this.image) {
 				gr.DrawBitmap(this.image, this.x, this.y, this.w, this.h, 0, 0, this.image.Width, this.image.Height);
 			}

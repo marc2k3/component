@@ -9,7 +9,7 @@
 
 var panel = new _panel();
 var buttons = new _buttons();
-var bs = _scale(24);
+var bs = Scale(24);
 
 window.MinHeight = window.MaxHeight = bs;
 var colour_mode = new Property('2K3.TOP.COLOUR.MODE', 0); // 0 auto, 1 dark, 2 light, 3 custom

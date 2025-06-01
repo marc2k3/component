@@ -206,11 +206,11 @@ function _text_display(x, y, w, h, buttons) {
 
 	this.size = function () {
 		this.text_height = 0;
-		var margin = _scale(12);
+		var margin = Scale(12);
 
 		switch (this.properties.layout.value) {
 		case 0: // text only
-			var margin_property = _scale(this.properties.margin.value);
+			var margin_property = Scale(this.properties.margin.value);
 
 			this.x = margin_property;
 			this.y = margin_property;
@@ -244,7 +244,7 @@ function _text_display(x, y, w, h, buttons) {
 				var offset = 0;
 
 				if (typeof bs === 'number') {
-					offset = bs + _scale(16);
+					offset = bs + Scale(16);
 				}
 
 				albumart.h -= offset;

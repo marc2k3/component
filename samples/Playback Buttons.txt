@@ -17,7 +17,7 @@ var colours = {
 
 var panel = new _panel();
 var buttons = new _buttons();
-var bs = _scale(24);
+var bs = Scale(24);
 
 buttons.update = function () {
 	var x = ((panel.w - bs * 4) / 2);

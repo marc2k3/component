@@ -660,13 +660,13 @@ function oBrowser() {
 		var context = fb.CreateContextMenuManager();
 
 		if (ppt.library) {
-			menu.AppendMenuItem(EnableMenuIf(playlist_can_add_items(g_active_playlist)), 1, "Add to current playlist");
+			menu.AppendMenuItem(EnableMenuIf(PlaylistCanAddItems(g_active_playlist)), 1, "Add to current playlist");
 		}
 
 		menu.AppendMenuItem(MF_STRING, 2, "Add to new playlist");
 
 		for (var i = 0; i < plman.PlaylistCount; i++) {
-			add.AppendMenuItem(EnableMenuIf(playlist_can_add_items(i)), i + 10, plman.GetPlaylistName(i));
+			add.AppendMenuItem(EnableMenuIf(PlaylistCanAddItems(i)), i + 10, plman.GetPlaylistName(i));
 		}
 		add.AppendTo(menu, MF_STRING, "Add to other playlist");
 		menu.AppendMenuSeparator();

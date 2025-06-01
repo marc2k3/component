@@ -8,7 +8,7 @@ function on_drag_drop(action, x, y, mask) {
 	if (x > brw.scrollbar.x || y < brw.y) {
 		action.Effect = 0;
 	} else {
-		if (playlist_can_add_items(g_active_playlist)) {
+		if (PlaylistCanAddItems(g_active_playlist)) {
 			plman.ClearPlaylistSelection(g_active_playlist);
 			plman.UndoBackup(g_active_playlist);
 			action.Playlist = g_active_playlist;
@@ -30,7 +30,7 @@ function on_drag_over(action, x, y, mask) {
 	if (x > brw.scrollbar.x || y < brw.y) {
 		action.Effect = 0;
 	} else {
-		if (g_active_playlist == -1 || playlist_can_add_items(g_active_playlist)) {
+		if (g_active_playlist == -1 || PlaylistCanAddItems(g_active_playlist)) {
 			action.Effect = 1;
 		} else {
 			action.Effect = 0;
@@ -133,7 +133,7 @@ function on_key_down(vkey) {
 			}
 			break;
 		case VK_DELETE:
-			if (playlist_can_remove_items(g_active_playlist)) {
+			if (PlaylistCanRemoveItems(g_active_playlist)) {
 				plman.UndoBackup(g_active_playlist);
 				plman.RemovePlaylistSelection(g_active_playlist);
 			}
@@ -227,7 +227,7 @@ function on_key_down(vkey) {
 			brw.repaint();
 			break;
 		case 86: // CTRL+V
-			if (playlist_can_add_items(g_active_playlist) && fb.CheckClipboardContents()) {
+			if (PlaylistCanAddItems(g_active_playlist) && fb.CheckClipboardContents()) {
 				var clipboard_contents = fb.GetClipboardContents();
 				plman.UndoBackup(g_active_playlist);
 				plman.InsertPlaylistItems(g_active_playlist, plman.GetPlaylistItemCount(g_active_playlist), clipboard_contents);
@@ -235,7 +235,7 @@ function on_key_down(vkey) {
 			}
 			break;
 		case 88: // CTRL+X
-			if (playlist_can_remove_items(g_active_playlist)) {
+			if (PlaylistCanRemoveItems(g_active_playlist)) {
 				var items = plman.GetPlaylistSelectedItems(g_active_playlist);
 				if (items.CopyToClipboard()) {
 					plman.UndoBackup(g_active_playlist);
@@ -946,8 +946,8 @@ function oBrowser() {
 		// settings end
 
 		if (x < brw.w && y > brw.y) {
-			var remove_flag = EnableMenuIf(playlist_can_remove_items(g_active_playlist));
-			var paste_flag = EnableMenuIf(!is_group_header && playlist_can_add_items(g_active_playlist) && fb.CheckClipboardContents());
+			var remove_flag = EnableMenuIf(PlaylistCanRemoveItems(g_active_playlist));
+			var paste_flag = EnableMenuIf(!is_group_header && PlaylistCanAddItems(g_active_playlist) && fb.CheckClipboardContents());
 
 			menu.AppendMenuSeparator();
 
@@ -966,7 +966,7 @@ function oBrowser() {
 					sub5.AppendMenuSeparator();
 				}
 				for (var i = 0; i < plman.PlaylistCount; i++) {
-					sub5.AppendMenuItem(EnableMenuIf(i != g_active_playlist && playlist_can_add_items(i)), 200 + i, plman.GetPlaylistName(i));
+					sub5.AppendMenuItem(EnableMenuIf(i != g_active_playlist && PlaylistCanAddItems(i)), 200 + i, plman.GetPlaylistName(i));
 				}
 				sub5.AppendTo(menu, MF_STRING, "Add to");
 				menu.AppendMenuSeparator();

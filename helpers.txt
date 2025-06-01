@@ -208,27 +208,31 @@ function Property(name, default_) {
 	this.val = window.GetProperty(name, default_);
 }
 
-function playlist_can_add_items(playlistIndex) {
+function Scale(size) {
+	return Math.round(size * DPI / 72);
+}
+
+function PlaylistCanAddItems(playlistIndex) {
 	return !(plman.GetPlaylistLockFilterMask(playlistIndex) & PlaylistLockFilterMask.filter_add);
 }
 
-function playlist_can_remove_items(playlistIndex) {
+function PlaylistCanRemoveItems(playlistIndex) {
 	return !(plman.GetPlaylistLockFilterMask(playlistIndex) & PlaylistLockFilterMask.filter_remove);
 }
 
-function playlist_can_reorder(playlistIndex) {
+function PlaylistCanReorder(playlistIndex) {
 	return !(plman.GetPlaylistLockFilterMask(playlistIndex) & PlaylistLockFilterMask.filter_reorder);
 }
 
-function playlist_can_replace_items(playlistIndex) {
+function PlaylistCanReplaceItems(playlistIndex) {
 	return !(plman.GetPlaylistLockFilterMask(playlistIndex) & PlaylistLockFilterMask.filter_replace);
 }
 
-function playlist_can_rename(playlistIndex) {
+function PlaylistCanRename(playlistIndex) {
 	return !(plman.GetPlaylistLockFilterMask(playlistIndex) & PlaylistLockFilterMask.filter_rename);
 }
 
-function playlist_can_remove(playlistIndex) {
+function PlaylistCanRemove(playlistIndex) {
 	return !(plman.GetPlaylistLockFilterMask(playlistIndex) & PlaylistLockFilterMask.filter_remove_playlist);
 }
 

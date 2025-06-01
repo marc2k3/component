@@ -139,7 +139,7 @@ function _musicbrainz(x, y, w, h) {
 		if (!this.containsXY(x, y))
 			return false;
 
-		this.index = Math.floor((y - this.y - _scale(12)) / panel.row_height) + this.offset;
+		this.index = Math.floor((y - this.y - Scale(12)) / panel.row_height) + this.offset;
 		this.in_range = this.index >= this.offset && this.index < this.offset + Math.min(this.rows, this.count);
 		switch (true) {
 		case this.up_btn.move(x, y):
@@ -171,10 +171,10 @@ function _musicbrainz(x, y, w, h) {
 			for (var i = 0; i < Math.min(this.count, this.rows); i++) {
 				var item = this.data[i + this.offset];
 				if (item.url == 'SECTION_HEADER') {
-					this.draw_row(gr, item.name, panel.colours.highlight, this.x, this.y + _scale(12) + (i * panel.row_height), this.text_width, panel.row_height);
+					this.draw_row(gr, item.name, panel.colours.highlight, this.x, this.y + Scale(12) + (i * panel.row_height), this.text_width, panel.row_height);
 				} else {
-					this.draw_row(gr, item.name, panel.colours.text, this.x, this.y + _scale(12) + (i * panel.row_height), this.text_width, panel.row_height);
-					this.draw_row(gr, item.date, panel.colours.highlight, this.x, this.y + _scale(12) + (i * panel.row_height), this.w, panel.row_height, DWRITE_TEXT_ALIGNMENT_TRAILING);
+					this.draw_row(gr, item.name, panel.colours.text, this.x, this.y + Scale(12) + (i * panel.row_height), this.text_width, panel.row_height);
+					this.draw_row(gr, item.date, panel.colours.highlight, this.x, this.y + Scale(12) + (i * panel.row_height), this.w, panel.row_height, DWRITE_TEXT_ALIGNMENT_TRAILING);
 				}
 			}
 		} else { // links
@@ -182,7 +182,7 @@ function _musicbrainz(x, y, w, h) {
 			this.text_width = this.w;
 
 			for (var i = 0; i < Math.min(this.count, this.rows); i++) {
-				this.draw_row(gr, this.data[i + this.offset].name, panel.colours.text, this.x, this.y + _scale(12) + (i * panel.row_height), this.text_width, panel.row_height);
+				this.draw_row(gr, this.data[i + this.offset].name, panel.colours.text, this.x, this.y + Scale(12) + (i * panel.row_height), this.text_width, panel.row_height);
 			}
 		}
 
@@ -222,11 +222,11 @@ function _musicbrainz(x, y, w, h) {
 	this.size = function () {
 		this.index = 0;
 		this.offset = 0;
-		this.rows = Math.floor((this.h - _scale(24)) / panel.row_height);
-		this.up_btn.x = this.x + Math.round((this.w - _scale(12)) * 0.5);
+		this.rows = Math.floor((this.h - Scale(24)) / panel.row_height);
+		this.up_btn.x = this.x + Math.round((this.w - Scale(12)) * 0.5);
 		this.down_btn.x = this.up_btn.x;
 		this.up_btn.y = this.y;
-		this.down_btn.y = this.y + this.h - _scale(12);
+		this.down_btn.y = this.y + this.h - Scale(12);
 	}
 
 	this.update = function () {
@@ -362,6 +362,6 @@ function _musicbrainz(x, y, w, h) {
 		mode : new Property('2K3.LIST.MUSICBRAINZ.MODE', 0) // 0 releases 1 links
 	};
 
-	this.up_btn = new _sb(chars.up, this.x, this.y, _scale(12), _scale(12), _.bind(function () { return this.offset > 0; }, this), _.bind(function () { this.wheel(1); }, this));
-	this.down_btn = new _sb(chars.down, this.x, this.y, _scale(12), _scale(12), _.bind(function () { return this.offset < this.count - this.rows; }, this), _.bind(function () { this.wheel(-1); }, this));
+	this.up_btn = new _sb(chars.up, this.x, this.y, Scale(12), Scale(12), _.bind(function () { return this.offset > 0; }, this), _.bind(function () { this.wheel(1); }, this));
+	this.down_btn = new _sb(chars.down, this.x, this.y, Scale(12), Scale(12), _.bind(function () { return this.offset < this.count - this.rows; }, this), _.bind(function () { this.wheel(-1); }, this));
 }

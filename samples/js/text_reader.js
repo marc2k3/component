@@ -97,7 +97,7 @@ function _text_reader(x, y, w, h) {
 
 	this.paint = function (gr) {
 		if (this.text_layout) {
-			gr.WriteTextLayout(this.text_layout, panel.colours.text, this.x, this.y + _scale(12), this.w, this.ha, this.offset);
+			gr.WriteTextLayout(this.text_layout, panel.colours.text, this.x, this.y + Scale(12), this.w, this.ha, this.offset);
 			this.up_btn.paint(gr, panel.colours.text);
 			this.down_btn.paint(gr, panel.colours.text);
 		}
@@ -160,11 +160,11 @@ function _text_reader(x, y, w, h) {
 	}
 
 	this.size = function () {
-		this.ha = this.h - _scale(24);
-		this.up_btn.x = this.x + Math.round((this.w - _scale(12)) / 2);
+		this.ha = this.h - Scale(24);
+		this.up_btn.x = this.x + Math.round((this.w - Scale(12)) / 2);
 		this.down_btn.x = this.up_btn.x;
 		this.up_btn.y = this.y;
-		this.down_btn.y = this.y + this.h - _scale(12);
+		this.down_btn.y = this.y + this.h - Scale(12);
 		this.update();
 	}
 
@@ -207,7 +207,7 @@ function _text_reader(x, y, w, h) {
 	this.y = y;
 	this.w = w;
 	this.h = h;
-	this.ha = h - _scale(24); // height adjusted for up/down buttons
+	this.ha = h - Scale(24); // height adjusted for up/down buttons
 	this.text_layout = null;
 	this.text_height = 0;
 	this.mx = 0;
@@ -225,6 +225,6 @@ function _text_reader(x, y, w, h) {
 		utf8 : new Property('2K3.TEXT.UTF8', true),
 	};
 
-	this.up_btn = new _sb(chars.up, this.x, this.y, _scale(12), _scale(12), _.bind(function () { return this.offset < 0; }, this), _.bind(function () { this.wheel(1); }, this));
-	this.down_btn = new _sb(chars.down, this.x, this.y, _scale(12), _scale(12), _.bind(function () { return this.offset > this.ha - this.text_height; }, this), _.bind(function () { this.wheel(-1); }, this));
+	this.up_btn = new _sb(chars.up, this.x, this.y, Scale(12), Scale(12), _.bind(function () { return this.offset < 0; }, this), _.bind(function () { this.wheel(1); }, this));
+	this.down_btn = new _sb(chars.down, this.x, this.y, Scale(12), Scale(12), _.bind(function () { return this.offset > this.ha - this.text_height; }, this), _.bind(function () { this.wheel(-1); }, this));
 }

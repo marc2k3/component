@@ -42,7 +42,7 @@ function on_drag_drop(action, x, y, mask) {
 			} else {
 				action.Effect = 0;
 			}
-		} else if (playlist_can_add_items(g_drag_drop_playlist_id)) {
+		} else if (PlaylistCanAddItems(g_drag_drop_playlist_id)) {
 			var base = plman.GetPlaylistItemCount(g_drag_drop_playlist_id);
 
 			if (g_drag_drop_internal) {
@@ -65,12 +65,12 @@ function on_drag_drop(action, x, y, mask) {
 		var new_pos = g_drag_drop_bottom ? plman.GetPlaylistItemCount(g_active_playlist) : g_drag_drop_track_id;
 
 		if (g_drag_drop_internal) {
-			if (playlist_can_reorder(g_active_playlist)) {
+			if (PlaylistCanReorder(g_active_playlist)) {
 				plman.UndoBackup(g_active_playlist);
 				plman.MovePlaylistSelection(g_active_playlist, new_pos);
 			}
 			action.Effect = 0;
-		} else if (playlist_can_add_items(g_active_playlist)) {
+		} else if (PlaylistCanAddItems(g_active_playlist)) {
 			plman.ClearPlaylistSelection(g_active_playlist);
 			plman.UndoBackup(g_active_playlist);
 			action.Playlist = g_active_playlist;
@@ -126,14 +126,14 @@ function on_drag_over(action, x, y, mask) {
 			action.Effect = p.playlistManager.ishoverHeader ? 1 : 0;
 		} else if (g_drag_drop_internal) {
 			action.Effect = g_drag_drop_playlist_id == g_active_playlist ? 0 : 1;
-		} else if (playlist_can_add_items(g_drag_drop_playlist_id)) {
+		} else if (PlaylistCanAddItems(g_drag_drop_playlist_id)) {
 			action.Effect = 1;
 		} else {
 			action.Effect = 0;
 		}
-	} else if (g_drag_drop_internal && !playlist_can_reorder(g_active_playlist)) {
+	} else if (g_drag_drop_internal && !PlaylistCanReorder(g_active_playlist)) {
 		action.Effect = 0;
-	} else if (g_drag_drop_internal || playlist_can_add_items(g_active_playlist)) {
+	} else if (g_drag_drop_internal || PlaylistCanAddItems(g_active_playlist)) {
 		p.list.check("drag_over", x, y);
 		if (y > p.list.y && y < p.list.y + 40) {
 			on_mouse_wheel(1);
@@ -221,7 +221,7 @@ function on_key_down(vkey) {
 				switch (vkey) {
 				case VK_F2:
 					// rename playlist (playlist manager panel visible)
-					if (cPlaylistManager.visible && playlist_can_rename(g_active_playlist)) {
+					if (cPlaylistManager.visible && PlaylistCanRename(g_active_playlist)) {
 						p.playlistManager.inputbox = new oInputbox(p.playlistManager.w - p.playlistManager.border - p.playlistManager.scrollbarWidth - scale(40), cPlaylistManager.rowHeight - 10, plman.GetPlaylistName(g_active_playlist), "", "renamePlaylist()");
 						p.playlistManager.inputboxID = g_active_playlist;
 						// activate box content + selection activated
@@ -316,11 +316,11 @@ function on_key_down(vkey) {
 					break;
 				case VK_DELETE:
 					if (cPlaylistManager.visible) {
-						if (playlist_can_remove(g_active_playlist)) {
+						if (PlaylistCanRemove(g_active_playlist)) {
 							plman.RemovePlaylistSwitch(g_active_playlist);
 						}
 					} else {
-						if (playlist_can_remove_items(g_active_playlist)) {
+						if (PlaylistCanRemoveItems(g_active_playlist)) {
 							plman.UndoBackup(g_active_playlist);
 							plman.RemovePlaylistSelection(g_active_playlist);
 						}
@@ -396,7 +396,7 @@ function on_key_down(vkey) {
 						full_repaint();
 					}
 					if (vkey == 88) { // CTRL+X
-						if (playlist_can_remove_items(g_active_playlist)) {
+						if (PlaylistCanRemoveItems(g_active_playlist)) {
 							var items = plman.GetPlaylistSelectedItems(g_active_playlist);
 							if (items.CopyToClipboard()) {
 								plman.UndoBackup(g_active_playlist);
@@ -411,7 +411,7 @@ function on_key_down(vkey) {
 						items.Dispose();
 					}
 					if (vkey == 86) { // CTRL+V
-						if (playlist_can_add_items(g_active_playlist) && fb.CheckClipboardContents()) {
+						if (PlaylistCanAddItems(g_active_playlist) && fb.CheckClipboardContents()) {
 							var clipboard_contents = fb.GetClipboardContents();
 							plman.UndoBackup(g_active_playlist);
 							plman.InsertPlaylistItems(g_active_playlist, p.list.focusedTrackId + 1, clipboard_contents);

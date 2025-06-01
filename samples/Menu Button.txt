@@ -14,7 +14,7 @@ var colours = {
 
 var panel = new _panel();
 var buttons = new _buttons();
-var bs = _scale(24);
+var bs = Scale(24);
 
 buttons.buttons.menu = new _button(0, 0, bs, bs, { char : chars.menu, colour : colours.buttons }, null, function () { _menu(0, bs); }, 'Menu');
 
