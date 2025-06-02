@@ -57,14 +57,7 @@ function _text_reader(x, y, w, h) {
 				this.filename = _.first(_getFiles(this.filename, this.exts))
 			}
 
-			if (this.properties.utf8.enabled) {
-				str = utils.ReadUTF8(this.filename);
-			} else {
-				var codepage = utils.DetectCharset(this.filename);
-				str = utils.ReadTextFile(this.filename, codepage);
-			}
-
-			str = str.replace(/\t/g, '    ');
+			str = utils.ReadUTF8(this.filename).replace(/\t/g, '    ');
 
 			if (str != this.text) {
 				this.clear_layout()
@@ -112,11 +105,6 @@ function _text_reader(x, y, w, h) {
 		panel.m.AppendMenuSeparator();
 		panel.m.AppendMenuItem(CheckMenuIf(this.properties.fixed.enabled), 1303, 'Fixed width font');
 		panel.m.AppendMenuSeparator();
-		panel.s10.AppendMenuItem(MF_STRING, 1310, 'UTF8');
-		panel.s10.AppendMenuItem(MF_STRING, 1311, 'Auto-detect');
-		panel.s10.CheckMenuRadioItem(1310, 1311, this.properties.utf8.enabled ? 1310 : 1311);
-		panel.s10.AppendTo(panel.m, MF_STRING, 'Encoding');
-		panel.m.AppendMenuSeparator();
 		panel.m.AppendMenuItem(EnableMenuIf(utils.IsFile(this.filename)), 1999, 'Open containing folder');
 		panel.m.AppendMenuSeparator();
 	}
@@ -138,13 +126,6 @@ function _text_reader(x, y, w, h) {
 			break;
 		case 1303:
 			this.properties.fixed.toggle();
-			this.clear_layout();
-			this.reset();
-			this.metadb_changed();
-			break;
-		case 1310:
-		case 1311:
-			this.properties.utf8.enabled = idx == 1310;
 			this.clear_layout();
 			this.reset();
 			this.metadb_changed();
@@ -222,7 +203,6 @@ function _text_reader(x, y, w, h) {
 		title_tf : new Property('2K3.READER.TITLE.TF', '%album artist% - $if2(%album%,%title%)'),
 		filename_tf : new Property('2K3.READER.FILENAME.TF', '$directory_path(%path%)'),
 		fixed : new Property('2K3.READER.FONTS.FIXED', true),
-		utf8 : new Property('2K3.READER.UTF8', true),
 	};
 
 	this.up_btn = new _sb(chars.up, this.x, this.y, Scale(12), Scale(12), _.bind(function () { return this.offset < 0; }, this), _.bind(function () { this.wheel(1); }, this));
