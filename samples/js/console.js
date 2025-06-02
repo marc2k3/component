@@ -187,7 +187,7 @@ function _console(x, y, w, h) {
 	this.colour_string = '';
 
 	this.properties = {
-		timestamp : new Property('2K3.TEXT.CONSOLE.TIMESTAMP', true)
+		timestamp : new Property('2K3.CONSOLE.TIMESTAMP', true)
 	};
 
 	this.update_font();

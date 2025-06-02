@@ -506,11 +506,11 @@ function _lastfm_info(x, y, w, h) {
 	];
 
 	this.properties = {
-		mode : new Property('2K3.LIST.LASTFM.MODE2', 0), // 0 artist 1 user
-		artist_method : new Property('2K3.LIST.LASTFM.ARTIST.METHOD', 0), // 0 similar artists 1 top tracks 2 top tags
-		user_mode : new Property('2K3.LIST.LASTFM.USER.MODE', 0), // 0 charts 1 recent tracks
-		charts_method : new Property('2K3.LIST.LASTFM.CHARTS.METHOD', 0),
-		charts_period : new Property('2K3.LIST.LASTFM.CHARTS.PERIOD', 0),
+		mode : new Property('2K3.LASTFM.MODE', 0), // 0 artist 1 user
+		artist_method : new Property('2K3.LASTFM.ARTIST.METHOD', 0), // 0 similar artists 1 top tracks 2 top tags
+		user_mode : new Property('2K3.LASTFM.USER.MODE', 0), // 0 charts 1 recent tracks
+		charts_method : new Property('2K3.LASTFM.CHARTS.METHOD', 0),
+		charts_period : new Property('2K3.LASTFM.CHARTS.PERIOD', 0),
 	};
 
 	if (this.properties.mode.value == 1) {

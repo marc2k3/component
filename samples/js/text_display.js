@@ -310,14 +310,14 @@ function _text_display(x, y, w, h, buttons) {
 	this.help_url = 'https://marc2k3.github.io/rtfm/guides/font-rgb/';
 
 	this.properties = {
-		text_tf : new Property('2K3.TEXT.DISPLAY.TF', ''),
-		halign : new Property('2K3.TEXT.HALIGN', 2),
-		valign : new Property('2K3.TEXT.VALIGN', 2),
-		per_second : new Property('2K3.TEXT.PER.SECOND', false),
-		albumart : new Property('2K3.TEXT.ALBUMART', true),
-		albumart_blur : new Property('2K3.TEXT.ALBUMART.BLUR', true),
-		layout : new Property('2K3.TEXT.LAYOUT', 0), // 0 text only, 1 album art top text bottom 2 album art left text right
-		margin : new Property('2K3.TEXT.MARGIN', 6),
+		text_tf : new Property('2K3.DISPLAY.TF', ''),
+		halign : new Property('2K3.DISPLAY.HALIGN', 2),
+		valign : new Property('2K3.DISPLAY.VALIGN', 2),
+		per_second : new Property('2K3.DISPLAY.PER.SECOND', false),
+		albumart : new Property('2K3.DISPLAY.ALBUMART', true),
+		albumart_blur : new Property('2K3.DISPLAY.ALBUMART.BLUR', true),
+		layout : new Property('2K3.DISPLAY.LAYOUT', 0), // 0 text only, 1 album art top text bottom 2 album art left text right
+		margin : new Property('2K3.DISPLAY.MARGIN', 6),
 	};
 
 	if (this.properties.text_tf.value.empty()) {

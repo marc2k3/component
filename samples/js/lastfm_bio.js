@@ -252,8 +252,8 @@ function _lastfm_bio(x, y, w, h) {
 	this.flag = '';
 
 	this.properties = {
-		lang : new Property('2K3.TEXT.BIO.LANG', 0),
-		country_tf : new Property('2K3.TEXT.BIO.COUNTRY.TF', '$country_flag(%country%)'),
+		lang : new Property('2K3.BIO.LANG', 0),
+		country_tf : new Property('2K3.BIO.COUNTRY.TF', '$country_flag(%country%)'),
 	};
 
 	this.headers = JSON.stringify({

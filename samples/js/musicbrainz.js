@@ -359,7 +359,7 @@ function _musicbrainz(x, y, w, h) {
 	this.filenames = {};
 
 	this.properties = {
-		mode : new Property('2K3.LIST.MUSICBRAINZ.MODE', 0) // 0 releases 1 links
+		mode : new Property('2K3.MUSICBRAINZ.MODE', 0) // 0 releases 1 links
 	};
 
 	this.up_btn = new _sb(chars.up, this.x, this.y, Scale(12), Scale(12), _.bind(function () { return this.offset > 0; }, this), _.bind(function () { this.wheel(1); }, this));

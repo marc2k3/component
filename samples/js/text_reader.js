@@ -219,10 +219,10 @@ function _text_reader(x, y, w, h) {
 	this.exts = ['txt', 'log'];
 
 	this.properties = {
-		title_tf : new Property('2K3.TEXT.TITLE.TF', '%album artist% - $if2(%album%,%title%)'),
-		filename_tf : new Property('2K3.TEXT.FILENAME.TF', '$directory_path(%path%)'),
-		fixed : new Property('2K3.TEXT.FONTS.FIXED', true),
-		utf8 : new Property('2K3.TEXT.UTF8', true),
+		title_tf : new Property('2K3.READER.TITLE.TF', '%album artist% - $if2(%album%,%title%)'),
+		filename_tf : new Property('2K3.READER.FILENAME.TF', '$directory_path(%path%)'),
+		fixed : new Property('2K3.READER.FONTS.FIXED', true),
+		utf8 : new Property('2K3.READER.UTF8', true),
 	};
 
 	this.up_btn = new _sb(chars.up, this.x, this.y, Scale(12), Scale(12), _.bind(function () { return this.offset < 0; }, this), _.bind(function () { this.wheel(1); }, this));

@@ -375,9 +375,9 @@ function _properties(mode, x, y, w, h) {
 
 	if (this.mode == 'properties') {
 		this.properties = {
-			meta : new Property('2K3.LIST.PROPERTIES.META', true),
-			location : new Property('2K3.LIST.PROPERTIES.LOCATION', true),
-			tech : new Property('2K3.LIST.PROPERTIES.TECH', true),
+			meta : new Property('2K3.PROPERTIES.META', true),
+			location : new Property('2K3.PROPERTIES.LOCATION', true),
+			tech : new Property('2K3.PROPERTIES.TECH', true),
 		}
 	}
 

@@ -208,8 +208,8 @@ function _play_log(x, y, w, h) {
 	this.text = '';
 
 	this.properties = {
-		limit : new Property('2K3.TEXT.LOG.LIMIT', 100),
-		tf : new Property('2K3.TEXT.LOG.TF', '[%artist% - ]%title%'),
+		limit : new Property('2K3.LOG.LIMIT', 100),
+		tf : new Property('2K3.LOG.TF', '[%artist% - ]%title%'),
 	};
 
 	this.filename = '';
