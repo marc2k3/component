@@ -353,7 +353,7 @@ function oItem(row_index, type, metadb, track_index, group_index, track_index_in
 			if (this.ishover && this.metadb) {
 				var handles = fb.CreateHandleList(this.metadb);
 				var rp = this.metadb.RawPath;
-				var can_tag = rp.indexOf("file://") == 0 || rp.indexOf("cdda://") == 0;
+				var can_tag = rp.indexOf("file") == 0 || rp.indexOf("cdda://") == 0;
 
 				if (rating_hover ) {
 					var new_rating = Math.ceil((x - columns.rating_x) / (columns.rating_w / 5));
