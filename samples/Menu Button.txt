@@ -4,7 +4,6 @@
 // @import "lodash"
 // @import "%fb2k_component_path%helpers.txt"
 // @import "%fb2k_component_path%samples\js\common.js"
-// @import "%fb2k_component_path%samples\js\panel.js"
 // ==/PREPROCESSOR==
 
 var colours = {
@@ -12,7 +11,6 @@ var colours = {
 	background : RGB(196, 30, 35)
 };
 
-var panel = new _panel();
 var buttons = new _buttons();
 var bs = Scale(24);
 
@@ -36,14 +34,10 @@ function on_mouse_rbtn_up(x, y) {
 		return true;
 	}
 
-	return panel.rbtn_up(x, y);
+	return false
 }
 
 function on_paint(gr) {
 	gr.Clear(colours.background);
 	buttons.paint(gr);
-}
-
-function on_size() {
-	panel.size();
 }
