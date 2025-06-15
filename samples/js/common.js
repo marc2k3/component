@@ -255,6 +255,8 @@ function _help(x, y, flags) {
 		utils.Run(ha_links[idx - 100][1]);
 		break;
 	}
+
+	return true;
 }
 
 function _isUUID(value) {

@@ -68,45 +68,45 @@ function on_mouse_move(x, y) {
 
 function on_mouse_rbtn_up(x, y) {
 	if (buttons.buttons.menu.containsXY(x, y)) {
-		_help(0, bs);
-	} else {
-		var menu = window.CreatePopupMenu();
-		var colour_menu = window.CreatePopupMenu();
-		colour_menu.AppendMenuItem(MF_STRING, 1, 'Auto');
-		colour_menu.AppendMenuItem(MF_STRING, 2, 'Dark');
-		colour_menu.AppendMenuItem(MF_STRING, 3, 'Light');
-		colour_menu.AppendMenuItem(MF_STRING, 4, 'Custom');
-		colour_menu.CheckMenuRadioItem(1, 4, colour_mode.value + 1);
-		colour_menu.AppendMenuSeparator();
-		colour_menu.AppendMenuItem(EnableMenuIf(colour_mode.value == 3), 5, 'Edit...');
-		colour_menu.AppendTo(menu, MF_STRING, 'Colours');
-		menu.AppendMenuSeparator();
-		menu.AppendMenuItem(MF_STRING, 10, 'Configure');
+		return _help(0, bs);
+	}
 
-		var idx = menu.TrackPopupMenu(x, y);
-		menu.Dispose();
+	var menu = window.CreatePopupMenu();
+	var colour_menu = window.CreatePopupMenu();
+	colour_menu.AppendMenuItem(MF_STRING, 1, 'Auto');
+	colour_menu.AppendMenuItem(MF_STRING, 2, 'Dark');
+	colour_menu.AppendMenuItem(MF_STRING, 3, 'Light');
+	colour_menu.AppendMenuItem(MF_STRING, 4, 'Custom');
+	colour_menu.CheckMenuRadioItem(1, 4, colour_mode.value + 1);
+	colour_menu.AppendMenuSeparator();
+	colour_menu.AppendMenuItem(EnableMenuIf(colour_mode.value == 3), 5, 'Edit...');
+	colour_menu.AppendTo(menu, MF_STRING, 'Colours');
+	menu.AppendMenuSeparator();
+	menu.AppendMenuItem(MF_STRING, 10, 'Configure');
 
-		switch (idx ) {
-		case 1:
-		case 2:
-		case 3:
-		case 4:
-			colour_mode.value = idx - 1;
-			update_colours();
-			buttons.update();
-			window.Repaint();
-			break;
-		case 5:
-			var tmp = utils.ColourPicker(colours.background);
-			window.SetProperty('2K3.TOP.COLOUR.BACKGROUND', tmp);
-			update_colours();
-			buttons.update();
-			window.Repaint();
-			break;
-		case 10:
-			window.ShowConfigure();
-			break;
-		}
+	var idx = menu.TrackPopupMenu(x, y);
+	menu.Dispose();
+
+	switch (idx ) {
+	case 1:
+	case 2:
+	case 3:
+	case 4:
+		colour_mode.value = idx - 1;
+		update_colours();
+		buttons.update();
+		window.Repaint();
+		break;
+	case 5:
+		var tmp = utils.ColourPicker(colours.background);
+		window.SetProperty('2K3.TOP.COLOUR.BACKGROUND', tmp);
+		update_colours();
+		buttons.update();
+		window.Repaint();
+		break;
+	case 10:
+		window.ShowConfigure();
+		break;
 	}
 
 	return true;

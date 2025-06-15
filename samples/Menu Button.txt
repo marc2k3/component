@@ -29,12 +29,7 @@ function on_mouse_move(x, y) {
 }
 
 function on_mouse_rbtn_up(x, y) {
-	if (buttons.buttons.menu.containsXY(x, y)) {
-		_help(0, bs);
-		return true;
-	}
-
-	return false
+	return _help(x, y);
 }
 
 function on_paint(gr) {
