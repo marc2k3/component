@@ -181,7 +181,7 @@ function _fbEscape(value) {
 }
 
 function _fileExpired(file, period) {
-	return Math.floor(Date.now() / 1000) - utils.GetLastModified(file) > period;
+	return utils.Now() - utils.GetLastModified(file) > period;
 }
 
 function _firstElement(obj, tag_name) {
