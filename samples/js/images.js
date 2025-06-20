@@ -17,8 +17,8 @@ function _images() {
 		this.artists[task_id] = this.artist;
 	}
 
-	this.http_request_done = function (id, success, response_text) {
-		var artist = this.artists[id];
+	this.http_request_done = function (task_id, success, response_text) {
+		var artist = this.artists[task_id];
 
 		if (!artist)
 			return; // we didn't request this id

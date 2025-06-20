@@ -44,8 +44,8 @@ function _allmusic(x, y, w, h) {
 		return panel.tf('%album artist%[ - %album%]');
 	}
 
-	this.http_request_done = function (id, success, response_text) {
-		var filename = this.filenames[id];
+	this.http_request_done = function (task_id, success, response_text) {
+		var filename = this.filenames[task_id];
 
 		if (!filename)
 			return;

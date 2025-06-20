@@ -49,8 +49,8 @@ function _lastfm_info(x, y, w, h) {
 		}
 	}
 
-	this.http_request_done = function (id, success, response_text) {
-		var f = this.filenames[id];
+	this.http_request_done = function (task_id, success, response_text) {
+		var f = this.filenames[task_id];
 
 		if (!f)
 			return;

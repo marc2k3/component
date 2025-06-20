@@ -41,8 +41,8 @@ function _musicbrainz(x, y, w, h) {
 		return this.artist + ': ' + (this.properties.mode.value == 0 ? 'releases' : 'links');
 	}
 
-	this.http_request_done = function (id, success, response_text) {
-		var f = this.filenames[id];
+	this.http_request_done = function (task_id, success, response_text) {
+		var f = this.filenames[task_id];
 
 		if (!f)
 			return;
