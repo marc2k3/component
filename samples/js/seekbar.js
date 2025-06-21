@@ -155,7 +155,7 @@ function _seekbar(x, y, w, h, spectrogram_mode) {
 			if (!metadb)
 				return null;
 
-			this.filename = spectrogram_cache + this.tfo.crc.EvalWithMetadb(metadb) + utils.ReplaceIllegalChars(this.properties.params.value, true);
+			this.filename = spectrogram_cache + this.tfo.crc.EvalWithMetadb(metadb) + utils.ReplaceIllegalChars(this.properties.params.value);
 
 			if (this.is_cue(metadb)) {
 				this.filename += '_' + metadb.SubSong;

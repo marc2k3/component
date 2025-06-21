@@ -1,5 +1,5 @@
 function _artistFolder(artist) {
-	var folder = folders.artists + utils.ReplaceIllegalChars(artist, true, true);
+	var folder = folders.artists + utils.ReplaceIllegalChars(artist, true);
 	utils.CreateFolder(folder);
 	return folder + '\\';
 }
