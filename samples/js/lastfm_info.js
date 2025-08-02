@@ -67,7 +67,9 @@ function _lastfm_info(x, y, w, h) {
 			return;
 		}
 
-		if (_save(f, response_text)) {
+		_save(f, response_text);
+
+		if (f == this.filename) {
 			this.reset();
 		}
 	}

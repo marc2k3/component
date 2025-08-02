@@ -68,10 +68,13 @@ function _allmusic(x, y, w, h) {
 			if (content.length) {
 				console.log(N, 'A review was found and saved.');
 				_save(obj.filename, content);
-				this.reset();
-				this.metadb_changed();
+				
+				if (obj.filename == this.filename) {
+					this.reset();
+					this.metadb_changed();
+				}
 			} else {
-				console.log(N, 'No review was found on the page for this album.');
+				console.log(N, 'No review was found on the page for', _q(obj.album));
 			}
 		} else {
 			this.parse_search_results(obj, response_text);
@@ -223,7 +226,7 @@ function _allmusic(x, y, w, h) {
 				console.log(N, 'A page was found for ' + _q(obj.album) + '. Now checking for review...');
 				this.get(obj);
 			} else {
-				console.log(N, 'A match could not be found for ' + _q(obj.album));
+				console.log(N, 'A match could not be found for', _q(obj.album));
 			}
 		} catch (e) {
 			console.log(N, 'Could not parse Allmusic server response.');

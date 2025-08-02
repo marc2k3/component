@@ -52,6 +52,8 @@ function _musicbrainz(x, y, w, h) {
 			return;
 		}
 
+		var to_save;
+
 		if (this.properties.mode.value == 0) {
 			var data = _jsonParse(response_text);
 			var max_offset = Math.min(500, data['release-group-count'] || 0) - 100;
@@ -65,12 +67,16 @@ function _musicbrainz(x, y, w, h) {
 				this.mb_offset += 100;
 				this.get();
 			} else {
-				if (_save(f, JSON.stringify(this.mb_data))) {
-					this.reset();
-				}
+				to_save = JSON.stringify(this.mb_data);
 			}
 		} else {
-			if (_save(f, response_text)) {
+			to_save = response_text;
+		}
+		
+		if (to_save) {
+			_save(f, to_save);
+
+			if (f == this.filename) {
 				this.reset();
 			}
 		}
