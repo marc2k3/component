@@ -10,34 +10,41 @@ function _allmusic(x, y, w, h) {
 		return x > this.x && x < this.x + this.w && y > this.y && y < this.y + this.h;
 	}
 
+	this.create_search_url = function (artist, album) {
+		var url;
+
+		if (!_tagged(artist) || !_tagged(album))
+			return '';
+
+		if (artist.toLowerCase() == 'various artists') {
+			url = this.search_base + encodeURIComponent(album);
+		} else {
+			url = this.search_base + encodeURIComponent(artist + ' ' + album);
+		}
+
+		if (this.history[url])
+			return '';
+
+		this.history[url] = true;
+		return url;
+	}
+
 	this.font_changed = function () {
 		this.reset();
 		this.metadb_changed();
 	}
 
-	this.get = function () {
+	this.get = function (obj) {
 		var url;
 
-		if (this.review_url.length) {
-			url = this.review_url;
+		if (obj.review_url) {
+			url = obj.review_url;
 		} else {
-			if (!_tagged(this.artist) || !_tagged(this.album))
-				return;
-
-			if (this.artist.toLowerCase() == 'various artists') {
-				url = this.search_base + encodeURIComponent(this.album);
-			} else {
-				url = this.search_base + encodeURIComponent(this.artist + ' ' + this.album);
-			}
-
-			if (this.history[url])
-				return;
-
-			this.history[url] = true;
+			url = obj.search_url;
 		}
 
 		var task_id = utils.HTTPRequestAsync(window.ID, 0, url, this.headers);
-		this.filenames[task_id] = this.filename;
+		this.objects[task_id] = obj;
 	}
 
 	this.header_text = function () {
@@ -45,9 +52,9 @@ function _allmusic(x, y, w, h) {
 	}
 
 	this.http_request_done = function (task_id, success, response_text) {
-		var filename = this.filenames[task_id];
+		var obj = this.objects[task_id];
 
-		if (!filename)
+		if (!obj)
 			return;
 
 		if (!success) {
@@ -55,25 +62,24 @@ function _allmusic(x, y, w, h) {
 			return;
 		}
 
-		if (this.review_url.length) {
-			this.review_url = '';
+		if (obj.review_url) {
 			var content = this.parse_review(response_text);
 
 			if (content.length) {
 				console.log(N, 'A review was found and saved.');
-				_save(filename, content);
+				_save(obj.filename, content);
 				this.reset();
 				this.metadb_changed();
 			} else {
 				console.log(N, 'No review was found on the page for this album.');
 			}
 		} else {
-			this.parse_search_results(response_text);
+			this.parse_search_results(obj, response_text);
 		}
 	}
 
-	this.is_match = function (artist, album) {
-		return this.tidy(artist) == this.tidy(this.artist) && this.tidy(album) == this.tidy(this.album);
+	this.is_match = function (obj, artist, album) {
+		return this.tidy(obj.artist) == this.tidy(artist) && this.tidy(obj.album) == this.tidy(album);
 	}
 
 	this.key_down = function (k) {
@@ -116,7 +122,18 @@ function _allmusic(x, y, w, h) {
 			if (utils.IsFile(this.filename)) {
 				str = utils.ReadUTF8(this.filename).trim();
 			} else {
-				this.get();
+				var url = this.create_search_url(this.artist, this.album);
+
+				if (url) {
+					var obj = {
+						artist : this.artist,
+						album : this.album,
+						filename : this.filename,
+						search_url : url
+					};
+
+					this.get(obj);
+				}
 			}
 
 			if (str != this.text) {
@@ -170,10 +187,8 @@ function _allmusic(x, y, w, h) {
 		return '';
 	}
 
-	this.parse_search_results = function (response_text) {
+	this.parse_search_results = function (obj, response_text) {
 		try {
-			this.review_url = '';
-
 			_(_getElementsByTagName(response_text, 'div'))
 				.filter({className : 'info'})
 				.forEach(function (info_div) {
@@ -197,18 +212,18 @@ function _allmusic(x, y, w, h) {
 						}
 					}
 
-					if (this.is_match(artist, album)) {
-						this.review_url = url;
+					if (this.is_match(obj, artist, album)) {
+						obj.review_url = url;
 						return false;
 					}
 				}, this)
 				.value();
 
-			if (this.review_url.length) {
-				console.log(N, 'A page was found for ' + _q(this.album) + '. Now checking for review...');
-				this.get();
+			if (obj.review_url) {
+				console.log(N, 'A page was found for ' + _q(obj.album) + '. Now checking for review...');
+				this.get(obj);
 			} else {
-				console.log(N, 'A match could not be found for ' + _q(this.album));
+				console.log(N, 'A match could not be found for ' + _q(obj.album));
 			}
 		} catch (e) {
 			console.log(N, 'Could not parse Allmusic server response.');
@@ -304,10 +319,10 @@ function _allmusic(x, y, w, h) {
 	this.artist = '';
 	this.album = '';
 	this.filename = '';
-	this.filenames = {};
 	this.review_url = '';
 	this.search_base = 'https://www.allmusic.com/search/albums/';
 	this.history = {};
+	this.objects = {};
 
 	this.headers = JSON.stringify({
 		'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0',
