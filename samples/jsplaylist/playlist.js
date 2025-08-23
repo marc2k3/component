@@ -124,7 +124,11 @@ function oItem(row_index, type, metadb, track_index, group_index, track_index_in
 						this.mood = tf_arr[j];
 					}
 
-					gr.WriteTextSimple(this.mood == 0 ? chars.heart_off : chars.heart_on, g_font_fluent_20, mood_colour, columns.mood_x, this.y, columns.mood_w, cRow.playlist_h, 2, 2);
+					if (this.mood == 0)
+						gr.WriteTextSimple(chars.heart_off, g_font_fluent_20, setAlpha(mood_colour, 120), columns.mood_x, this.y, columns.mood_w, cRow.playlist_h, 2, 2);
+					else
+						gr.WriteTextSimple(chars.heart_on, g_font_fluent_20, mood_colour, columns.mood_x, this.y, columns.mood_w, cRow.playlist_h, 2, 2);
+
 					break;
 				case "Rating":
 					cw = p.headerBar.columns[j].w - g_z5;
