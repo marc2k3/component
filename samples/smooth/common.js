@@ -330,7 +330,6 @@ function get_colours() {
 			g_colour_text = arr[1];
 			g_colour_selection = arr[2];
 			g_colour_selected_text = arr[3];
-			g_themed = false;
 			get_images();
 			return;
 		}
@@ -341,7 +340,6 @@ function get_colours() {
 		g_colour_selection = window.GetProperty("SMOOTH.COLOUR.BACKGROUND.SELECTED", RGB(15, 177, 255));
 		g_colour_text = window.GetProperty("SMOOTH.COLOUR.TEXT", RGB(255, 255, 255));
 		g_colour_selected_text = DetermineTextColour(g_colour_selection);
-		g_themed = false;
 	} else {
 		g_colour_background = window.GetUIColour(ColourType.background);
 		g_colour_selection = window.GetUIColour(ColourType.selection);
