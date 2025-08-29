@@ -35,15 +35,7 @@ function _allmusic(x, y, w, h) {
 	}
 
 	this.get = function (obj) {
-		var url;
-
-		if (obj.review_url) {
-			url = obj.review_url;
-		} else {
-			url = obj.search_url;
-		}
-
-		var task_id = utils.HTTPRequestAsync(window.ID, 0, url, this.headers);
+		var task_id = utils.HTTPRequestAsync(window.ID, 0, obj.review_url || obj.search_url, this.headers);
 		this.objects[task_id] = obj;
 	}
 
