@@ -60,7 +60,7 @@ function _allmusic(x, y, w, h) {
 			if (content.length) {
 				console.log(N, 'A review was found and saved.');
 				_save(obj.filename, content);
-				
+
 				if (obj.filename == this.filename) {
 					this.reset();
 					this.metadb_changed();

@@ -72,7 +72,7 @@ function _musicbrainz(x, y, w, h) {
 		} else {
 			to_save = response_text;
 		}
-		
+
 		if (to_save) {
 			_save(f, to_save);
 
