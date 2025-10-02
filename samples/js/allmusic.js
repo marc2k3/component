@@ -31,7 +31,7 @@ function _allmusic(x, y, w, h) {
 
 	this.font_changed = function () {
 		this.reset();
-		this.metadb_changed();
+		this.refresh();
 	}
 
 	this.get = function (obj) {
@@ -63,7 +63,7 @@ function _allmusic(x, y, w, h) {
 
 				if (obj.filename == this.filename) {
 					this.reset();
-					this.metadb_changed();
+					this.refresh();
 				}
 			} else {
 				console.log(N, 'No review was found on the page for', _q(obj.album));
@@ -97,55 +97,6 @@ function _allmusic(x, y, w, h) {
 		this.up_btn.lbtn_up(x, y);
 		this.down_btn.lbtn_up(x, y);
 		return true;
-	}
-
-	this.metadb_changed = function () {
-		if (panel.metadb) {
-			var str = '';
-
-			var temp_artist = panel.tf('%album artist%');
-			var temp_album = panel.tf('%album%');
-
-			if (this.artist == temp_artist && this.album == temp_album)
-				return;
-
-			this.artist = temp_artist;
-			this.album = temp_album;
-			this.filename = _artistFolder(this.artist) + 'allmusic.' + utils.ReplaceIllegalChars(this.album) + '.txt';
-			this.review_url = '';
-
-			if (utils.IsFile(this.filename)) {
-				str = utils.ReadUTF8(this.filename).trim();
-			} else {
-				var url = this.create_search_url(this.artist, this.album);
-
-				if (url) {
-					var obj = {
-						artist : this.artist,
-						album : this.album,
-						filename : this.filename,
-						search_url : url
-					};
-
-					this.get(obj);
-				}
-			}
-
-			if (str != this.text) {
-				this.clear_layout()
-				this.text = str;
-
-				if (this.text.length) {
-					this.text_layout = utils.CreateTextLayout(this.text, panel.fonts.normal);
-				}
-			}
-		} else {
-			this.clear_layout();
-			this.reset();
-		}
-
-		this.update();
-		window.Repaint();
 	}
 
 	this.move = function (x, y) {
@@ -238,12 +189,61 @@ function _allmusic(x, y, w, h) {
 		case 1000:
 			_save(this.filename, this.cb);
 			this.reset();
-			this.metadb_changed();
+			this.refresh();
 			break;
 		case 1999:
 			_explorer(this.filename);
 			break;
 		}
+	}
+
+	this.refresh = function () {
+		if (panel.metadb) {
+			var str = '';
+
+			var temp_artist = panel.tf('%album artist%');
+			var temp_album = panel.tf('%album%');
+
+			if (this.artist == temp_artist && this.album == temp_album)
+				return;
+
+			this.artist = temp_artist;
+			this.album = temp_album;
+			this.filename = _artistFolder(this.artist) + 'allmusic.' + utils.ReplaceIllegalChars(this.album) + '.txt';
+			this.review_url = '';
+
+			if (utils.IsFile(this.filename)) {
+				str = utils.ReadUTF8(this.filename).trim();
+			} else {
+				var url = this.create_search_url(this.artist, this.album);
+
+				if (url) {
+					var obj = {
+						artist : this.artist,
+						album : this.album,
+						filename : this.filename,
+						search_url : url
+					};
+
+					this.get(obj);
+				}
+			}
+
+			if (str != this.text) {
+				this.clear_layout()
+				this.text = str;
+
+				if (this.text.length) {
+					this.text_layout = utils.CreateTextLayout(this.text, panel.fonts.normal);
+				}
+			}
+		} else {
+			this.clear_layout();
+			this.reset();
+		}
+
+		this.update();
+		window.Repaint();
 	}
 
 	this.reset = function () {

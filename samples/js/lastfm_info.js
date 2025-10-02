@@ -112,27 +112,6 @@ function _lastfm_info(x, y, w, h) {
 		return true;
 	}
 
-	this.metadb_changed = function () {
-		// user mode
-		if (this.properties.mode.value == 1)
-			return;
-
-		if (panel.metadb) {
-			var temp_artist = panel.tf(DEFAULT_ARTIST);
-			if (this.artist == temp_artist)
-				return;
-
-			this.artist = temp_artist;
-			this.update();
-		} else {
-			this.artist = '';
-			this.filename = '';
-			this.data = [];
-			this.count = 0;
-			window.Repaint();
-		}
-	}
-
 	this.move = function (x, y) {
 		this.mx = x;
 		this.my = y;
@@ -205,7 +184,7 @@ function _lastfm_info(x, y, w, h) {
 
 	this.playback_new_track = function () {;
 		this.time_elapsed = 0;
-		panel.item_focus_change();
+		this.refresh();
 	}
 
 	this.playback_time = function () {
@@ -303,13 +282,34 @@ function _lastfm_info(x, y, w, h) {
 		}
 	}
 
+	this.refresh = function () {
+		// user mode
+		if (this.properties.mode.value == 1)
+			return;
+
+		if (panel.metadb) {
+			var temp_artist = panel.tf(DEFAULT_ARTIST);
+			if (this.artist == temp_artist)
+				return;
+
+			this.artist = temp_artist;
+			this.update();
+		} else {
+			this.artist = '';
+			this.filename = '';
+			this.data = [];
+			this.count = 0;
+			window.Repaint();
+		}
+	}
+
 	this.reset = function () {
 		this.count = 0;
 		this.data = [];
 		this.artist = '';
 
 		if (this.properties.mode.value == 0) { // artist
-			this.metadb_changed();
+			this.refresh();
 		} else { // user
 			this.update();
 		}

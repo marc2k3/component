@@ -11,7 +11,12 @@
 var panel = new _panel({ custom_background : true });
 var albumart = new _albumart(0, 0, 0, 0);
 
-panel.item_focus_change();
+refresh();
+
+function refresh() {
+	panel.item_focus_change();
+	albumart.refresh();
+}
 
 function on_colours_changed() {
 	panel.colours_changed();
@@ -22,7 +27,7 @@ function on_item_focus_change() {
 	if (panel.prefer_playing())
 		return;
 
-	panel.item_focus_change();
+	refresh();
 }
 
 function on_key_down(k) {
@@ -30,10 +35,10 @@ function on_key_down(k) {
 }
 
 function on_metadb_changed(handles, fromhook) {
-	if (fromhook)
+	if (fromhook || !panel.metadb_changed(handles))
 		return;
 
-	albumart.metadb_changed();
+	albumart.refresh();
 }
 
 function on_mouse_lbtn_dblclk(x, y) {
@@ -59,17 +64,17 @@ function on_paint(gr) {
 
 function on_playback_dynamic_info_track(type) {
 	if (type == 1) {
-		albumart.metadb_changed();
+		albumart.refresh();
 	}
 }
 
 function on_playback_new_track() {
-	panel.item_focus_change();
+	refresh();
 }
 
 function on_playback_stop(reason) {
 	if (reason != 2) {
-		panel.item_focus_change();
+		refresh();
 	}
 }
 

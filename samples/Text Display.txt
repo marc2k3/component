@@ -13,7 +13,13 @@ var panel = new _panel({ custom_background : true });
 var text = new _text_display(LM, 0, 0, 0);
 var albumart = new _albumart(0, 0, 0, 0);
 
-panel.item_focus_change();
+refresh();
+
+function refresh() {
+	panel.item_focus_change();
+	albumart.refresh();
+	text.refresh();
+}
 
 function on_colours_changed() {
 	panel.colours_changed();
@@ -29,15 +35,18 @@ function on_item_focus_change() {
 	if (panel.prefer_playing())
 		return;
 
-	panel.item_focus_change();
+	refresh();
 }
 
 function on_metadb_changed(handles, fromhook) {
+	if (!panel.metadb_changed(handles))
+		return;
+
 	if (!fromhook) {
-		albumart.metadb_changed();
+		albumart.refresh();
 	}
 
-	text.metadb_changed();
+	text.refresh();
 }
 
 function on_mouse_lbtn_dblclk(x, y) {
@@ -71,13 +80,13 @@ function on_paint(gr) {
 
 function on_playback_dynamic_info_track(type) {
 	if (type == 0)
-		text.metadb_changed();
+		text.refresh();
 	else if (text.properties.albumart.enabled || text.properties.layout.value > 0)
-		albumart.metadb_changed();
+		albumart.refresh();
 }
 
 function on_playback_new_track() {
-	panel.item_focus_change();
+	refresh();
 }
 
 function on_playback_pause() {
@@ -86,7 +95,7 @@ function on_playback_pause() {
 
 function on_playback_stop(reason) {
 	if (reason != 2) {
-		panel.item_focus_change();
+		refresh();
 	}
 }
 

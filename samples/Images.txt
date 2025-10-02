@@ -11,15 +11,15 @@
 var panel = new _panel();
 var images = new _images();
 
-panel.item_focus_change();
+refresh();
+
+function refresh() {
+	panel.item_focus_change();
+	images.refresh();
+}
 
 function on_colours_changed() {
 	panel.colours_changed();
-	window.Repaint();
-}
-
-function on_font_changed() {
-	panel.font_changed();
 	window.Repaint();
 }
 
@@ -31,7 +31,7 @@ function on_item_focus_change() {
 	if (panel.prefer_playing())
 		return;
 
-	panel.item_focus_change();
+	refresh();
 }
 
 function on_key_down(k) {
@@ -39,10 +39,10 @@ function on_key_down(k) {
 }
 
 function on_metadb_changed(handles, fromhook) {
-	if (fromhook)
+	if (fromhook || !panel.metadb_changed(handles))
 		return;
 
-	images.metadb_changed();
+	images.refresh();
 }
 
 function on_mouse_move(x, y) {
@@ -79,7 +79,7 @@ function on_playback_new_track() {
 
 function on_playback_stop(reason) {
 	if (reason != 2) {
-		panel.item_focus_change();
+		refresh();
 	}
 }
 

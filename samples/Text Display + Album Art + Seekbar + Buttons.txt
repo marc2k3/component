@@ -42,7 +42,13 @@ buttons.update = function () {
 	this.buttons.preferences = new _button(x + (bs * 6), y, bs, bs, { char : chars.preferences, colour:colours.white}, null, function () { fb.ShowPreferences(); }, 'Preferences');
 }
 
-panel.item_focus_change();
+refresh();
+
+function refresh() {
+	panel.item_focus_change();
+	albumart.refresh();
+	text.refresh();
+}
 
 function on_colours_changed() {
 	panel.colours_changed();
@@ -58,14 +64,18 @@ function on_item_focus_change() {
 	if (panel.prefer_playing())
 		return;
 
-	panel.item_focus_change();
+	refresh();
 }
 
 function on_metadb_changed(handles, fromhook) {
+	if (!panel.metadb_changed(handles))
+		return;
+
 	if (!fromhook) {
-		albumart.metadb_changed();
+		albumart.refresh();
 	}
-	text.metadb_changed();
+
+	text.refresh();
 }
 
 function on_mouse_lbtn_dblclk(x, y) {
@@ -103,6 +113,7 @@ function on_mouse_rbtn_up(x, y) {
 		playback.StopAfterCurrent = !playback.StopAfterCurrent;
 		return true;
 	}
+
 	return panel.rbtn_up(x, y, text);
 }
 
@@ -140,13 +151,13 @@ function on_playback_order_changed() {
 
 function on_playback_dynamic_info_track(type) {
 	if (type == 0)
-		text.metadb_changed();
+		text.refresh();
 	else
-		albumart.metadb_changed();
+		albumart.refresh();
 }
 
 function on_playback_new_track() {
-	panel.item_focus_change();
+	refresh();
 }
 
 function on_playback_pause() {
@@ -166,7 +177,7 @@ function on_playback_starting() {
 
 function on_playback_stop(reason) {
 	if (reason != 2) {
-		panel.item_focus_change();
+		refresh();
 	}
 
 	buttons.update();

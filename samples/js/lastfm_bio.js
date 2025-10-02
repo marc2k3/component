@@ -13,7 +13,7 @@ function _lastfm_bio(x, y, w, h) {
 	this.download_file_done = function (path, success, error_text) {
 		if (success) {
 			this.reset();
-			this.metadb_changed();
+			this.refresh();
 		} else {
 			console.log(N, error_text);
 		}
@@ -37,7 +37,7 @@ function _lastfm_bio(x, y, w, h) {
 
 	this.font_changed = function () {
 		this.reset();
-		this.metadb_changed();
+		this.refresh();
 	}
 
 	this.get = function () {
@@ -68,50 +68,6 @@ function _lastfm_bio(x, y, w, h) {
 		this.up_btn.lbtn_up(x, y);
 		this.down_btn.lbtn_up(x, y);
 		return true;
-	}
-
-	this.metadb_changed = function () {
-		if (panel.metadb) {
-			var str = '';
-
-			var temp_artist = panel.tf(DEFAULT_ARTIST);
-			var temp_flag = panel.tf(this.properties.country_tf.value)
-
-			if (this.artist == temp_artist && this.flag == temp_flag) {
-				return;
-			}
-
-			this.artist = temp_artist;
-			this.flag = temp_flag;
-			this.filename = _artistFolder(this.artist) + 'lastfm.artist.getInfo.' + this.langs[this.properties.lang.value] + '.json';
-
-			if (utils.IsFile(this.filename)) {
-				var obj = _jsonParseFile(this.filename);
-				str = _.get(obj, 'artist.bio.content', '').trim();
-				str = _stripTags(str);
-				str = str.replace('Read more on Last.fm. User-contributed text is available under the Creative Commons By-SA License; additional terms may apply.', '');
-
-				if (_fileExpired(this.filename, ONE_DAY)) {
-					this.get();
-				}
-			} else {
-				this.get();
-			}
-
-			if (str != this.text) {
-				this.clear_layout()
-				this.text = str;
-				if (this.text.length) {
-					this.text_layout = utils.CreateTextLayout(this.text, panel.fonts.normal);
-				}
-			}
-		} else {
-			this.clear_layout();
-			this.reset();
-		}
-
-		this.update();
-		window.Repaint();
 	}
 
 	this.move = function (x, y) {
@@ -176,12 +132,56 @@ function _lastfm_bio(x, y, w, h) {
 		case 1121:
 			this.properties.lang.value = idx - 1110;
 			this.reset();
-			this.metadb_changed();
+			this.refresh();
 			break;
 		case 1999:
 			_explorer(this.filename);
 			break;
 		}
+	}
+
+	this.refresh = function () {
+		if (panel.metadb) {
+			var str = '';
+
+			var temp_artist = panel.tf(DEFAULT_ARTIST);
+			var temp_flag = panel.tf(this.properties.country_tf.value)
+
+			if (this.artist == temp_artist && this.flag == temp_flag) {
+				return;
+			}
+
+			this.artist = temp_artist;
+			this.flag = temp_flag;
+			this.filename = _artistFolder(this.artist) + 'lastfm.artist.getInfo.' + this.langs[this.properties.lang.value] + '.json';
+
+			if (utils.IsFile(this.filename)) {
+				var obj = _jsonParseFile(this.filename);
+				str = _.get(obj, 'artist.bio.content', '').trim();
+				str = _stripTags(str);
+				str = str.replace('Read more on Last.fm. User-contributed text is available under the Creative Commons By-SA License; additional terms may apply.', '');
+
+				if (_fileExpired(this.filename, ONE_DAY)) {
+					this.get();
+				}
+			} else {
+				this.get();
+			}
+
+			if (str != this.text) {
+				this.clear_layout()
+				this.text = str;
+				if (this.text.length) {
+					this.text_layout = utils.CreateTextLayout(this.text, panel.fonts.normal);
+				}
+			}
+		} else {
+			this.clear_layout();
+			this.reset();
+		}
+
+		this.update();
+		window.Repaint();
 	}
 
 	this.reset = function () {

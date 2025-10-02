@@ -73,59 +73,6 @@ function _albumart(x, y, w, h) {
 		return true;
 	}
 
-	this.metadb_changed = function () {
-		var img = null;
-		this.custom_id = -1;
-		this.custom_type = -1;
-
-		if (panel.metadb) {
-			if (this.properties.mode.value == 0) {
-				img = panel.metadb.GetAlbumArt(this.properties.id.value);
-			} else {
-				_.forEach(_stringToArray(this.properties.edit.value, CRLF), function (item) {
-					var id_type = _stringToArray(item, '_');
-					if (id_type.length == 2) {
-						var id = this.ids.indexOf(id_type[0]);
-						var type = this.types.indexOf(id_type[1]);
-
-						if (id > -1 && type > -1) {
-							img = this.get_custom(id, type);
-
-							if (img) {
-								// if valid, store the id/type for ShowAlbumArtViewer2
-								this.custom_id = id;
-								this.custom_type = type;
-								return false;
-							}
-						}
-					}
-				}, this);
-			}
-		}
-
-		this.reset_bitmaps();
-
-		if (img) {
-			this.tooltip = 'Original dimensions: ' + img.Width + 'x' + img.Height + 'px';
-			this.path = img.Path;
-
-			if (this.path.length) {
-				this.tooltip += '\nPath: ' + this.path;
-			}
-
-			this.bitmap.normal = img.CreateBitmap();
-
-			if (this.want_blur()) {
-				img.StackBlur(120);
-				this.bitmap.blur = img.CreateBitmap();
-			}
-
-			img.Dispose();
-		}
-
-		window.Repaint();
-	}
-
 	this.move = function (x, y) {
 		this.mx = x;
 		this.my = y;
@@ -156,20 +103,6 @@ function _albumart(x, y, w, h) {
 		} else {
 			_drawImage(gr, this.bitmap.normal, this.x, this.y, this.w, this.h, this.properties.aspect.value);
 		}
-	}
-
-	this.reset_bitmaps = function () {
-		if (this.bitmap.normal) {
-			this.bitmap.normal.Dispose();
-			this.bitmap.normal = null;
-		}
-
-		if (this.bitmap.blur) {
-			this.bitmap.blur.Dispose();
-			this.bitmap.blur = null;
-		}
-
-		this.tooltip = this.path = '';
 	}
 
 	this.rbtn_up = function (x, y) {
@@ -228,12 +161,12 @@ function _albumart(x, y, w, h) {
 			window.Repaint();
 			break;
 		case 1002:
-			this.metadb_changed();
+			this.refresh();
 			break;
 		case 1010:
 		case 1011:
 			this.properties.mode.value = idx - 1010;
-			this.metadb_changed();
+			this.refresh();
 			break;
 		case 1020:
 		case 1021:
@@ -241,14 +174,14 @@ function _albumart(x, y, w, h) {
 		case 1023:
 		case 1024:
 			this.properties.id.value = idx - 1020;
-			this.metadb_changed();
+			this.refresh();
 			break;
 		case 1030:
 			try {
 				var tmp = utils.TextBox('Enter image types here. Each one will checked in order until a valid image is found. See Help.', window.Name, this.properties.edit.value, this.help_text);
 				if (tmp != this.properties.edit.value) {
 					this.properties.edit.value = tmp;
-					this.metadb_changed();
+					this.refresh();
 				}
 			} catch (e) {}
 			break;
@@ -272,6 +205,73 @@ function _albumart(x, y, w, h) {
 		}
 	}
 
+	this.refresh = function () {
+		var img = null;
+		this.custom_id = -1;
+		this.custom_type = -1;
+
+		if (panel.metadb) {
+			if (this.properties.mode.value == 0) {
+				img = panel.metadb.GetAlbumArt(this.properties.id.value);
+			} else {
+				_.forEach(_stringToArray(this.properties.edit.value, CRLF), function (item) {
+					var id_type = _stringToArray(item, '_');
+					if (id_type.length == 2) {
+						var id = this.ids.indexOf(id_type[0]);
+						var type = this.types.indexOf(id_type[1]);
+
+						if (id > -1 && type > -1) {
+							img = this.get_custom(id, type);
+
+							if (img) {
+								// if valid, store the id/type for ShowAlbumArtViewer2
+								this.custom_id = id;
+								this.custom_type = type;
+								return false;
+							}
+						}
+					}
+				}, this);
+			}
+		}
+
+		this.reset_bitmaps();
+
+		if (img) {
+			this.tooltip = 'Original dimensions: ' + img.Width + 'x' + img.Height + 'px';
+			this.path = img.Path;
+
+			if (this.path.length) {
+				this.tooltip += '\nPath: ' + this.path;
+			}
+
+			this.bitmap.normal = img.CreateBitmap();
+
+			if (this.want_blur()) {
+				img.StackBlur(120);
+				this.bitmap.blur = img.CreateBitmap();
+			}
+
+			img.Dispose();
+		}
+
+		window.Repaint();
+	}
+
+	this.reset_bitmaps = function () {
+		if (this.bitmap.normal) {
+			this.bitmap.normal.Dispose();
+			this.bitmap.normal = null;
+		}
+
+		if (this.bitmap.blur) {
+			this.bitmap.blur.Dispose();
+			this.bitmap.blur = null;
+		}
+
+		this.tooltip = this.path = '';
+	}
+
 	this.wheel = function (s) {
 		if (this.properties.mode.value == 1 || !this.containsXY(this.mx, this.my))
 			return false;
@@ -286,7 +286,7 @@ function _albumart(x, y, w, h) {
 
 		this.properties.id.value = id;
 		_tt('');
-		this.metadb_changed();
+		this.refresh();
 		return true;
 	}
 

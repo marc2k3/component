@@ -116,27 +116,6 @@ function _musicbrainz(x, y, w, h) {
 		return true;
 	}
 
-	this.metadb_changed = function () {
-		if (panel.metadb) {
-			var temp_artist = panel.tf(DEFAULT_ARTIST);
-			var temp_id = panel.tf('$if3($meta(musicbrainz_artistid,0),$meta(musicbrainz artist id,0),)');
-
-			if (this.artist == temp_artist && this.mb_id == temp_id)
-				return;
-
-			this.artist = temp_artist;
-			this.mb_id = temp_id;
-			this.update();
-		} else {
-			this.artist = '';
-			this.mb_id = '';
-			this.filename = '';
-			this.data = [];
-			this.count = 0;
-			window.Repaint();
-		}
-	}
-
 	this.move = function (x, y) {
 		this.mx = x;
 		this.my = y;
@@ -218,11 +197,32 @@ function _musicbrainz(x, y, w, h) {
 		}
 	}
 
+	this.refresh = function () {
+		if (panel.metadb) {
+			var temp_artist = panel.tf(DEFAULT_ARTIST);
+			var temp_id = panel.tf('$if3($meta(musicbrainz_artistid,0),$meta(musicbrainz artist id,0),)');
+
+			if (this.artist == temp_artist && this.mb_id == temp_id)
+				return;
+
+			this.artist = temp_artist;
+			this.mb_id = temp_id;
+			this.update();
+		} else {
+			this.artist = '';
+			this.mb_id = '';
+			this.filename = '';
+			this.data = [];
+			this.count = 0;
+			window.Repaint();
+		}
+	}
+
 	this.reset = function () {
 		this.count = 0;
 		this.data = [];
 		this.artist = '';
-		this.metadb_changed();
+		this.refresh();
 	}
 
 	this.size = function () {

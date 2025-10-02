@@ -13,7 +13,12 @@ var panel = new _panel();
 var lastfm = new _lastfm();
 var lastfm_info = new _lastfm_info(LM, TM, 0, 0);
 
-panel.item_focus_change();
+refresh();
+
+function refresh() {
+	panel.item_focus_change();
+	lastfm_info.refresh();
+}
 
 function on_colours_changed() {
 	panel.colours_changed();
@@ -33,7 +38,7 @@ function on_item_focus_change() {
 	if (panel.prefer_playing())
 		return;
 
-	panel.item_focus_change();
+	refresh();
 }
 
 function on_key_down(k) {
@@ -41,10 +46,10 @@ function on_key_down(k) {
 }
 
 function on_metadb_changed(handles, fromhook) {
-	if (fromhook)
+	if (fromhook || !panel.metadb_changed(handles))
 		return;
 
-	lastfm_info.metadb_changed();
+	lastfm_info.refresh();
 }
 
 function on_mouse_lbtn_up(x, y) {
@@ -75,17 +80,18 @@ function on_paint(gr) {
 
 function on_playback_dynamic_info_track(type) {
 	if (type == 0) {
-		lastfm_info.metadb_changed();
+		refresh();
 	}
 }
 
 function on_playback_new_track() {
+	panel.item_focus_change();
 	lastfm_info.playback_new_track();
 }
 
 function on_playback_stop(reason) {
 	if (reason != 2) {
-		panel.item_focus_change();
+		refresh();
 	}
 }
 

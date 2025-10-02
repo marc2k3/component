@@ -16,7 +16,7 @@ function _lastfm() {
 			_.forEach(panel.text_objects, function (item) {
 				if (item.name == 'lastfm_bio') {
 					item.reset();
-					item.metadb_changed();
+					item.refresh();
 				}
 			});
 		}

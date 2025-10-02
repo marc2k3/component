@@ -116,7 +116,7 @@ function _properties(mode, x, y, w, h) {
 
 	this.font_changed = function () {
 		this.size();
-		this.metadb_changed();
+		this.refresh();
 	}
 
 	this.get_musicbrainz_url = function (name, value) {
@@ -187,16 +187,6 @@ function _properties(mode, x, y, w, h) {
 		}
 
 		return true;
-	}
-
-	this.metadb_changed = function () {
-		if (panel.metadb) {
-			this.update();
-		} else {
-			this.count = 0;
-			this.data = [];
-			window.Repaint();
-		}
 	}
 
 	this.move = function (x, y) {
@@ -271,19 +261,29 @@ function _properties(mode, x, y, w, h) {
 		switch (idx) {
 		case 1300:
 			this.properties.meta.toggle();
-			this.metadb_changed();
+			this.refresh();
 			break;
 		case 1301:
 			this.properties.location.toggle();
-			this.metadb_changed();
+			this.refresh();
 			break;
 		case 1302:
 			this.properties.tech.toggle();
-			this.metadb_changed();
+			this.refresh();
 			break;
 		case 1999:
 			_explorer(this.filename);
 			break;
+		}
+	}
+
+	this.refresh = function () {
+		if (panel.metadb) {
+			this.update();
+		} else {
+			this.count = 0;
+			this.data = [];
+			window.Repaint();
 		}
 	}
 

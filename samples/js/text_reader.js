@@ -12,7 +12,7 @@ function _text_reader(x, y, w, h) {
 
 	this.font_changed = function () {
 		this.reset();
-		this.metadb_changed();
+		this.refresh();
 	}
 
 	this.header_text = function () {
@@ -39,40 +39,6 @@ function _text_reader(x, y, w, h) {
 		this.up_btn.lbtn_up(x, y);
 		this.down_btn.lbtn_up(x, y);
 		return true;
-	}
-
-	this.metadb_changed = function () {
-		if (panel.metadb) {
-			var str = '';
-
-			var temp_filename = panel.tf(this.properties.filename_tf.value);
-			if (this.filename == temp_filename) {
-				window.Repaint(); // title might have changed
-				return;
-			}
-
-			this.filename = temp_filename;
-
-			if (utils.IsFolder(this.filename)) {
-				this.filename = _.first(_getFiles(this.filename, this.exts))
-			}
-
-			str = utils.ReadUTF8(this.filename).replace(/\t/g, '    ');
-
-			if (str != this.text) {
-				this.clear_layout()
-				this.text = str;
-
-				if (this.text.length) {
-					this.text_layout = utils.CreateTextLayout(this.text, this.properties.fixed.enabled ? panel.fonts.fixed : panel.fonts.normal);
-				}
-			}
-		} else {
-			this.clear_layout();
-			this.reset();
-		}
-		this.update();
-		window.Repaint();
 	}
 
 	this.move = function (x, y) {
@@ -114,7 +80,7 @@ function _text_reader(x, y, w, h) {
 		case 1300:
 			this.clear_layout();
 			this.reset();
-			this.metadb_changed();
+			this.refresh();
 			break;
 		case 1301:
 			this.properties.title_tf.value = utils.InputBox('You can use full title formatting here.', window.Name, this.properties.title_tf.value);
@@ -122,18 +88,53 @@ function _text_reader(x, y, w, h) {
 			break;
 		case 1302:
 			this.properties.filename_tf.value = utils.InputBox('Use title formatting to specify a path to a text file. eg: $directory_path(%path%)\\info.txt\n\nIf you prefer, you can specify just the path to a folder and the first txt or log file will be used.', window.Name, this.properties.filename_tf.value);
-			this.metadb_changed();
+			this.refresh();
 			break;
 		case 1303:
 			this.properties.fixed.toggle();
 			this.clear_layout();
 			this.reset();
-			this.metadb_changed();
+			this.refresh();
 			break;
 		case 1999:
 			_explorer(this.filename);
 			break;
 		}
+	}
+
+	this.refresh = function () {
+		if (panel.metadb) {
+			var str = '';
+
+			var temp_filename = panel.tf(this.properties.filename_tf.value);
+			if (this.filename == temp_filename) {
+				window.Repaint(); // title might have changed
+				return;
+			}
+
+			this.filename = temp_filename;
+
+			if (utils.IsFolder(this.filename)) {
+				this.filename = _.first(_getFiles(this.filename, this.exts))
+			}
+
+			str = utils.ReadUTF8(this.filename).replace(/\t/g, '    ');
+
+			if (str != this.text) {
+				this.clear_layout()
+				this.text = str;
+
+				if (this.text.length) {
+					this.text_layout = utils.CreateTextLayout(this.text, this.properties.fixed.enabled ? panel.fonts.fixed : panel.fonts.normal);
+				}
+			}
+		} else {
+			this.clear_layout();
+			this.reset();
+		}
+
+		this.update();
+		window.Repaint();
 	}
 
 	this.reset = function () {

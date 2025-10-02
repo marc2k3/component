@@ -30,7 +30,13 @@ allmusic.paint = function (gr) {
 	}
 }
 
-panel.item_focus_change();
+refresh();
+
+function refresh() {
+	panel.item_focus_change();
+	albumart.refresh();
+	allmusic.refresh();
+}
 
 function on_colours_changed() {
 	panel.colours_changed();
@@ -50,20 +56,20 @@ function on_item_focus_change() {
 	if (panel.prefer_playing())
 		return;
 
-	panel.item_focus_change();
+	refresh();
 }
 
 function on_key_down(k) {
-	allmusic.key_down(k);
 	albumart.key_down(k);
+	allmusic.key_down(k);
 }
 
 function on_metadb_changed(handles, fromhook) {
-	if (fromhook)
+	if (fromhook || !panel.metadb_changed(handles))
 		return;
 
-	allmusic.metadb_changed();
-	albumart.metadb_changed();
+	albumart.refresh();
+	allmusic.refresh();
 }
 
 function on_mouse_lbtn_up(x, y) {
@@ -112,17 +118,17 @@ function on_playback_dynamic_info_track(type) {
 		// lookups but we can update the artist in the title section
 		window.Repaint();
 	} else {
-		albumart.metadb_changed();
+		albumart.refresh();
 	}
 }
 
 function on_playback_new_track() {
-	panel.item_focus_change();
+	refresh();
 }
 
 function on_playback_stop(reason) {
 	if (reason != 2) {
-		panel.item_focus_change();
+		refresh();
 	}
 }
 

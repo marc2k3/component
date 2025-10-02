@@ -53,10 +53,6 @@ function _text_display(x, y, w, h, buttons) {
 	}
 
 // callbacks begin
-	this.metadb_changed = function () {
-		this.refresh();
-	}
-
 	this.move = function (x, y) {
 		this.mx = x;
 		this.my = y;
@@ -164,7 +160,7 @@ function _text_display(x, y, w, h, buttons) {
 
 			if (this.properties.albumart.enabled) {
 				panel.custom_background = false;
-				albumart.metadb_changed();
+				albumart.refresh();
 			} else {
 				panel.custom_background = true;
 			}
@@ -173,7 +169,7 @@ function _text_display(x, y, w, h, buttons) {
 			break;
 		case 1208:
 			this.properties.albumart_blur.toggle();
-			albumart.metadb_changed();
+			albumart.refresh();
 			break;
 		case 1210:
 		case 1211:

@@ -284,31 +284,6 @@ function _thumbs() {
 		}
 	}
 
-	this.metadb_changed = function () {
-		if (panel.metadb) {
-			if (this.properties.source.value == 0) { // custom folder
-				var temp_folder = panel.tf(this.properties.tf.value);
-
-				if (this.folder == temp_folder)
-					return;
-
-				this.folder = temp_folder;
-			} else { // last.fm
-				var temp_artist = panel.tf(DEFAULT_ARTIST);
-				if (this.artist == temp_artist)
-					return;
-
-				this.artist = temp_artist;
-				this.folder = _artistFolder(this.artist);
-			}
-		} else {
-			this.artist = '';
-			this.folder = '';
-		}
-
-		this.update();
-	}
-
 	this.move = function (x, y) {
 		this.mx = x;
 		this.my = y;
@@ -419,7 +394,7 @@ function _thumbs() {
 
 	this.playback_new_track = function () {
 		this.counter = 0;
-		panel.item_focus_change();
+		this.refresh();
 	}
 
 	this.playback_time = function () {
@@ -530,13 +505,13 @@ function _thumbs() {
 			this.properties.source.value = idx - 1000;
 			this.artist = '';
 			this.folder = '';
-			this.metadb_changed();
+			this.refresh();
 			break;
 		case 1002:
 			try {
 				this.properties.tf.value = utils.TextBox('Enter title formatting or an absolute path to a folder. You can specify multiple folders by placing each one on their own line.', window.Name, this.properties.tf.value);
 				this.folder = '';
-				this.metadb_changed();
+				this.refresh();
 			} catch (e) {}
 			break;
 		case 1003:
@@ -635,6 +610,31 @@ function _thumbs() {
 			this.update();
 			break;
 		}
+	}
+
+	this.refresh = function () {
+		if (panel.metadb) {
+			if (this.properties.source.value == 0) { // custom folder
+				var temp_folder = panel.tf(this.properties.tf.value);
+
+				if (this.folder == temp_folder)
+					return;
+
+				this.folder = temp_folder;
+			} else { // last.fm
+				var temp_artist = panel.tf(DEFAULT_ARTIST);
+				if (this.artist == temp_artist)
+					return;
+
+				this.artist = temp_artist;
+				this.folder = _artistFolder(this.artist);
+			}
+		} else {
+			this.artist = '';
+			this.folder = '';
+		}
+
+		this.update();
 	}
 
 	this.reset = function () {

@@ -64,16 +64,15 @@ function _panel(options) {
 	}
 
 	this.item_focus_change = function () {
-		if (!this.metadb_func)
-			return;
-
 		this.metadb = this.prefer_playing() ? playback.GetNowPlaying() : plman.GetActivePlaylistFocusItem();
 
 		if (!this.metadb) {
 			_tt('');
 		}
+	}
 
-		on_metadb_changed();
+	this.metadb_changed = function (handles) {
+		return this.metadb && handles.Find(this.metadb) > -1;
 	}
 
 	this.paint = function (gr) {
@@ -165,7 +164,7 @@ function _panel(options) {
 		case idx == 110:
 		case idx == 111:
 			this.selection.value = idx - 110;
-			this.item_focus_change();
+			refresh();
 			break;
 		case idx == 120:
 			window.ShowConfigure();
