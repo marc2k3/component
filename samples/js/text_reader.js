@@ -69,7 +69,7 @@ function _text_reader(x, y, w, h) {
 		panel.m.AppendMenuSeparator();
 		panel.m.AppendMenuItem(MF_STRING, 1302, 'Custom path...');
 		panel.m.AppendMenuSeparator();
-		panel.m.AppendMenuItem(CheckMenuIf(this.properties.fixed.enabled), 1303, 'Fixed width font');
+		panel.m.AppendMenuItem(CheckMenuIf(this.properties.monospace_font.enabled), 1303, 'Monospace font');
 		panel.m.AppendMenuSeparator();
 		panel.m.AppendMenuItem(EnableMenuIf(utils.IsFile(this.filename)), 1999, 'Open containing folder');
 		panel.m.AppendMenuSeparator();
@@ -78,7 +78,6 @@ function _text_reader(x, y, w, h) {
 	this.rbtn_up_done = function (idx) {
 		switch (idx) {
 		case 1300:
-			this.clear_layout();
 			this.reset();
 			this.refresh();
 			break;
@@ -91,8 +90,7 @@ function _text_reader(x, y, w, h) {
 			this.refresh();
 			break;
 		case 1303:
-			this.properties.fixed.toggle();
-			this.clear_layout();
+			this.properties.monospace_font.toggle();
 			this.reset();
 			this.refresh();
 			break;
@@ -104,9 +102,8 @@ function _text_reader(x, y, w, h) {
 
 	this.refresh = function () {
 		if (panel.metadb) {
-			var str = '';
-
 			var temp_filename = panel.tf(this.properties.filename_tf.value);
+
 			if (this.filename == temp_filename) {
 				window.Repaint(); // title might have changed
 				return;
@@ -118,18 +115,17 @@ function _text_reader(x, y, w, h) {
 				this.filename = _.first(_getFiles(this.filename, this.exts))
 			}
 
-			str = utils.ReadUTF8(this.filename).replace(/\t/g, '    ');
+			var str = utils.ReadUTF8(this.filename).replace(/\t/g, '    ');
 
 			if (str != this.text) {
 				this.clear_layout()
 				this.text = str;
 
 				if (this.text.length) {
-					this.text_layout = utils.CreateTextLayout(this.text, this.properties.fixed.enabled ? panel.fonts.fixed : panel.fonts.normal);
+					this.text_layout = utils.CreateTextLayout(this.text, this.properties.monospace_font.enabled ? panel.fonts.monospace : panel.fonts.normal);
 				}
 			}
 		} else {
-			this.clear_layout();
 			this.reset();
 		}
 
@@ -138,6 +134,7 @@ function _text_reader(x, y, w, h) {
 	}
 
 	this.reset = function () {
+		this.clear_layout();
 		this.text = this.filename = '';
 	}
 
@@ -203,7 +200,7 @@ function _text_reader(x, y, w, h) {
 	this.properties = {
 		title_tf : new Property('2K3.READER.TITLE.TF', '%album artist% - $if2(%album%,%title%)'),
 		filename_tf : new Property('2K3.READER.FILENAME.TF', '$directory_path(%path%)'),
-		fixed : new Property('2K3.READER.FONTS.FIXED', true),
+		monospace_font : new Property('2K3.READER.FONTS.MONOSPACE', true),
 	};
 
 	this.up_btn = new _sb(chars.up, this.x, this.y, Scale(12), Scale(12), _.bind(function () { return this.offset < 0; }, this), _.bind(function () { this.wheel(1); }, this));

@@ -49,7 +49,7 @@ function _panel(options) {
 		this.fonts.name = JSON.parse(window.GetUIFont(0)).Name;
 		this.fonts.normal = this.create_font(this.fonts.size.value);
 		this.fonts.title = this.create_font(this.fonts.size.value, 700);
-		this.fonts.fixed = CreateFontString('Consolas', this.fonts.size.value);
+		this.fonts.monospace = CreateFontString('Consolas', this.fonts.size.value);
 		this.twemoji_font = utils.CheckFont('Twemoji Mozilla');
 
 		if (this.twemoji_font) {
