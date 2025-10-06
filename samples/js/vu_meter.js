@@ -122,11 +122,6 @@ function clear_graph() {
 }
 
 function update_graph() {
-	var cur_time = playback.Time;
-
-	if (cur_time < rms_window)
-		return;
-
 	var chunk = fb.GetAudioChunk(rms_window);
 
 	if (!chunk)
