@@ -199,8 +199,6 @@ function _allmusic(x, y, w, h) {
 
 	this.refresh = function () {
 		if (panel.metadb) {
-			var str = '';
-
 			var temp_artist = panel.tf('%album artist%');
 			var temp_album = panel.tf('%album%');
 
@@ -211,6 +209,7 @@ function _allmusic(x, y, w, h) {
 			this.album = temp_album;
 			this.filename = _artistFolder(this.artist) + 'allmusic.' + utils.ReplaceIllegalChars(this.album) + '.txt';
 			this.review_url = '';
+			var str = '';
 
 			if (utils.IsFile(this.filename)) {
 				str = utils.ReadUTF8(this.filename).trim();

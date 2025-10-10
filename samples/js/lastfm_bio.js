@@ -142,8 +142,6 @@ function _lastfm_bio(x, y, w, h) {
 
 	this.refresh = function () {
 		if (panel.metadb) {
-			var str = '';
-
 			var temp_artist = panel.tf(DEFAULT_ARTIST);
 			var temp_flag = panel.tf(this.properties.country_tf.value)
 
@@ -154,6 +152,7 @@ function _lastfm_bio(x, y, w, h) {
 			this.artist = temp_artist;
 			this.flag = temp_flag;
 			this.filename = _artistFolder(this.artist) + 'lastfm.artist.getInfo.' + this.langs[this.properties.lang.value] + '.json';
+			var str = '';
 
 			if (utils.IsFile(this.filename)) {
 				var obj = _jsonParseFile(this.filename);
@@ -171,6 +170,7 @@ function _lastfm_bio(x, y, w, h) {
 			if (str != this.text) {
 				this.clear_layout()
 				this.text = str;
+
 				if (this.text.length) {
 					this.text_layout = utils.CreateTextLayout(this.text, panel.fonts.normal);
 				}
