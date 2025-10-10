@@ -90,11 +90,11 @@ function _vu_meter(x, y, w, h) {
 		}
 	}
 
-	this.update_bar_colour = function (horizontal) {
+	this.update_bar_colour = function () {
 		if (this.solid_colour)
 			return;
 
-		if (horizontal) {
+		if (this.is_horizontal) {
 			if (this.brush.Start[1] == 0 && this.brush.End[0] == this.w)
 				return;
 
@@ -162,9 +162,7 @@ function _vu_meter(x, y, w, h) {
 
 		var smooth_mode = this.properties.meter_style.value == 0;
 
-		if (this.w > this.h) { // horizontal
-			this.update_bar_colour(true);
-
+		if (this.is_horizontal) {
 			var bar_width = this.w;
 			var bar_height = Math.floor(this.h / this.channels.count);
 
@@ -202,8 +200,6 @@ function _vu_meter(x, y, w, h) {
 				}
 			}
 		} else { // vertical
-			this.update_bar_colour(false);
-
 			var bar_width = Math.floor(this.w / this.channels.count);
 			var bar_height = this.h;
 
@@ -303,7 +299,7 @@ function _vu_meter(x, y, w, h) {
 
 		if (this.properties.meter_style.value == 1) {
 			style_menu.AppendMenuSeparator();
-			style_menu.AppendMenuItem(MF_GRAYED, 0, 'Block width (dB)');
+			style_menu.AppendMenuItem(MF_GRAYED, 0, this.is_horizontal ? 'Block width (dB)' : 'Block height (dB)');
 
 			this.rms_block_dbs.forEach(function (item, index) {
 				style_menu.AppendMenuItem(MF_STRING, 20 + index, item);
@@ -413,6 +409,11 @@ function _vu_meter(x, y, w, h) {
 
 		return true;
 	}
+
+	this.size = function () {
+		this.is_horizontal = this.w > this.h;
+		this.update_bar_colour();
+	}
 // callbacks end
 
 	this.x = x;
@@ -430,6 +431,7 @@ function _vu_meter(x, y, w, h) {
 	this.Peak_falldown = [];
 	this.timer_id = 0;
 	this.dBrange = 0;
+	this.is_horizontal = false;
 
 	this.channels = {
 		count : 2,

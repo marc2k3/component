@@ -46,4 +46,5 @@ function on_playback_stop(reason) {
 function on_size() {
 	vu_meter.w = window.Width;
 	vu_meter.h = window.Height;
+	vu_meter.size();
 }
