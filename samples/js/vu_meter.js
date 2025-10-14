@@ -193,7 +193,7 @@ function stop_timer() {
 }
 
 function get_initial_track_info() {
-	var handle = plman.GetActivePlaylistFocusItem();
+	var handle = fb.GetFocusItem();
 
 	if (!handle)
 		return;

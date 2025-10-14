@@ -174,7 +174,7 @@ function _seekbar(x, y, w, h, spectrogram_mode) {
 				return;
 
 			this.clear_image();
-			this.image = this.get_image(plman.GetActivePlaylistFocusItem());
+			this.image = this.get_image(fb.GetFocusItem());
 			window.Repaint();
 		}
 

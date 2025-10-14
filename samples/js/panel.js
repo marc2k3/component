@@ -64,7 +64,7 @@ function _panel(options) {
 	}
 
 	this.item_focus_change = function () {
-		this.metadb = this.prefer_playing() ? playback.GetNowPlaying() : plman.GetActivePlaylistFocusItem();
+		this.metadb = this.prefer_playing() ? playback.GetNowPlaying() : fb.GetFocusItem();
 
 		if (!this.metadb) {
 			_tt('');
@@ -194,7 +194,7 @@ function _panel(options) {
 	this.custom_background = false;
 	this.w = 0;
 	this.h = 0;
-	this.metadb = plman.GetActivePlaylistFocusItem();
+	this.metadb = fb.GetFocusItem();
 	this.metadb_func = typeof on_metadb_changed == 'function';
 	this.fonts.sizes = [10, 12, 14, 16];
 	this.fonts.size = new Property('2K3.PANEL.FONTS.SIZE', 12);
