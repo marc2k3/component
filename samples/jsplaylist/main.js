@@ -336,7 +336,7 @@ function get_font() {
 
 	g_font_fluent_12 = js_font("Segoe Fluent Icons", 12);
 	g_font_fluent_20 = js_font("Segoe Fluent Icons", 20);
-	g_font_fluent_40 = js_font("Segoe Fluent Icons", 40);
+	g_font_fluent_40 = JSON.stringify({Name:"Segoe Fluent Icons", Size:40});
 
 	g_font_group1 = js_font(name, 16, true);
 	g_font_group2 = js_font(name, 14);
