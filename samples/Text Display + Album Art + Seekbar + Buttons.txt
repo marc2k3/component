@@ -144,11 +144,6 @@ function on_paint(gr) {
 	}
 }
 
-function on_playback_order_changed() {
-	buttons.update();
-	window.Repaint();
-}
-
 function on_playback_dynamic_info_track(type) {
 	if (type == 0)
 		text.refresh();
@@ -158,6 +153,11 @@ function on_playback_dynamic_info_track(type) {
 
 function on_playback_new_track() {
 	refresh();
+}
+
+function on_playback_order_changed() {
+	buttons.update();
+	window.Repaint();
 }
 
 function on_playback_pause() {

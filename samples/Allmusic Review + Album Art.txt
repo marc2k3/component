@@ -72,6 +72,10 @@ function on_metadb_changed(handles, fromhook) {
 	allmusic.refresh();
 }
 
+function on_mouse_lbtn_dblclk(x, y) {
+	albumart.lbtn_dblclk(x, y);
+}
+
 function on_mouse_lbtn_up(x, y) {
 	allmusic.lbtn_up(x, y);
 }
@@ -79,10 +83,6 @@ function on_mouse_lbtn_up(x, y) {
 function on_mouse_move(x, y) {
 	allmusic.move(x, y);
 	albumart.move(x, y);
-}
-
-function on_mouse_lbtn_dblclk(x, y) {
-	albumart.lbtn_dblclk(x, y);
 }
 
 function on_mouse_rbtn_up(x, y) {

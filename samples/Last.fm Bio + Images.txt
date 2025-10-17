@@ -77,6 +77,10 @@ function on_metadb_changed(handles, fromhook) {
 	lastfm_bio.refresh();
 }
 
+function on_mouse_lbtn_dblclk(x, y) {
+	images.lbtn_dblclk(x, y);
+}
+
 function on_mouse_lbtn_up(x, y) {
 	lastfm_bio.lbtn_up(x, y);
 }
@@ -84,10 +88,6 @@ function on_mouse_lbtn_up(x, y) {
 function on_mouse_move(x, y) {
 	lastfm_bio.move(x, y);
 	images.move(x, y);
-}
-
-function on_mouse_lbtn_dblclk(x, y) {
-	images.lbtn_dblclk(x, y);
 }
 
 function on_mouse_rbtn_up(x, y) {
