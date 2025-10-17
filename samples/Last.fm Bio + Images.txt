@@ -131,6 +131,7 @@ function on_playback_dynamic_info_track(type) {
 function on_playback_new_track() {
 	panel.item_focus_change();
 	images.playback_new_track();
+	lastfm_bio.refresh();
 }
 
 function on_playback_stop(reason) {
