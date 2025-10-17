@@ -336,7 +336,6 @@ function get_font() {
 
 	g_font_fluent_12 = js_font("Segoe Fluent Icons", 12);
 	g_font_fluent_20 = js_font("Segoe Fluent Icons", 20);
-	g_font_fluent_40 = JSON.stringify({Name:"Segoe Fluent Icons", Size:40});
 
 	g_font_group1 = js_font(name, 16, true);
 	g_font_group2 = js_font(name, 14);
@@ -440,7 +439,17 @@ var g_colour_selection = 0;
 var g_colour_highlight = 0;
 var g_colour_mood = 0;
 var g_colour_rating = 0;
-var g_font_size = 0;
+
+var g_font_12;
+var g_font_12_bold;
+var g_font_20_bold;
+var g_font_fluent_12;
+var g_font_fluent_20;
+var g_font_fluent_40 = JSON.stringify({Name:"Segoe Fluent Icons", Size:40}); // fixed, not relative to UI font size
+var g_font_group1;
+var g_font_group2;
+var g_font_size;
+
 var g_queue_width = 0;
 var g_dynamic = false;
 var g_double_clicked = false;
