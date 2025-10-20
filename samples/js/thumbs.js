@@ -4,9 +4,10 @@ function _thumbs() {
 	}
 
 	this.create_grid = function () {
-		if (this.img) this.img.Dispose();
-		var size = this.properties.px.value;
+		if (this.img)
+			this.img.Dispose();
 
+		var size = this.properties.px.value;
 		this.img = utils.CreateImage(Math.min(this.columns, this.thumbs.length) * size, this.img_rows * size);
 		var temp_gr = this.img.GetGraphics();
 		var current = 0;
@@ -38,7 +39,9 @@ function _thumbs() {
 	}
 
 	this.create_strip = function (vertical) {
-		if (this.img) this.img.Dispose();
+		if (this.img)
+			this.img.Dispose();
+
 		var size = this.properties.px.value;
 		var x = y = 0;
 
@@ -66,8 +69,6 @@ function _thumbs() {
 	}
 
 	this.create_thumb = function (img) {
-		var size = this.properties.px.value;
-
 		if (img.Width < img.Height) {
 			var src_x = 0;
 			var src_w = img.Width;
@@ -80,6 +81,7 @@ function _thumbs() {
 			var src_x = Math.round((img.Width - src_w) / 2);
 		}
 
+		var size = this.properties.px.value;
 		var square = utils.CreateImage(size, size);
 		var temp_gr = square.GetGraphics();
 		temp_gr.DrawImage(img, 0, 0, size, size, src_x, src_y, src_w, src_h);

@@ -220,7 +220,9 @@ function oBrowser() {
 			break;
 		case 1:
 			this.totalColumns = Math.floor(this.w / scale(ppt.default_thumbnailWidthMin));
-			if (this.totalColumns < 1) this.totalColumns = 1;
+			if (this.totalColumns < 1)
+				this.totalColumns = 1;
+
 			this.thumbnailWidth = this.w / this.totalColumns;
 			this.rowsCount = Math.ceil(this.groups.length / this.totalColumns);
 			this.rowHeight = this.thumbnailWidth + (g_font_height * 4);

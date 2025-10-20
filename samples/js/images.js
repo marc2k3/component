@@ -356,7 +356,7 @@ function _images() {
 				window.Repaint();
 			}
 
-			return;
+			return true;
 		}
 
 		if (!this.containsXY(this.mx, this.my))

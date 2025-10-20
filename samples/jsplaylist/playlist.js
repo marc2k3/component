@@ -151,7 +151,8 @@ function oItem(row_index, type, metadb, track_index, group_index, track_index_in
 					break;
 				default:
 					this.drawText(gr, tf_arr[j], g_font_12, txt_color, cx, tf1_y, cw, tf1_h, p.headerBar.columns[j].align);
-					if (cList.enableExtraLine) this.drawText(gr, tf2_arr[j], g_font_12, fader_txt, cx, tf2_y, cw, tf2_h, p.headerBar.columns[j].align);
+					if (cList.enableExtraLine)
+						this.drawText(gr, tf2_arr[j], g_font_12, fader_txt, cx, tf2_y, cw, tf2_h, p.headerBar.columns[j].align);
 					break;
 				}
 			}
@@ -605,10 +606,12 @@ function oList(object_name) {
 			cGroup.expandedHeight = 0;
 		}
 
-		this.focusedTrackId = plman.GetPlaylistFocusItemIndex(g_active_playlist);
-		if (this.handleList) this.handleList.Dispose();
+		if (this.handleList)
+			this.handleList.Dispose();
+
 		this.handleList = plman.GetPlaylistItems(g_active_playlist);
 		this.count = this.handleList.Count;
+		this.focusedTrackId = plman.GetPlaylistFocusItemIndex(g_active_playlist);
 		this.init_groups();
 		this.getStartOffsetFromFocusId();
 	}

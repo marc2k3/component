@@ -443,7 +443,9 @@ function ScrollBar(parent, x, y, w, h, total_items, item_height) {
 							if (!cScrollBar.timerID) {
 								cScrollBar.timerID = window.SetInterval((function () {
 									if (cScrollBar.timer_counter > 7) {
-										if (this.offset > 0) this.offset--;
+										if (this.offset > 0)
+											this.offset--;
+
 										this.updateCursorPos(this.offset);
 										eval(this.parent).offset = this.offset;
 										full_repaint();
@@ -552,6 +554,8 @@ function ScrollBar(parent, x, y, w, h, total_items, item_height) {
 		}
 	}
 
-	if (this.cursorHeight) this.setCursorButton();
+	if (this.cursorHeight)
+		this.setCursorButton();
+
 	this.setButtons();
 }
