@@ -450,6 +450,8 @@ var VK_SPACEBAR = 0x20;
 
 var UINT_MAX = Math.pow(2, 32) - 1;
 var DPI = window.DPI;
+var GET = 0;
+var POST = 1;
 
 var AlbumArtId = {
 	front : 0,

@@ -33,7 +33,7 @@ function _musicbrainz(x, y, w, h) {
 			var url = 'https://musicbrainz.org/ws/2/artist/' + this.mb_id + '?fmt=json&inc=url-rels';
 		}
 
-		var task_id = utils.HTTPRequestAsync(window.ID, 0, url, 'foo_jscript_panel_musicbrainz');
+		var task_id = utils.HTTPRequestAsync(window.ID, GET, url, 'foo_jscript_panel_musicbrainz');
 		this.filenames[task_id] = this.filename;
 	}
 

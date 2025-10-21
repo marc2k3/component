@@ -33,7 +33,7 @@ function _lastfm_info(x, y, w, h) {
 			break;
 		}
 
-		var task_id = utils.HTTPRequestAsync(window.ID, 0, url, lastfm.ua);
+		var task_id = utils.HTTPRequestAsync(window.ID, GET, url, lastfm.ua);
 		this.filenames[task_id] = this.filename;
 	}
 

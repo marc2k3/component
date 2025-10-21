@@ -13,7 +13,7 @@ function _images() {
 			return;
 
 		var url = 'https://www.last.fm/music/' + encodeURIComponent(this.artist) + '/+images';
-		var task_id = utils.HTTPRequestAsync(window.ID, 0, url, this.headers);
+		var task_id = utils.HTTPRequestAsync(window.ID, GET, url, this.headers);
 		this.artists[task_id] = this.artist;
 	}
 
