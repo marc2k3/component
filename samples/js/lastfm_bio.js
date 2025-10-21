@@ -256,11 +256,6 @@ function _lastfm_bio(x, y, w, h) {
 		country_tf : new Property('2K3.BIO.COUNTRY.TF', '$country_flag(%country%)'),
 	};
 
-	this.headers = JSON.stringify({
-		'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0',
-		'Referer' : 'https://www.last.fm',
-	});
-
 	this.up_btn = new _sb(chars.up, this.x, this.y, Scale(12), Scale(12), _.bind(function () { return this.offset < 0; }, this), _.bind(function () { this.wheel(1); }, this));
 	this.down_btn = new _sb(chars.down, this.x, this.y, Scale(12), Scale(12), _.bind(function () { return this.offset > this.ha - this.text_height; }, this), _.bind(function () { this.wheel(-1); }, this));
 }
