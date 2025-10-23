@@ -121,11 +121,9 @@ function on_paint(gr) {
 	lastfm_bio.paint(gr);
 }
 
-function on_playback_dynamic_info_track(type) {
-	if (type == 0) {
-		images.playback_new_track();
-		lastfm_bio.refresh();
-	}
+function on_playback_dynamic_info_track() {
+	images.playback_new_track();
+	lastfm_bio.refresh();
 }
 
 function on_playback_new_track() {

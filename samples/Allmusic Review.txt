@@ -72,12 +72,10 @@ function on_paint(gr) {
 	allmusic.paint(gr);
 }
 
-function on_playback_dynamic_info_track(type) {
-	if (type == 0) {
-		// stream metadata doesn't contain album tags for
-		// lookups but we can update the artist in the title section
-		window.Repaint();
-	}
+function on_playback_dynamic_info_track() {
+	// stream metadata doesn't contain album tags for
+	// lookups but we can update the artist in the title section
+	window.Repaint();
 }
 
 function on_playback_new_track() {

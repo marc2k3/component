@@ -62,12 +62,6 @@ function on_paint(gr) {
 	albumart.paint(gr);
 }
 
-function on_playback_dynamic_info_track(type) {
-	if (type == 1) {
-		albumart.refresh();
-	}
-}
-
 function on_playback_new_track() {
 	refresh();
 }
@@ -86,4 +80,8 @@ function on_size() {
 	panel.size();
 	albumart.w = panel.w;
 	albumart.h = panel.h;
+}
+
+function on_stream_album_art_change() {
+	albumart.refresh();
 }

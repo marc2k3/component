@@ -70,10 +70,8 @@ function on_paint(gr) {
 	thumbs.paint(gr);
 }
 
-function on_playback_dynamic_info_track(type) {
-	if (type == 0) {
-		thumbs.playback_new_track();
-	}
+function on_playback_dynamic_info_track() {
+	thumbs.playback_new_track();
 }
 
 function on_playback_new_track() {

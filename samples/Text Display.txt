@@ -78,11 +78,8 @@ function on_paint(gr) {
 	text.paint(gr);
 }
 
-function on_playback_dynamic_info_track(type) {
-	if (type == 0)
-		text.refresh();
-	else if (text.properties.albumart.enabled || text.properties.layout.value > 0)
-		albumart.refresh();
+function on_playback_dynamic_info_track() {
+	text.refresh();
 }
 
 function on_playback_new_track() {
@@ -126,4 +123,10 @@ function on_playlists_changed() {
 function on_size() {
 	panel.size();
 	text.size();
+}
+
+function on_stream_album_art_change() {
+	if (text.properties.albumart.enabled || text.properties.layout.value > 0) {
+		albumart.refresh();
+	}
 }

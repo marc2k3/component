@@ -145,11 +145,8 @@ function on_paint(gr) {
 	}
 }
 
-function on_playback_dynamic_info_track(type) {
-	if (type == 0)
-		window.Repaint();
-	else
-		update_album_art(playback.GetNowPlaying());
+function on_playback_dynamic_info_track() {
+	window.Repaint();
 }
 
 function on_playback_edited() {
@@ -210,4 +207,8 @@ function on_size() {
 	seekbar.w = panel.w - seekbar.x - Scale(300);
 	seekbar.h = panel.h - (seekbar.y * 2);
 	buttons.update();
+}
+
+function on_stream_album_art_change() {
+	update_album_art(playback.GetNowPlaying());
 }

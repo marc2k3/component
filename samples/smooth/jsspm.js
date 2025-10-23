@@ -191,18 +191,6 @@ function on_paint(gr) {
 	brw.draw(gr);
 }
 
-function on_playback_dynamic_info_track(type) {
-	if (type == 1) {
-		if (ppt.wallpapermode == 1) {
-			setWallpaperImg();
-		}
-		if (ppt.enableDynamicColours) {
-			on_colours_changed();
-		}
-		brw.repaint();
-	}
-}
-
 function on_playback_new_track() {
 	setWallpaperImg();
 
@@ -244,6 +232,18 @@ function on_playlist_switch() {
 function on_playlists_changed() {
 	g_active_playlist = plman.ActivePlaylist;
 	brw.populate();
+}
+
+function on_stream_album_art_change() {
+	if (ppt.wallpapermode == 1) {
+		setWallpaperImg();
+	}
+
+	if (ppt.enableDynamicColours) {
+		on_colours_changed();
+	}
+
+	brw.repaint();
 }
 
 function oBrowser() {

@@ -144,11 +144,8 @@ function on_paint(gr) {
 	}
 }
 
-function on_playback_dynamic_info_track(type) {
-	if (type == 0)
-		text.refresh();
-	else
-		albumart.refresh();
+function on_playback_dynamic_info_track() {
+	text.refresh();
 }
 
 function on_playback_new_track() {
@@ -225,4 +222,8 @@ function on_size() {
 
 	bottom_y = seekbar.y - Scale(4);
 	buttons.update();
+}
+
+function on_stream_album_art_change() {
+	albumart.refresh();
 }

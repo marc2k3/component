@@ -724,18 +724,6 @@ function on_paint(gr) {
 	}
 }
 
-function on_playback_dynamic_info_track(type) {
-	if (type == 1) {
-		update_wallpaper();
-
-		if (properties.enableDynamicColours) {
-			on_colours_changed();
-		}
-
-		full_repaint();
-	}
-}
-
 function on_playback_new_track() {
 	update_wallpaper();
 
@@ -864,4 +852,14 @@ function on_size() {
 		update_playlist();
 		g_init_on_size = true;
 	}
+}
+
+function on_stream_album_art_change() {
+	update_wallpaper();
+
+	if (properties.enableDynamicColours) {
+		on_colours_changed();
+	}
+
+	full_repaint();
 }

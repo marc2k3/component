@@ -158,11 +158,8 @@ function on_paint(gr) {
 	}
 }
 
-function on_playback_dynamic_info_track(type) {
-	if (type == 0)
-		window.Repaint();
-	else
-		update_album_art(playback.GetNowPlaying());
+function on_playback_dynamic_info_track() {
+	window.Repaint();
 }
 
 function on_playback_edited() {
@@ -218,6 +215,10 @@ function on_size() {
 	volume.w = panel.w - volume.x - Scale(20);
 	volume.h = bar_h;
 	buttons.update();
+}
+
+function on_stream_album_art_change() {
+	update_album_art(playback.GetNowPlaying());
 }
 
 function on_volume_change() {

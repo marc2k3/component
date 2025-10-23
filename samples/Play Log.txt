@@ -47,10 +47,8 @@ function on_paint(gr) {
 	play_log.paint(gr);
 }
 
-function on_playback_dynamic_info_track(type) {
-	if (type == 0) {
-		play_log.log();
-	}
+function on_playback_dynamic_info_track() {
+	play_log.log();
 }
 
 function on_playback_new_track() {

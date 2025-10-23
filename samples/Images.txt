@@ -66,10 +66,8 @@ function on_paint(gr) {
 	images.paint(gr);
 }
 
-function on_playback_dynamic_info_track(type) {
-	if (type == 0) {
-		images.playback_new_track();
-	}
+function on_playback_dynamic_info_track() {
+	images.playback_new_track();
 }
 
 function on_playback_new_track() {

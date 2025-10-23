@@ -68,10 +68,8 @@ function on_paint(gr) {
 	properties.paint(gr);
 }
 
-function on_playback_dynamic_info_track(type) {
-	if (type == 0) {
-		properties.refresh();
-	}
+function on_playback_dynamic_info_track() {
+	properties.refresh();
 }
 
 function on_playback_new_track() {

@@ -112,14 +112,10 @@ function on_paint(gr) {
 	albumart.paint(gr);
 }
 
-function on_playback_dynamic_info_track(type) {
-	if (type == 0) {
-		// stream metadata doesn't contain album tags for
-		// lookups but we can update the artist in the title section
-		window.Repaint();
-	} else {
-		albumart.refresh();
-	}
+function on_playback_dynamic_info_track() {
+	// stream metadata doesn't contain album tags for
+	// lookups but we can update the artist in the title section
+	window.Repaint();
 }
 
 function on_playback_new_track() {
@@ -161,4 +157,8 @@ function on_size() {
 	}
 
 	allmusic.size();
+}
+
+function on_stream_album_art_change() {
+	albumart.refresh();
 }

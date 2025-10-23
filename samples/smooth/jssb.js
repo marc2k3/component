@@ -132,13 +132,6 @@ function on_paint(gr) {
 	}
 }
 
-function on_playback_dynamic_info_track(type) {
-	if (type == 1 && ppt.enableDynamicColours) {
-		on_colours_changed();
-		brw.repaint();
-	}
-}
-
 function on_playback_new_track() {
 	if (ppt.enableDynamicColours) {
 		on_colours_changed();
@@ -197,6 +190,13 @@ function on_playlists_changed() {
 
 	if (!ppt.library) {
 		brw.populate();
+	}
+}
+
+function on_stream_album_art_change() {
+	if (ppt.enableDynamicColours) {
+		on_colours_changed();
+		brw.repaint();
 	}
 }
 
