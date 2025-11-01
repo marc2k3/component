@@ -172,14 +172,15 @@ function _thumbs() {
 		return filtered;
 	}
 
-	this.http_request_done = function (task_id, success, response_text) {
+	this.http_request_done = function (task_id, success, response_text, status, response_headers) {
 		var artist = this.artists[task_id];
 
 		if (!artist)
 			return; // we didn't request this id
 
-		if (!success) {
-			console.log(N, response_text);
+		if (!success || status != 200) {
+			console.log(N, "HTTP status:", status);
+			console.log(response_text);
 			return;
 		}
 
