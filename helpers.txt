@@ -555,10 +555,3 @@ String.prototype.calc_width = function (font) {
 String.prototype.empty = function () {
 	return this.length == 0;
 }
-
-String.prototype.repeat = function (num) {
-	if (num >= 0 && num <= 5)
-		return new Array(Math.round(num) + 1).join(this);
-
-	return '';
-}
