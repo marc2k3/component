@@ -340,14 +340,12 @@ function get_font() {
 	g_font_group1 = js_font(name, 16, true);
 	g_font_group2 = js_font(name, 14);
 
-	columns.rating_w = (chars.rating_off.calc_width(g_font_fluent_20) * 5) + 4;
 	g_queue_width = "0000".calc_width(g_font_20_bold);
 }
 
 function get_colours() {
 	g_dynamic = false;
 	g_colour_mood = window.GetProperty("JSPLAYLIST.COLOUR.MOOD", RGB(196,30,35));
-	g_colour_rating = window.GetProperty("JSPLAYLIST.COLOUR.RATING", RGB(255, 128, 0));
 
 	if (properties.enableDynamicColours) {
 		var arr = GetNowPlayingColours();
@@ -438,7 +436,6 @@ var g_colour_background = 0;
 var g_colour_selection = 0;
 var g_colour_highlight = 0;
 var g_colour_mood = 0;
-var g_colour_rating = 0;
 
 var g_font_12;
 var g_font_12_bold;
@@ -584,8 +581,6 @@ var cList = {
 var columns = {
 	mood_x : 0,
 	mood_w : 0,
-	rating_x : 0,
-	rating_w : 0,
 };
 
 init();

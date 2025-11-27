@@ -287,7 +287,6 @@ function oHeaderBar() {
 			"Album",
 			"Genre",
 			"Mood",
-			"Rating",
 			"Plays",
 			"Bitrate",
 			"Time"
@@ -303,7 +302,6 @@ function oHeaderBar() {
 			"$if2(%album%,$if(%length%,Single,Stream))",
 			"$if2(%genre%,Other)",
 			"$if(%mood%,1,0)",
-			"$if2(%rating%,0)",
 			"$if2(%play_count%,0)",
 			"[%__bitrate% kbps]",
 			"$if(%isplaying%,[-%playback_time_remaining%],[%length%])"
@@ -321,13 +319,12 @@ function oHeaderBar() {
 			"",
 			"",
 			"",
-			"",
 			"[%__bitrate% kbps]"
 		].join("^^")
 
-		var default_percent = [8000, 0, 7000, 50000, 0, 0, 0, 0, 0, 20000, 0, 0, 15000].join("^^");
-		var default_ref = ["State", "Index", "Tracknumber", "Title", "Date", "Artist", "Album", "Genre", "Mood", "Rating", "Plays", "Bitrate", "Time"].join("^^");
-		var default_align = ["2", "2", "1", "0", "1", "0", "0", "0", "2", "2", "1", "2", "1"].join("^^");
+		var default_percent = [8000, 0, 7000, 70000, 0, 0, 0, 0, 0, 0, 0, 15000].join("^^");
+		var default_ref = ["State", "Index", "Tracknumber", "Title", "Date", "Artist", "Album", "Genre", "Mood", "Plays", "Bitrate", "Time"].join("^^");
+		var default_align = ["2", "2", "1", "0", "1", "0", "0", "0", "2", "1", "2", "1"].join("^^");
 		var default_sortOrder = [
 			"%album artist% | $if(%album%,%date%,9999) | %album% | %discnumber% | %tracknumber% | %title%",
 			"",
@@ -338,7 +335,6 @@ function oHeaderBar() {
 			"$if2(%album%,%artist%) | $if(%album%,%date%,9999) | %album artist% | %discnumber% | %tracknumber% | %title%",
 			"%genre% | %album artist% | $if(%album%,%date%,9999) | %album% | %discnumber% | %tracknumber% | %title%",
 			"%mood% | %album artist% | $if(%album%,%date%,9999) | %album% | %discnumber% | %tracknumber% | %title%",
-			"%rating% | %album artist% | $if(%album%,%date%,9999) | %album% | %discnumber% | %tracknumber% | %title%",
 			"$if2(%play_count%,0) | %album artist% | $if(%album%,%date%,9999) | %album% | %discnumber% | %tracknumber% | %title%",
 			"%__bitrate% | %album artist% | $if(%album%,%date%,9999) | %album% | %discnumber% | %tracknumber% | %title%",
 			"%length_seconds%"

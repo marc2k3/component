@@ -42,7 +42,6 @@ function oItem(row_index, type, metadb, track_index, group_index, track_index_in
 		var is_selected = plman.IsPlaylistItemSelected(g_active_playlist, this.track_index);
 		var txt_color = is_selected ? g_colour_selected_text : g_colour_text;
 		var fader_txt = setAlpha(txt_color, 180);
-		var rating_colour = g_dynamic ? txt_color : g_colour_rating;
 		var mood_colour = g_dynamic ? txt_color : g_colour_mood;
 
 		if (is_selected) {
@@ -66,7 +65,6 @@ function oItem(row_index, type, metadb, track_index, group_index, track_index_in
 		}
 
 		columns.mood_x = ww;
-		columns.rating_x = ww;
 
 		var tf_arr = get_tfo(g_tf_pattern).EvalPlaylistItem(g_active_playlist, this.track_index).split("^^");
 		var tf2_arr = cList.enableExtraLine ? get_tfo(g_tf2_pattern).EvalPlaylistItem(g_active_playlist, this.track_index).split("^^") : [];
@@ -129,25 +127,6 @@ function oItem(row_index, type, metadb, track_index, group_index, track_index_in
 					else
 						gr.WriteTextSimple(chars.heart_on, g_font_fluent_20, mood_colour, columns.mood_x, this.y, columns.mood_w, cRow.playlist_h, 2, 2);
 
-					break;
-				case "Rating":
-					cw = p.headerBar.columns[j].w - g_z5;
-					p.headerBar.columns[j].minWidth = columns.rating_w; // columns.rating_w set inside get_font
-					switch (p.headerBar.columns[j].align) {
-					case 0:
-						columns.rating_x = cx;
-						break;
-					case 1:
-						columns.rating_x = cx + (cw - columns.rating_w);
-						break;
-					case 2:
-						columns.rating_x = cx + ((cw - columns.rating_w) /2);
-						break;
-					}
-
-					this.rating = tf_arr[j];
-					gr.WriteTextSimple(chars.rating_off.repeat(5), g_font_fluent_20, rating_colour & 0x20ffffff, columns.rating_x, this.y, columns.rating_w, cRow.playlist_h, 0, 2);
-					gr.WriteTextSimple(chars.rating_on.repeat(this.rating), g_font_fluent_20, rating_colour, columns.rating_x, this.y, columns.rating_w, cRow.playlist_h, 0, 2);
 					break;
 				default:
 					this.drawText(gr, tf_arr[j], g_font_12, txt_color, cx, tf1_y, cw, tf1_h, p.headerBar.columns[j].align);
@@ -266,7 +245,6 @@ function oItem(row_index, type, metadb, track_index, group_index, track_index_in
 		var groupDelta = this.groupRowDelta * cRow.playlist_h;
 		this.ishover = (x >= this.x && x < this.x + this.w && y >= this.y && y < this.y + this.h - groupDelta);
 
-		var rating_hover = (this.type == 0 && x >= columns.rating_x && x <= columns.rating_x + columns.rating_w && y > this.y + 2 && y < this.y + this.h - 2);
 		var mood_hover = (this.type == 0 && x >= columns.mood_x && x <= columns.mood_x + columns.mood_w - 3 && y > this.y + 2 && y < this.y + this.h - 2);
 
 		switch (event) {
@@ -293,7 +271,7 @@ function oItem(row_index, type, metadb, track_index, group_index, track_index_in
 						p.list.SHIFT_start_id = null;
 					}
 				} else { // track
-					if (!rating_hover && !mood_hover) {
+					if (!mood_hover) {
 						if (is_item_selected) {
 							g_drag_drop_internal = true;
 							if (utils.IsKeyPressed(VK_SHIFT)) {
@@ -347,7 +325,7 @@ function oItem(row_index, type, metadb, track_index, group_index, track_index_in
 					p.list.setItems(false);
 					full_repaint();
 				} else { // track
-					if (!rating_hover && !mood_hover) {
+					if (!mood_hover) {
 						plman.ExecutePlaylistDefaultAction(g_active_playlist, this.track_index);
 					}
 				}
@@ -360,23 +338,7 @@ function oItem(row_index, type, metadb, track_index, group_index, track_index_in
 				var rp = this.metadb.RawPath;
 				var can_tag = rp.indexOf("file") == 0 || rp.indexOf("cdda://") == 0;
 
-				if (rating_hover ) {
-					var new_rating = Math.ceil((x - columns.rating_x) / (columns.rating_w / 5));
-
-					if (foo_playcount) {
-						if (new_rating != this.rating && new_rating > 0) {
-							handles.RunContextCommand("Playback Statistics/Rating/" + new_rating);
-						} else {
-							handles.RunContextCommand("Playback Statistics/Rating/<not set>");
-						}
-					} else if (can_tag) {
-						if (new_rating != this.rating && new_rating > 0) {
-							handles.UpdateFileInfoFromJSON(JSON.stringify({"RATING" : new_rating}));
-						} else {
-							handles.UpdateFileInfoFromJSON(JSON.stringify({"RATING" : ""}));
-						}
-					}
-				} else if (mood_hover) {
+				if (mood_hover) {
 					if (properties.use_foo_lastfm_playcount_sync) {
 						if (foo_lastfm_playcount_sync) {
 							var loved = get_tfo("$if2(%lfm_loved%,0)").EvalWithMetadb(this.metadb);
@@ -392,6 +354,7 @@ function oItem(row_index, type, metadb, track_index, group_index, track_index_in
 						}
 					}
 				}
+
 				handles.Dispose();
 			}
 			this.drawRectSel_click = false;
@@ -1083,7 +1046,6 @@ function oList(object_name) {
 		sub.AppendMenuItem(colour_flag, 7, "Selected background");
 		sub.AppendMenuSeparator();
 		sub.AppendMenuItem(MF_STRING, 8, "Mood");
-		sub.AppendMenuItem(MF_STRING, 9, "Rating");
 		sub.AppendTo(menu, MF_STRING, "Colours");
 		menu.AppendMenuSeparator();
 
@@ -1156,11 +1118,6 @@ function oList(object_name) {
 		case 8:
 			g_colour_mood = utils.ColourPicker(g_colour_mood);
 			window.SetProperty("JSPLAYLIST.COLOUR.MOOD", g_colour_mood);
-			window.Repaint();
-			break;
-		case 9:
-			g_colour_rating = utils.ColourPicker(g_colour_rating);
-			window.SetProperty("JSPLAYLIST.COLOUR.RATING", g_colour_rating);
 			window.Repaint();
 			break;
 		case 20:
