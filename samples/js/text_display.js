@@ -43,7 +43,7 @@ function _text_display(x, y, w, h, buttons) {
 				if (this.properties.layout.value == 1) {
 					this.text_layout = utils.CreateTextLayout(this.text, panel.fonts.normal, 2, 0);
 				} else {
-					this.text_layout = utils.CreateTextLayout(this.text, panel.fonts.normal, this.properties.halign.value, this.properties.valign.value);
+					this.text_layout = utils.CreateTextLayout(this.text, panel.fonts.normal, this.properties.text_align.value, this.properties.paragraph_align.value);
 				}
 			}
 		}
@@ -113,13 +113,13 @@ function _text_display(x, y, w, h, buttons) {
 			panel.s11.AppendMenuItem(MF_STRING, 1210, 'Left');
 			panel.s11.AppendMenuItem(MF_STRING, 1211, 'Right');
 			panel.s11.AppendMenuItem(MF_STRING, 1212, 'Centre');
-			panel.s11.CheckMenuRadioItem(1210, 1212, this.properties.halign.value + 1210);
-			panel.s11.AppendTo(panel.m, MF_STRING, 'Text alignment (horizontal)');
+			panel.s11.CheckMenuRadioItem(1210, 1212, this.properties.text_align.value + 1210);
+			panel.s11.AppendTo(panel.m, MF_STRING, 'Text alignment');
 			panel.s12.AppendMenuItem(MF_STRING, 1220, 'Top');
 			panel.s12.AppendMenuItem(MF_STRING, 1221, 'Bottom');
 			panel.s12.AppendMenuItem(MF_STRING, 1222, 'Centre');
-			panel.s12.CheckMenuRadioItem(1220, 1222, this.properties.valign.value + 1220);
-			panel.s12.AppendTo(panel.m, MF_STRING, 'Text alignment (vertical)');
+			panel.s12.CheckMenuRadioItem(1220, 1222, this.properties.paragraph_align.value + 1220);
+			panel.s12.AppendTo(panel.m, MF_STRING, 'Paragraph alignment');
 
 			if (this.properties.layout.value == 0) {
 				panel.m.AppendMenuItem(MF_STRING, 1230, 'Margin...');
@@ -174,13 +174,13 @@ function _text_display(x, y, w, h, buttons) {
 		case 1210:
 		case 1211:
 		case 1212:
-			this.properties.halign.value = idx - 1210;
+			this.properties.text_align.value = idx - 1210;
 			this.refresh(true);
 			break;
 		case 1220:
 		case 1221:
 		case 1222:
-			this.properties.valign.value = idx - 1220;
+			this.properties.paragraph_align.value = idx - 1220;
 			this.refresh(true);
 			break;
 		case 1230:
@@ -307,8 +307,8 @@ function _text_display(x, y, w, h, buttons) {
 
 	this.properties = {
 		text_tf : new Property('2K3.DISPLAY.TF', ''),
-		halign : new Property('2K3.DISPLAY.HALIGN', 2),
-		valign : new Property('2K3.DISPLAY.VALIGN', 2),
+		text_align : new Property('2K3.DISPLAY.TEXT_ALIGN', 2),
+		paragraph_align : new Property('2K3.DISPLAY.PARAGRAPH_ALIGN', 2),
 		per_second : new Property('2K3.DISPLAY.PER.SECOND', false),
 		albumart : new Property('2K3.DISPLAY.ALBUMART', true),
 		albumart_blur : new Property('2K3.DISPLAY.ALBUMART.BLUR', true),
