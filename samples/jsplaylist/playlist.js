@@ -116,7 +116,7 @@ function oItem(row_index, type, metadb, track_index, group_index, track_index_in
 						break;
 					}
 
-					if (properties.use_foo_lastfm_playcount_sync && foo_lastfm_playcount_sync) {
+					if (foo_lastfm_playcount_sync) {
 						this.mood = get_tfo("$if2(%lfm_loved%,0)").EvalPlaylistItem(g_active_playlist, this.track_index);
 					} else {
 						this.mood = tf_arr[j];
@@ -339,11 +339,9 @@ function oItem(row_index, type, metadb, track_index, group_index, track_index_in
 				var can_tag = rp.indexOf("file") == 0 || rp.indexOf("cdda://") == 0;
 
 				if (mood_hover) {
-					if (properties.use_foo_lastfm_playcount_sync) {
-						if (foo_lastfm_playcount_sync) {
-							var loved = get_tfo("$if2(%lfm_loved%,0)").EvalWithMetadb(this.metadb);
-							handles.RunContextCommand("Last.fm Playcount Sync/" + (loved == 1 ? "Unlove" : "Love"));
-						}
+					if (foo_lastfm_playcount_sync) {
+						var loved = get_tfo("$if2(%lfm_loved%,0)").EvalWithMetadb(this.metadb);
+						handles.RunContextCommand("Last.fm Playcount Sync/" + (loved == 1 ? "Unlove" : "Love"));
 					} else if (can_tag) {
 						if (typeof this.mood == "undefined" || this.mood == 0) {
 							var now_ts = new Date().getTime() / 1000;

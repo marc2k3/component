@@ -457,7 +457,6 @@ var g_tf2_pattern = "";
 var ww = 0, wh = 0;
 var mouse_x = 0, mouse_y = 0;
 var need_repaint = false;
-var foo_playcount = fb.CheckComponent("foo_playcount");
 var foo_lastfm_playcount_sync = fb.CheckComponent("foo_lastfm_playcount_sync");
 var tfos = {};
 var tf_group_key = null;
@@ -486,7 +485,6 @@ var properties = {
 	wallpaperpath : window.GetProperty("JSPLAYLIST.Default Wallpaper Path", ""),
 	max_columns : 24,
 	max_patterns : 25,
-	use_foo_lastfm_playcount_sync : window.GetProperty("Love tracks with foo_lastfm_playcount_sync", false),
 };
 
 var images = {
