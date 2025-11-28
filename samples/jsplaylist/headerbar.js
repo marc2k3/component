@@ -597,10 +597,8 @@ function oHeaderBar() {
 			if (i == column_index) label = "[" + label + "]";
 			columns.AppendMenuItem(CheckMenuIf(this.columns[i].w > 0), columnMenuIdx + i, label);
 		}
-		columns.AppendTo(menu, MF_STRING, "Columns");
-		menu.AppendMenuSeparator();
 
-		menu.AppendMenuItem(CheckMenuIf(cList.enableExtraLine), 2, "Double Track Line");
+		columns.AppendTo(menu, MF_STRING, "Columns");
 
 		var idx = menu.TrackPopupMenu(x, y);
 		menu.Dispose();
@@ -614,14 +612,6 @@ function oHeaderBar() {
 			p.list.setItems(true);
 			p.scrollbar.setCursor(p.list.totalRowVisible, p.list.totalRows, p.list.offset);
 			p.playlistManager.refresh();
-			break;
-		case 2:
-			cList.enableExtraLine = !cList.enableExtraLine;
-			window.SetProperty("JSPLAYLIST.Enable Extra Line", cList.enableExtraLine);
-			resize_panels();
-			p.list.updateHandleList();
-			p.list.setItems(true);
-			p.scrollbar.setCursor(p.list.totalRowVisible, p.list.totalRows, p.list.offset);
 			break;
 		default:
 			if (idx >= groupByMenuIdx && idx < 100) {

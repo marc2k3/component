@@ -52,22 +52,15 @@ function oItem(row_index, type, metadb, track_index, group_index, track_index_in
 			DrawRectangle(gr, this.x, this.y, this.w - 1, this.h - 1, fader_txt);
 		}
 
-		if (cList.enableExtraLine) {
-			var tf1_y = this.y;
-			var tf1_h = (this.h / 2) + 2;
-			var tf2_y = this.y + (this.h / 2);
-			var tf2_h = (this.h / 2) - 2;
-		} else {
-			var tf1_y = this.y;
-			var tf1_h = this.h;
-			var tf2_y = 0;
-			var tf2_h = 0;
-		}
+		var tf1_y = this.y;
+		var tf1_h = (this.h / 2) + 2;
+		var tf2_y = this.y + (this.h / 2);
+		var tf2_h = (this.h / 2) - 2;
 
 		columns.mood_x = ww;
 
 		var tf_arr = get_tfo(g_tf_pattern).EvalPlaylistItem(g_active_playlist, this.track_index).split("^^");
-		var tf2_arr = cList.enableExtraLine ? get_tfo(g_tf2_pattern).EvalPlaylistItem(g_active_playlist, this.track_index).split("^^") : [];
+		var tf2_arr = get_tfo(g_tf2_pattern).EvalPlaylistItem(g_active_playlist, this.track_index).split("^^");
 
 		for (var j = 0; j < p.headerBar.columns.length; j++) {
 			if (p.headerBar.columns[j].w > 0) {
@@ -130,8 +123,7 @@ function oItem(row_index, type, metadb, track_index, group_index, track_index_in
 					break;
 				default:
 					this.drawText(gr, tf_arr[j], g_font_12, txt_color, cx, tf1_y, cw, tf1_h, p.headerBar.columns[j].align);
-					if (cList.enableExtraLine)
-						this.drawText(gr, tf2_arr[j], g_font_12, fader_txt, cx, tf2_y, cw, tf2_h, p.headerBar.columns[j].align);
+					this.drawText(gr, tf2_arr[j], g_font_12, fader_txt, cx, tf2_y, cw, tf2_h, p.headerBar.columns[j].align);
 					break;
 				}
 			}

@@ -215,12 +215,7 @@ function full_repaint() {
 }
 
 function resize_panels() {
-	cRow.playlist_h = scale(cRow.default_playlist_h);
-
-	if (cList.enableExtraLine) {
-		cRow.playlist_h += scale(6);
-	}
-
+	cRow.playlist_h = scale(cRow.default_playlist_h) + scale(6);
 	p.topBar.setSize(0, 0, ww, cTopBar.visible ? cTopBar.height + cHeaderBar.borderWidth : 0);
 
 	p.headerBar.visible = cHeaderBar.locked;
@@ -572,8 +567,7 @@ var cList = {
 	scroll_direction : 1,
 	scroll_step : Math.floor(cRow.playlist_h / 3),
 	scroll_div : 2,
-	borderWidth : 2,
-	enableExtraLine : window.GetProperty("JSPLAYLIST.Enable Extra Line", true)
+	borderWidth : 2
 };
 
 var columns = {
