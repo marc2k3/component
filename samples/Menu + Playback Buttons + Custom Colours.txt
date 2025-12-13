@@ -27,8 +27,11 @@ var pbo_names = playback.GetOrderNames().toArray();
 
 buttons.update = function () {
 	this.buttons.menu = new _button(0, 0, bs, bs, { char : chars.menu, colour : colours.buttons }, null, function () { _menu(0, bs); }, 'Menu');
+
 	this.buttons.album_list = new _button(bs * 2, 0, bs, bs, { char : chars.music, colour : colours.buttons }, null, function () { fb.RunMainMenuCommand('Library/Album List'); }, 'Album List');
 	this.buttons.search = new _button(bs * 3, 0, bs, bs, { char : chars.search, colour : colours.buttons }, null, function () { fb.RunMainMenuCommand('Library/Search'); }, 'Library Search');
+
+	this.buttons.dark_mode_toggle = new _button(bs * 5, 0, bs, bs, { char : is_dark ? chars.brightness : chars.moon , colour: colours.buttons }, null, function () { fb.RunMainMenuCommand("View/Mode/Switch to other mode") }, "Switch to " + (is_dark ? "light mode" : "dark mode"));
 
 	var x = panel.w - (bs * 9);
 

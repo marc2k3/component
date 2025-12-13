@@ -271,6 +271,8 @@ var chars = {
 	album : '\ue93c',
 	folder : '\ued25',
 	autoplaylist : '\uea69',
+	moon : '\ue708', 
+	brightness : '\ue706',
 // Ignore these, they are special chars for $rgb and $font parsing
 	etx : String.fromCharCode(3),
 	bel : String.fromCharCode(7),
