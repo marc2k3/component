@@ -10,6 +10,7 @@
 var panel = new _panel();
 var buttons = new _buttons();
 var bs = Scale(24);
+var can_toggle = check_dark_mode_toggle();
 
 window.MinHeight = window.MaxHeight = bs;
 var colour_mode = new Property('2K3.TOP.COLOUR.MODE', 0); // 0 auto, 1 dark, 2 light, 3 custom
@@ -31,7 +32,9 @@ buttons.update = function () {
 	this.buttons.album_list = new _button(bs * 2, 0, bs, bs, { char : chars.music, colour : colours.buttons }, null, function () { fb.RunMainMenuCommand('Library/Album List'); }, 'Album List');
 	this.buttons.search = new _button(bs * 3, 0, bs, bs, { char : chars.search, colour : colours.buttons }, null, function () { fb.RunMainMenuCommand('Library/Search'); }, 'Library Search');
 
-	this.buttons.dark_mode_toggle = new _button(bs * 5, 0, bs, bs, { char : is_dark ? chars.brightness : chars.moon , colour: colours.buttons }, null, function () { fb.RunMainMenuCommand("View/Mode/Switch to other mode") }, "Switch to " + (is_dark ? "light mode" : "dark mode"));
+	if (can_toggle) {
+		this.buttons.dark_mode_toggle = new _button(bs * 5, 0, bs, bs, { char : is_dark ? chars.brightness : chars.moon , colour: colours.buttons }, null, function () { fb.RunMainMenuCommand("View/Mode/Switch to other mode") }, "Switch to " + (is_dark ? "light mode" : "dark mode"));
+	}
 
 	var x = panel.w - (bs * 9);
 
@@ -46,6 +49,19 @@ buttons.update = function () {
 	this.buttons.console = new _button(x + (bs * 7), 0, bs, bs, {char : chars.list, colour:colours.buttons }, null, function () { fb.ShowConsole(); }, 'Console');
 	this.buttons.preferences = new _button(x + (bs * 8), 0, bs, bs, { char : chars.preferences, colour : colours.buttons }, null, function () { fb.ShowPreferences(); }, 'Preferences');
 };
+
+function check_dark_mode_toggle() {
+	var commands_str = fb.EnumerateMainMenuCommands();
+	var commands = JSON.parse(commands_str);
+
+	var is_cui = commands.filter(function (item) {
+		return item.FullPath == "View/Show status bar" && item.Visible;
+	}).length == 1;
+
+	return is_cui && commands.filter(function (item) {
+		return item.FullPath == "View/Mode/Switch to other mode";
+	}).length == 1;
+}
 
 function on_colours_changed() {
 	is_dark = window.IsDark;
