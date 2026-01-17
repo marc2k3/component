@@ -212,28 +212,38 @@ function Scale(size) {
 	return Math.round(size * DPI / 72);
 }
 
+function IsFlagSet(value, flags) {
+	return (value & flags) != 0;
+}
+
 function PlaylistCanAddItems(playlistIndex) {
-	return !(plman.GetPlaylistLockFilterMask(playlistIndex) & PlaylistLockFilterMask.filter_add);
+	var mask = plman.GetPlaylistLockFilterMask(playlistIndex);
+	return !IsFlagSet(mask, PlaylistLockFilterMask.filter_add);
 }
 
 function PlaylistCanRemoveItems(playlistIndex) {
-	return !(plman.GetPlaylistLockFilterMask(playlistIndex) & PlaylistLockFilterMask.filter_remove);
+	var mask = plman.GetPlaylistLockFilterMask(playlistIndex);
+	return !IsFlagSet(mask, PlaylistLockFilterMask.filter_remove);
 }
 
 function PlaylistCanReorder(playlistIndex) {
-	return !(plman.GetPlaylistLockFilterMask(playlistIndex) & PlaylistLockFilterMask.filter_reorder);
+	var mask = plman.GetPlaylistLockFilterMask(playlistIndex);
+	return !IsFlagSet(mask, PlaylistLockFilterMask.filter_reorder);
 }
 
 function PlaylistCanReplaceItems(playlistIndex) {
-	return !(plman.GetPlaylistLockFilterMask(playlistIndex) & PlaylistLockFilterMask.filter_replace);
+	var mask = plman.GetPlaylistLockFilterMask(playlistIndex);
+	return !IsFlagSet(mask, PlaylistLockFilterMask.filter_replace);
 }
 
 function PlaylistCanRename(playlistIndex) {
-	return !(plman.GetPlaylistLockFilterMask(playlistIndex) & PlaylistLockFilterMask.filter_rename);
+	var mask = plman.GetPlaylistLockFilterMask(playlistIndex);
+	return !IsFlagSet(mask, PlaylistLockFilterMask.filter_rename);
 }
 
 function PlaylistCanRemove(playlistIndex) {
-	return !(plman.GetPlaylistLockFilterMask(playlistIndex) & PlaylistLockFilterMask.filter_remove_playlist);
+	var mask = plman.GetPlaylistLockFilterMask(playlistIndex);
+	return !IsFlagSet(mask, PlaylistLockFilterMask.filter_remove_playlist);
 }
 
 var chars = {
