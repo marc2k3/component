@@ -178,7 +178,7 @@ function _albumart(x, y, w, h) {
 			break;
 		case 1030:
 			try {
-				var tmp = utils.TextBox('Enter image types here. Each one will checked in order until a valid image is found. See Help.', window.Name, this.properties.edit.value, this.help_text);
+				var tmp = utils.TextBox('Enter image types here. Each one will be checked in order until a valid image is found. See Help.', window.Name, this.properties.edit.value, this.help_text);
 				if (tmp != this.properties.edit.value) {
 					this.properties.edit.value = tmp;
 					this.refresh();
