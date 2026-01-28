@@ -1059,7 +1059,8 @@ function oBrowser() {
 			this.populate();
 			break;
 		case 25:
-			utils.RemoveFolderRecursive(CACHE_FOLDER, 1);
+			utils.RemovePath(CACHE_FOLDER);
+			utils.CreateFolder(CACHE_FOLDER);
 			images.clear();
 			this.populate();
 			break;
