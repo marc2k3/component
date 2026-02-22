@@ -206,7 +206,7 @@ class Thumbs {
 
 		if (this.properties.source.value == 1 && files.length > 1) {
 			this.default_file = this.folder + this.defaults[this.artist];
-			let tmp = _.indexOf(files, this.default_file);
+			let tmp = files.indexOf(this.default_file);
 
 			if (tmp > -1) {
 				files.splice(tmp, 1);

@@ -210,7 +210,7 @@ class Properties {
 			let item = this.data[this.index];
 
 			if (x > this.x + this.clickable_text_x && x < this.x + this.clickable_text_x + Math.min(item.width, this.text_width) && typeof item.url == 'string') {
-				if (_.startsWith(item.url, 'http')) {
+				if (item.url.startsWith('http')) {
 					utils.Run(item.url);
 				} else {
 					plman.ActivePlaylist = plman.CreateAutoPlaylist(plman.PlaylistCount, item.value, item.url);
@@ -245,7 +245,7 @@ class Properties {
 			if (x > this.x + this.clickable_text_x && x < this.x + this.clickable_text_x + Math.min(item.width, this.text_width) && typeof item.url == 'string') {
 				window.SetCursor(IDC_HAND);
 
-				if (_.startsWith(item.url, 'http')) {
+				if (item.url.startsWith('http')) {
 					TT(item.url);
 				} else {
 					TT('Autoplaylist: ' + item.url);

@@ -1025,7 +1025,7 @@ function oPage(id, objectName, label, nbrows) {
 			// delete user column button
 			var dy = Math.floor(cSettings.topBarHeight + rh * 2.1 + g_z5 + p.settings.newbutton.h) - (this.offset * cSettings.rowHeight);
 			var idx = p.settings.pages[1].elements[0].selectedId;
-			if (p.headerBar.columns[idx].ref.indexOf("Custom") == 0) {
+			if (p.headerBar.columns[idx].ref.startsWith("Custom")) {
 				p.settings.delbutton.draw(gr, listBox_button_x, dy);
 			}
 			break;
@@ -1040,7 +1040,7 @@ function oPage(id, objectName, label, nbrows) {
 			// delete pattern button
 			var dy = Math.floor(cSettings.topBarHeight + rh * 2.1 + g_z5 + p.settings.newbuttonPattern.h) - (this.offset * cSettings.rowHeight);
 			var idx = p.settings.pages[2].elements[0].selectedId;
-			if (p.list.groupby[idx].ref.indexOf("Custom") == 0) {
+			if (p.list.groupby[idx].ref.startsWith("Custom")) {
 				p.settings.delbuttonPattern.draw(gr, listBox_button_x, dy);
 			}
 

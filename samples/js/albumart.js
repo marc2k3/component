@@ -90,7 +90,7 @@ class AlbumArt {
 			case 0:
 				if (panel.metadb.Path == this.path) {
 					Explorer(this.path);
-				} else if (utils.IsFile(this.path) || _.startsWith(this.path, 'http')) {
+				} else if (utils.IsFile(this.path) || this.path.startsWith('http')) {
 					utils.Run(this.path);
 				}
 				break;
