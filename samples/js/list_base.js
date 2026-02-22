@@ -77,7 +77,7 @@ class ListBase {
 			return false;
 
 		if (this.count > this.rows) {
-			var offset = this.offset - (s * 3);
+			let offset = this.offset - (s * 3);
 
 			if (offset < 0) {
 				offset = 0;

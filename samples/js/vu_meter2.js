@@ -80,7 +80,7 @@ class VUMeter {
 
 	start_timer () {
 		if (!this.timer_id) {
-			this.timer_id = window.SetInterval((function () { this.update_graph(); }).bind(this), this.timer_interval);
+			this.timer_id = window.SetInterval(() => { this.update_graph(); }, this.timer_interval);
 		}
 	}
 
@@ -220,11 +220,11 @@ class VUMeter {
 			return;
 
 		let smooth_mode = this.properties.meter_style.value == 0;
+		let block_count, block_height, block_width, block_pad, height, width, blocks, bar_width, bar_height;
 
 		if (this.is_horizontal) {
-			let bar_width = this.w;
-			let bar_height = Math.floor(this.h / this.channels.count);
-			let block_count, block_width, block_pad;
+			bar_width = this.w;
+			bar_height = Math.floor(this.h / this.channels.count);
 
 			if (!smooth_mode) {
 				block_count = Math.max(Math.floor(this.dBrange / this.properties.rms_block_db.value), 1);
@@ -234,14 +234,14 @@ class VUMeter {
 
 			for (let c = 0; c < this.channels.count; ++c) {
 				if (this.RMS_levels[c]) {
-					let rms_db = Clamp(this.to_db(this.RMS_levels[c]), this.minDB, this.maxDB);
+					const rms_db = Clamp(this.to_db(this.RMS_levels[c]), this.minDB, this.maxDB);
 
 					if (smooth_mode) {
-						let width = Math.round(bar_width * (rms_db - this.minDB) / this.dBrange);
+						width = Math.round(bar_width * (rms_db - this.minDB) / this.dBrange);
 						gr.FillRectangle(this.x, this.y + (bar_height * c), width, bar_height - 1, this.colours.bar);
 					} else {
-						let blocks = Math.round(block_count * (rms_db - this.minDB) / this.dBrange);
-						let width = blocks * block_width;
+						blocks = Math.round(block_count * (rms_db - this.minDB) / this.dBrange);
+						width = blocks * block_width;
 						gr.FillRectangle(this.x, this.y + (bar_height * c), width, bar_height - 1, this.colours.bar);
 
 						for (let i = 1; i <= blocks; ++i) {
@@ -251,7 +251,7 @@ class VUMeter {
 				}
 
 				if (this.peak_bar_width > 0 && this.Peak_levels[c] > 0) {
-					let peak_db = Clamp(this.to_db(this.Peak_levels[c]), this.minDB, this.maxDB);
+					const peak_db = Clamp(this.to_db(this.Peak_levels[c]), this.minDB, this.maxDB);
 
 					if (peak_db > this.minDB) {
 						let peak_pos = Math.round(bar_width * (peak_db - this.minDB) / this.dBrange);
@@ -260,8 +260,8 @@ class VUMeter {
 				}
 			}
 		} else { // vertical
-			let bar_width = Math.floor(this.w / this.channels.count);
-			let bar_height = this.h;
+			bar_width = Math.floor(this.w / this.channels.count);
+			bar_height = this.h;
 
 			if (!smooth_mode) {
 				block_count = Math.max(Math.floor(this.dBrange / this.properties.rms_block_db.value), 1);
@@ -271,13 +271,13 @@ class VUMeter {
 
 			for (let c = 0; c < this.channels.count; ++c) {
 				if (this.RMS_levels[c]) {
-					let rms_db = Clamp(this.to_db(this.RMS_levels[c]), this.minDB, this.maxDB);
+					const rms_db = Clamp(this.to_db(this.RMS_levels[c]), this.minDB, this.maxDB);
 
 					if (smooth_mode) {
-						let height = Math.round(bar_height * (rms_db - this.minDB) / this.dBrange);
+						height = Math.round(bar_height * (rms_db - this.minDB) / this.dBrange);
 					} else {
-						let blocks = Math.round(block_count * (rms_db - this.minDB) / this.dBrange);
-						let height = blocks * block_height;
+						blocks = Math.round(block_count * (rms_db - this.minDB) / this.dBrange);
+						height = blocks * block_height;
 					}
 
 					gr.FillRectangle(this.x + (bar_width * c), this.y, bar_width - 1, this.h, this.colours.bar);
@@ -291,10 +291,10 @@ class VUMeter {
 				}
 
 				if (this.peak_bar_width > 0 && this.Peak_levels[c] > 0) {
-					let peak_db = Clamp(this.to_db(this.Peak_levels[c]), this.minDB, this.maxDB);
+					const peak_db = Clamp(this.to_db(this.Peak_levels[c]), this.minDB, this.maxDB);
 
 					if (peak_db > this.minDB) {
-						let peak_pos = this.h - Math.round(bar_height * (peak_db - this.minDB) / this.dBrange);
+						const peak_pos = this.h - Math.round(bar_height * (peak_db - this.minDB) / this.dBrange);
 						gr.FillRectangle(this.x + (bar_width * c), this.y + peak_pos, bar_width - 1, this.peak_bar_width, this.colours.peak);
 					}
 				}
@@ -361,7 +361,7 @@ class VUMeter {
 			style_menu.AppendMenuSeparator();
 			style_menu.AppendMenuItem(MF_GRAYED, 0, this.is_horizontal ? 'Block width (dB)' : 'Block height (dB)');
 
-			this.rms_block_dbs.forEach(function (item, index) {
+			this.rms_block_dbs.forEach((item, index) => {
 				style_menu.AppendMenuItem(MF_STRING, 20 + index, item);
 			});
 

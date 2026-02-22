@@ -42,7 +42,7 @@ class AlbumArt {
 
 	want_blur () {
 		if (this.is_text_display_panel) {
-			var properties = panel.display_objects[0].properties;
+			let properties = panel.display_objects[0].properties;
 			return properties.albumart.enabled && properties.albumart_blur.enabled;
 		} else {
 			return this.is_review_panel;
@@ -219,7 +219,7 @@ class AlbumArt {
 			break;
 		case 1030:
 			try {
-				var tmp = utils.TextBox('Enter image types here. Each one will be checked in order until a valid image is found. See Help.', window.Name, this.properties.edit.value, this.help_text);
+				let tmp = utils.TextBox('Enter image types here. Each one will be checked in order until a valid image is found. See Help.', window.Name, this.properties.edit.value, this.help_text);
 				if (tmp != this.properties.edit.value) {
 					this.properties.edit.value = tmp;
 					this.refresh();
@@ -247,7 +247,7 @@ class AlbumArt {
 	}
 
 	refresh () {
-		var img = null;
+		let img = null;
 		this.custom_id = -1;
 		this.custom_type = -1;
 
@@ -256,10 +256,10 @@ class AlbumArt {
 				img = panel.metadb.GetAlbumArt(this.properties.id.value);
 			} else {
 				_.forEach(StringToArray(this.properties.edit.value, CRLF), (item) => {
-					var id_type = StringToArray(item, '_');
+					const id_type = StringToArray(item, '_');
 					if (id_type.length == 2) {
-						var id = this.ids.indexOf(id_type[0]);
-						var type = this.types.indexOf(id_type[1]);
+						const id = this.ids.indexOf(id_type[0]);
+						const type = this.types.indexOf(id_type[1]);
 
 						if (id > -1 && type > -1) {
 							img = this.get_custom(id, type);
@@ -313,7 +313,7 @@ class AlbumArt {
 		if (this.properties.mode.value == 1 || !this.containsXY(this.mx, this.my))
 			return false;
 
-		var id = this.properties.id.value - s;
+		let id = this.properties.id.value - s;
 
 		if (id < 0) {
 			id = 4;

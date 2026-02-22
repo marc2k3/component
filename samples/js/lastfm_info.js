@@ -108,24 +108,26 @@ class LastFmInfo {
 		if (lastfm.api_key.empty())
 			return;
 
+		let url;
+
 		switch (this.properties.mode.value) {
 		case 0:
 			if (!Tagged(this.artist)) {
 				return;
 			}
 
-			var url = lastfm.base_url() + '&limit=100&method=' + this.artist_methods[this.properties.artist_method.value].method + '&artist=' + encodeURIComponent(this.artist);
+			url = lastfm.base_url() + '&limit=100&method=' + this.artist_methods[this.properties.artist_method.value].method + '&artist=' + encodeURIComponent(this.artist);
 			break;
 		case 1:
 			if (this.properties.user_mode.value == 0) {
-				var url = lastfm.base_url() + '&limit=100&method=' + this.chart_methods[this.properties.charts_method.value].method + '&period=' + this.chart_periods[this.properties.charts_period.value].period + '&user=' + lastfm.username;
+				url = lastfm.base_url() + '&limit=100&method=' + this.chart_methods[this.properties.charts_method.value].method + '&period=' + this.chart_periods[this.properties.charts_period.value].period + '&user=' + lastfm.username;
 			} else {
-				var url = lastfm.base_url() + '&limit=100&method=user.getRecentTracks&user=' + lastfm.username;
+				url = lastfm.base_url() + '&limit=100&method=user.getRecentTracks&user=' + lastfm.username;
 			}
 			break;
 		}
 
-		var task_id = utils.HTTPRequestAsync(GET, url, lastfm.ua);
+		const task_id = utils.HTTPRequestAsync(GET, url, lastfm.ua);
 		this.filenames[task_id] = this.filename;
 	}
 
@@ -142,7 +144,7 @@ class LastFmInfo {
 	}
 
 	http_request_done (task_id, success, response_text) {
-		var f = this.filenames[task_id];
+		const f = this.filenames[task_id];
 
 		if (!f)
 			return;
@@ -152,7 +154,7 @@ class LastFmInfo {
 			return;
 		}
 
-		var data = JsonParse(response_text);
+		let data = JsonParse(response_text);
 
 		if (data.error) {
 			console.log(N, data.message);
@@ -189,7 +191,7 @@ class LastFmInfo {
 		case !this.in_range:
 			break;
 		default:
-			var item = this.data[this.index];
+			let item = this.data[this.index];
 
 			if (x > this.x + this.clickable_text_x && x < this.x + this.clickable_text_x + Math.min(item.width, this.text_width) && typeof item.url == 'string') {
 				if (_.startsWith(item.url, 'http')) {
@@ -221,7 +223,7 @@ class LastFmInfo {
 		case !this.in_range:
 			break;
 		default:
-			var item = this.data[this.index];
+			let item = this.data[this.index];
 
 			if (x > this.x + this.clickable_text_x && x < this.x + this.clickable_text_x + Math.min(item.width, this.text_width) && typeof item.url == 'string') {
 				window.SetCursor(IDC_HAND);
@@ -248,12 +250,12 @@ class LastFmInfo {
 		case this.properties.mode.value == 1 && this.properties.user_mode.value == 0: // charts
 			this.clickable_text_x = this.spacer_w + 5;
 			this.text_width = Math.round(this.w * 0.5);
-			var lastfm_charts_bar_x = this.x + this.clickable_text_x + this.text_width + 10;
-			var unit_width = (this.w - lastfm_charts_bar_x - Scale(50)) / this.data[0].playcount;
+			const lastfm_charts_bar_x = this.x + this.clickable_text_x + this.text_width + 10;
+			const unit_width = (this.w - lastfm_charts_bar_x - Scale(50)) / this.data[0].playcount;
 
-			for (var i = 0; i < Math.min(this.count, this.rows); i++) {
-				var item = this.data[i + this.offset];
-				var bar_width = Math.ceil(unit_width * item.playcount);
+			for (let i = 0; i < Math.min(this.count, this.rows); i++) {
+				let item = this.data[i + this.offset];
+				const bar_width = Math.ceil(unit_width * item.playcount);
 				this.draw_row(gr, item.rank + '.', panel.colours.highlight, this.x, this.y + Scale(12) + (i * panel.row_height), this.clickable_text_x - 5, panel.row_height, DWRITE_TEXT_ALIGNMENT_TRAILING);
 				this.draw_row(gr, item.name, panel.colours.text, this.x + this.clickable_text_x, this.y + Scale(12) + (i * panel.row_height), this.text_width, panel.row_height);
 				gr.FillRectangle(lastfm_charts_bar_x, this.y + Scale(13) + (i * panel.row_height), bar_width, panel.row_height - 3, panel.colours.highlight);
@@ -264,7 +266,7 @@ class LastFmInfo {
 			this.clickable_text_x = 0;
 			this.text_width = this.w;
 
-			for (var i = 0; i < Math.min(this.count, this.rows); i++) {
+			for (let i = 0; i < Math.min(this.count, this.rows); i++) {
 				this.draw_row(gr, this.data[i + this.offset].name, panel.colours.text, this.x, this.y + Scale(12) + (i * panel.row_height), this.text_width, panel.row_height);
 			}
 			break;
@@ -380,7 +382,7 @@ class LastFmInfo {
 			return;
 
 		if (panel.metadb) {
-			var temp_artist = panel.tf(DEFAULT_ARTIST);
+			const temp_artist = panel.tf(DEFAULT_ARTIST);
 			if (this.artist == temp_artist)
 				return;
 
@@ -452,16 +454,19 @@ class LastFmInfo {
 			if (this.properties.user_mode.value == 0) {
 				this.filename = Paths.lastfm + lastfm.username + '.' + this.chart_methods[this.properties.charts_method.value].method + '.' + this.chart_periods[this.properties.charts_period.value].period + '.json';
 				if (utils.IsFile(this.filename)) {
-					var data = _.get(JsonParseFile(this.filename), this.chart_methods[this.properties.charts_method.value].json, []);
+					let data = _.get(JsonParseFile(this.filename), this.chart_methods[this.properties.charts_method.value].json, []);
 
-					for (var i = 0; i < data.length; i++) {
+					for (let i = 0; i < data.length; i++) {
+						let name, url;
+
 						if (this.properties.charts_method.value == 0) {
-							var name = data[i].name;
-							var url = data[i].url;
+							name = data[i].name;
+							url = data[i].url;
 						} else {
-							var name = data[i].artist.name + ' - ' + data[i].name;
-							var url = data[i].url;
+							name = data[i].artist.name + ' - ' + data[i].name;
+							url = data[i].url;
 						}
+
 						this.data[i] = {
 							name : name,
 							width : name.calc_width(panel.fonts.normal),
@@ -484,7 +489,8 @@ class LastFmInfo {
 					this.data = _(_.get(JsonParseFile(this.filename), 'recenttracks.track', []))
 						.filter('date')
 						.map((item) => {
-							var name = item.artist['#text'] + ' - ' + item.name;
+							const name = item.artist['#text'] + ' - ' + item.name;
+
 							return {
 								name : name,
 								width : name.calc_width(panel.fonts.normal),
@@ -509,7 +515,7 @@ class LastFmInfo {
 			return false;
 
 		if (this.count > this.rows) {
-			var offset = this.offset - (s * 3);
+			let offset = this.offset - (s * 3);
 
 			if (offset < 0) {
 				offset = 0;

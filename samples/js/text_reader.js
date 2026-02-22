@@ -132,7 +132,7 @@ class TextReader {
 
 	refresh () {
 		if (panel.metadb) {
-			var temp_filename = panel.tf(this.properties.filename_tf.value);
+			const temp_filename = panel.tf(this.properties.filename_tf.value);
 
 			if (this.filename == temp_filename) {
 				window.Repaint(); // title might have changed
@@ -145,7 +145,7 @@ class TextReader {
 				this.filename = _.first(GetFiles(this.filename, this.exts))
 			}
 
-			var str = utils.ReadUTF8(this.filename).replace(/\t/g, '    ');
+			const str = utils.ReadUTF8(this.filename).replace(/\t/g, '    ');
 
 			if (str != this.text) {
 				this.clear_layout()

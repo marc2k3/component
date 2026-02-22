@@ -28,7 +28,7 @@ class LastFm {
 	}
 
 	download_images (response_text, filename_base, limit) {
-		var json = window.himalaya.parse(response_text);
+		let json = window.himalaya.parse(response_text);
 
 		this.image_urls = [];
 		this.extract_urls(json);
@@ -96,7 +96,7 @@ class LastFm {
 		}
 	}
 
-	write_file = function () {
+	write_file () {
 		const str = JSON.stringify({
 			username : this.username,
 			api_key : this.api_key,
