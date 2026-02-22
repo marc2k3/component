@@ -6,7 +6,7 @@ class LastFm {
 		this.json_file = Paths.data + 'lastfm.json';
 		this.api_key = '';
 		this.username = ''
-		this.ua = 'javascript_panelLastFm';
+		this.ua = 'javascript_panel_lastfm';
 		this.read_file();
 		this.image_urls = [];
 	}
