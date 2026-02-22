@@ -1,7 +1,7 @@
 'use strict';
 
 window.DefineScript('Images', {author:'marc2003'});
-include(fb.ComponentPath + 'helpers.txt');
+include(fb.ComponentPath + 'helpers.js');
 includeJS('lodash.min.js');
 includeJS('himalaya.js');
 includeJS('common.js');

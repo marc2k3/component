@@ -1,7 +1,7 @@
 'use strict';
 
 window.DefineScript('VU Meter', {author:'Case + marc2003'});
-include(fb.ComponentPath + 'helpers.txt');
+include(fb.ComponentPath + 'helpers.js');
 includeJS('vu_meter.js');
 
 // Original version, resize to show/hide labels, horizontal only

@@ -1,6 +1,6 @@
 'use strict';
 window.DefineScript('VU Meter 2', {author:'Case + marc2003'});
-include(fb.ComponentPath + 'helpers.txt');
+include(fb.ComponentPath + 'helpers.js');
 includeJS('vu_meter2.js');
 
 // Modified version, auto orientation, no labels

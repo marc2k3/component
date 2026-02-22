@@ -11,7 +11,7 @@ window.DefineScript(
 	}
 );
 
-include(fb.ComponentPath + 'helpers.txt');
+include(fb.ComponentPath + 'helpers.js');
 include(Paths.jsplaylist + 'inputbox.js');
 include(Paths.jsplaylist + 'topbar.js');
 include(Paths.jsplaylist + 'scrollbar.js');
