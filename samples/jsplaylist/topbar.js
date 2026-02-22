@@ -67,6 +67,6 @@ function oTopBar() {
 
 	this.line1 = "";
 	this.line2 = "";
-	this.logo = utils.LoadImage(Paths.jsplaylist + 'foobar2000.png');
+	this.logo = utils.LoadImage(Paths.images + 'foobar2000.png');
 	this.setDatas();
 }

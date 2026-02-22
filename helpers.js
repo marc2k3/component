@@ -35,6 +35,7 @@ class Paths {
 	static jsplaylist = this.samples + 'jsplaylist\\';
 	static smooth = this.samples + 'smooth\\';
 	static text = this.samples + 'text\\';
+	static images = this.samples + 'images\\';
 
 	static data = fb.ProfilePath + 'js_data\\';
 	static smooth_cache = this.data + 'smooth_cache\\';
