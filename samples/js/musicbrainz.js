@@ -92,10 +92,7 @@ class MusicBrainz {
 			let data = JsonParse(response_text);
 			let max_offset = Math.min(500, data['release-group-count'] || 0) - 100;
 			let rg = data['release-groups'] || [];
-
-			if (rg.length) {
-				Array.prototype.push.apply(this.mb_data, rg);
-			}
+			this.mb_data.push(...rg);
 
 			if (this.mb_offset < max_offset) {
 				this.mb_offset += 100;
@@ -303,7 +300,7 @@ class MusicBrainz {
 							if (group) {
 								let name = (primary + ' + ' + secondary).replace('null + null', 'Unspecified type').replace('null + ', '').replace(' + null', '');
 								this.data.push({name : name, width : 0, url : 'SECTION_HEADER', date : ''});
-								Array.prototype.push.apply(this.data, group);
+								this.data.push(...group);
 								this.data.push({name : '', width : 0, url : '', date : ''});
 							}
 						});
