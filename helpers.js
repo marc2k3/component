@@ -2,7 +2,6 @@
 
 class Property {
 	#name;
-	#default_;
 	#val;
 
 	constructor (name, default_) {
@@ -17,7 +16,6 @@ class Property {
 		});
 
 		this.#name = name;
-		this.#default_ = default_;
 		this.#val = window.GetProperty(name, default_);
 	}
 
