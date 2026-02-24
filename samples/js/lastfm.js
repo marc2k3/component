@@ -45,7 +45,7 @@ class LastFm {
 			})
 			.take(limit)
 			.forEach((item) => {
-				utils.DownloadFileAsync(item.url, item.filename);
+				utils.DownloadFileAsync(item.url, item.filename, true);
 			});
 	}
 
