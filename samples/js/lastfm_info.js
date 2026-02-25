@@ -127,7 +127,7 @@ class LastFmInfo {
 			break;
 		}
 
-		const task_id = utils.HTTPRequestAsync(GET, url, lastfm.ua);
+		const task_id = utils.HTTPRequestAsync(GET, url, LastFm.ua);
 		this.filenames[task_id] = this.filename;
 	}
 

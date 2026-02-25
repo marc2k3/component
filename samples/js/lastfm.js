@@ -1,12 +1,17 @@
 'use strict';
 
 class LastFm {
+	static ua = 'javascript_panel_lastfm';
+	static headers = JSON.stringify({
+		'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:144.0) Gecko/20100101 Firefox/144.0',
+		'Referer' : 'https://www.last.fm',
+	});
+
 	constructor() {
 		utils.CreateFolder(Paths.data);
 		this.json_file = Paths.data + 'lastfm.json';
 		this.api_key = '';
 		this.username = ''
-		this.ua = 'javascript_panel_lastfm';
 		this.read_file();
 		this.image_urls = [];
 	}

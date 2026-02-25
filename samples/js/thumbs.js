@@ -7,7 +7,7 @@ class Thumbs {
 		this.images = [];
 		this.blurred_images = [];
 		this.thumbs = [];
-		this.history = {}; // track auto-downloads, attempt same artist only once per session
+		this.history = new Set();
 		this.limits = [1, 3, 5, 10, 15, 20];
 		this.modes = ['grid', 'left', 'right', 'top', 'bottom', 'off'];
 		this.pxs = [75, 100, 150, 200, 250, 300];
@@ -17,7 +17,7 @@ class Thumbs {
 		this.default_file = '';
 		this.folder = '';
 		this.artist = '';
-		this.artists = {};
+		this.artists = new Map();
 		this.properties = {};
 		this.img = null;
 		this.circular_mask = null;
@@ -43,11 +43,6 @@ class Thumbs {
 			max_size : new Property('2K3.THUMBS.MAX.SIZE', 1024),
 			blur_opacity : new Property('2K3.THUMBS.BLUR.OPACITY', 0.5),
 		};
-
-		this.headers = JSON.stringify({
-			'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:144.0) Gecko/20100101 Firefox/144.0',
-			'Referer' : 'https://www.last.fm',
-		});
 
 		this.close_btn = new SimpleButton(chars.close, 0, 0, Scale(10), Scale(10), () => { return this.properties.mode.value == 0 && this.overlay; }, () => { this.enable_overlay(false); });
 		this.create_mask();
@@ -160,8 +155,8 @@ class Thumbs {
 			return;
 
 		const url = 'https://www.last.fm/music/' + encodeURIComponent(this.artist) + '/+images';
-		const task_id = utils.HTTPRequestAsync(GET, url, this.headers);
-		this.artists[task_id] = this.artist;
+		const task_id = utils.HTTPRequestAsync(GET, url, LastFm.headers);
+		this.artists.set(task_id, this.artist);
 	}
 
 	draw_blurred_image (gr) {
@@ -230,7 +225,7 @@ class Thumbs {
 	}
 
 	http_request_done (task_id, success, response_text, status, response_headers) {
-		const artist = this.artists[task_id];
+		const artist = this.artists.get(task_id);
 
 		if (!artist)
 			return; // we didn't request this id
@@ -442,8 +437,14 @@ class Thumbs {
 	playback_time () {
 		this.counter++;
 
-		if (panel.selection.value == 0 && this.properties.source.value == 1 && this.properties.auto_download.enabled && this.counter == 2 && this.images.length == 0 && !this.history[this.artist]) {
-			this.history[this.artist] = true;
+		if (panel.selection.value == 0
+			&& this.properties.source.value == 1
+			&& this.properties.auto_download.enabled
+			&& this.counter == 2
+			&& this.images.length == 0
+			&& !this.history.has(this.artist))
+		{
+			this.history.add(this.artist);
 			this.download();
 		}
 	}

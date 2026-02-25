@@ -9,13 +9,13 @@ class Images {
 		this.mx = 0;
 		this.my = 0;
 		this.image_paths = [];
-		this.history = {}; // track auto-downloads, attempt same artist only once per session
+		this.history = new Set();
 		this.limits = [1, 3, 5, 10, 15, 20];
 		this.modes = ['grid', 'left', 'right', 'top', 'bottom', 'off'];
 		this.exts = ['webp', 'jpg', 'jpeg', 'png', 'gif', 'heif', 'heic', 'avif', 'jxl'];
 		this.folder = '';
 		this.artist = '';
-		this.artists = {};
+		this.artists = new Map();
 		this.properties = {};
 		this.image_index = 0;
 		this.time = 0;
@@ -46,11 +46,6 @@ class Images {
 			this.properties.blur_opacity = new Property('2K3.IMAGES.BLUR.OPACITY', 0.5);
 		}
 
-		this.headers = JSON.stringify({
-			'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:144.0) Gecko/20100101 Firefox/144.0',
-			'Referer' : 'https://www.last.fm',
-		});
-
 		utils.CreateFolder(Paths.artists);
 		window.SetInterval(() => {
 			this.interval_func();
@@ -71,12 +66,12 @@ class Images {
 			return;
 
 		const url = 'https://www.last.fm/music/' + encodeURIComponent(this.artist) + '/+images';
-		const task_id = utils.HTTPRequestAsync(GET, url, this.headers);
-		this.artists[task_id] = this.artist;
+		const task_id = utils.HTTPRequestAsync(GET, url, LastFm.headers);
+		this.artists.set(task_id, this.artist);
 	}
 
 	http_request_done (task_id, success, response_text, status, response_headers) {
-		const artist = this.artists[task_id];
+		const artist = this.artists.get(task_id);
 
 		if (!artist)
 			return; // we didn't request this id
@@ -173,8 +168,14 @@ class Images {
 	playback_time () {
 		this.counter++;
 
-		if (panel.selection.value == 0 && this.properties.source.value == 1 && this.properties.auto_download.enabled && this.counter == 2 && this.image_paths.length == 0 && !this.history[this.artist]) {
-			this.history[this.artist] = true;
+		if (panel.selection.value == 0
+			&& this.properties.source.value == 1
+			&& this.properties.auto_download.enabled
+			&& this.counter == 2
+			&& this.image_paths.length == 0
+			&& !this.history.has(this.artist))
+		{
+			this.history.add(this.artist);
 			this.download();
 		}
 	}
