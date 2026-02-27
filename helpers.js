@@ -35,8 +35,8 @@ class Paths {
 	static text = this.samples + 'text\\';
 	static images = this.samples + 'images\\';
 
-	static data = fb.ProfilePath + 'js_data\\';
-	static smooth_cache = this.data + 'smooth_cache\\';
+	static data = fb.ProfilePath + 'jsp-data\\';
+	static smooth_cache = this.data + 'smooth-cache\\';
 	static artists = this.data + 'artists\\';
 	static lastfm = this.data + 'lastfm\\';
 }
