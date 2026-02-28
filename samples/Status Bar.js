@@ -21,7 +21,7 @@ let properties = {
 	text : new Property('2K3.STATUS.TEXT', RGB(0, 0, 0))
 };
 
-const tfo = fb.TitleFormat(properties.tf.value);
+let tfo = fb.TitleFormat(properties.tf.value);
 
 refresh();
 
