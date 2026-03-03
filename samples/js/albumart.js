@@ -3,7 +3,6 @@
 class AlbumArt {
 	constructor (x, y, w, h) {
 		this.is_text_display_panel = panel.display_objects.length == 1;
-		this.is_review_panel = panel.text_objects.length == 1 && panel.text_objects[0].name == 'allmusic';
 
 		this.x = x;
 		this.y = y;
@@ -11,7 +10,7 @@ class AlbumArt {
 		this.h = h;
 		this.mx = 0;
 		this.my = 0;
-		this.tooltip = '';
+		this.tooltip_text = '';
 		this.image_index = 0;
 		this.path = null;
 		this.hover = false;
@@ -33,20 +32,15 @@ class AlbumArt {
 			mode : new Property('2K3.ARTREADER.MODE', 0), // 0 default, 1 custom
 			edit : new Property('2K3.ARTREADER.EDIT', 'front_default\r\ndisc_default\r\nartist_default\r\nfront_stub\r\n'),
 		};
-
-		if (this.is_review_panel) {
-			this.properties.layout = new Property('2K3.ARTREADER.LAYOUT', 0); // 0 horizontal, 1 vertical
-			this.properties.ratio = new Property('2K3.ARTREADER.RATIO', 0.5);
-		}
 	}
 
 	want_blur () {
 		if (this.is_text_display_panel) {
 			let properties = panel.display_objects[0].properties;
 			return properties.albumart.enabled && properties.albumart_blur.enabled;
-		} else {
-			return this.is_review_panel;
 		}
+
+		return false;
 	}
 
 	containsXY (x, y) {
@@ -120,7 +114,7 @@ class AlbumArt {
 
 		if (this.containsXY(x, y)) {
 			if (this.bitmap.normal) {
-				TT(this.tooltip);
+				TT(this.tooltip_text);
 			}
 
 			this.hover = true;
@@ -139,22 +133,11 @@ class AlbumArt {
 		if (!this.bitmap.normal)
 			return;
 
-		if (this.is_review_panel) {
-			DrawImage(gr, this.bitmap.normal, this.x, this.y, this.w, this.h, image.top_align, 1.0, RGB(150, 150, 150));
-		} else {
-			DrawImage(gr, this.bitmap.normal, this.x, this.y, this.w, this.h, this.properties.aspect.value);
-		}
+		DrawImage(gr, this.bitmap.normal, this.x, this.y, this.w, this.h, this.properties.aspect.value);
 	}
 
 	rbtn_up (x, y) {
-		if (this.is_review_panel) {
-			panel.m.AppendMenuItem(MF_STRING, 1000, 'Album Art left, Text right');
-			panel.m.AppendMenuItem(MF_STRING, 1001, 'Album Art top, Text bottom');
-			panel.m.CheckMenuRadioItem(1000, 1001, this.properties.layout.value + 1000);
-			panel.m.AppendMenuSeparator();
-		}
-
-		panel.m.AppendMenuItem(MF_STRING, 1002, 'Refresh');
+		panel.m.AppendMenuItem(MF_STRING, 1000, 'Refresh');
 		panel.m.AppendMenuSeparator();
 		panel.m.AppendMenuItem(MF_GRAYED, 0, 'Mode');
 		panel.m.AppendMenuItem(MF_STRING, 1010, 'Default');
@@ -173,7 +156,7 @@ class AlbumArt {
 
 		panel.m.AppendMenuSeparator();
 
-		if (!this.is_review_panel && !this.is_text_display_panel) {
+		if (!this.is_text_display_panel) {
 			panel.m.AppendMenuItem(MF_STRING, 1040, 'Crop (focus on centre)');
 			panel.m.AppendMenuItem(MF_STRING, 1041, 'Crop (focus on top)');
 			panel.m.AppendMenuItem(MF_STRING, 1042, 'Centre');
@@ -196,12 +179,6 @@ class AlbumArt {
 	rbtn_up_done (idx) {
 		switch (idx) {
 		case 1000:
-		case 1001:
-			this.properties.layout.value = idx - 1000;
-			on_size();
-			window.Repaint();
-			break;
-		case 1002:
 			this.refresh();
 			break;
 		case 1010:
@@ -279,11 +256,11 @@ class AlbumArt {
 		this.reset_bitmaps();
 
 		if (img) {
-			this.tooltip = 'Original dimensions: ' + img.Width + 'x' + img.Height + 'px';
+			this.tooltip_text = 'Original dimensions: ' + img.Width + 'x' + img.Height + 'px';
 			this.path = img.Path;
 
 			if (this.path.length) {
-				this.tooltip += '\nPath: ' + this.path;
+				this.tooltip_text += '\nPath: ' + this.path;
 			}
 
 			this.bitmap.normal = img.CreateBitmap();
@@ -306,7 +283,7 @@ class AlbumArt {
 			this.bitmap.blur = null;
 		}
 
-		this.tooltip = this.path = '';
+		this.tooltip_text = this.path = '';
 	}
 
 	wheel (s) {
