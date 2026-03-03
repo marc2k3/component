@@ -11,7 +11,7 @@ class LastFm {
 		utils.CreateFolder(Paths.data);
 		this.json_file = Paths.data + 'lastfm.json';
 		this.api_key = '';
-		this.username = ''
+		this.username = '';
 		this.read_file();
 		this.image_urls = [];
 	}
