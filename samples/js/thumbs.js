@@ -52,7 +52,7 @@ class Thumbs {
 			this.interval_func();
 		}, 1000);
 	}
-	
+
 	containsXY (x, y) {
 		return x > this.x && x < this.x + this.w && y > this.y && y < this.y + this.h;
 	}
@@ -121,7 +121,7 @@ class Thumbs {
 
 	create_thumb (img) {
 		let src_x, src_y, src_w, src_h;
-		
+
 		if (img.Width < img.Height) {
 			src_x = 0;
 			src_w = img.Width;
