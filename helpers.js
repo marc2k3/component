@@ -41,6 +41,8 @@ class Paths {
 	static lastfm = this.data + 'lastfm\\';
 }
 
+Object.freeze(Paths);
+
 const includeJS = (filename) => {
 	return include(Paths.js + filename);
 };
