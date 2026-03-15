@@ -119,7 +119,7 @@ function on_paint(gr) {
 
 	if (playback.IsPlaying) {
 		if (img) {
-			DrawImage(gr, img, 0, 0, panel.h, panel.h, image.crop_top);
+			DrawImage(gr, img, 0, 0, panel.h, panel.h, fit.crop_top);
 		}
 
 		gr.WriteText(tfo.title.Eval(), bold_font, colours.text, panel.h + 10, 0, seekbar.x - panel.h - Scale(60), panel.h * 0.6, DWRITE_TEXT_ALIGNMENT_LEADING, DWRITE_PARAGRAPH_ALIGNMENT_CENTER, DWRITE_WORD_WRAPPING_NO_WRAP, DWRITE_TRIMMING_GRANULARITY_CHARACTER);

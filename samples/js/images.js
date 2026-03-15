@@ -31,7 +31,7 @@ class Images {
 			source : new Property('2K3.IMAGES.SOURCE', 0), // 0 custom folder 1 last.fm
 			tf : new Property('2K3.IMAGES.CUSTOM.FOLDER.TF', '$directory_path(%path%)'),
 			cycle : new Property('2K3.IMAGES.CYCLE', 5),
-			aspect : new Property('2K3.IMAGES.ASPECT', image.centre),
+			fit : new Property('2K3.IMAGES.FIT', fit.centre),
 			limit : new Property('2K3.IMAGES.DOWNLOAD.LIMIT', 10),
 			auto_download : new Property('2K3.IMAGES.AUTO.DOWNLOAD', true),
 			double_click_mode : new Property('2K3.IMAGES.DOUBLE.CLICK.MODE', 1), // 0 external viewer 1 fb2k viewer 2 explorer
@@ -58,7 +58,7 @@ class Images {
 
 	draw_blurred_image (gr) {
 		gr.Clear(RGB(30, 30, 30));
-		DrawImage(gr, this.bitmap.blur, 0, 0, panel.w, panel.h, image.crop, this.properties.blur_opacity.value);
+		DrawImage(gr, this.bitmap.blur, 0, 0, panel.w, panel.h, fit.crop, this.properties.blur_opacity.value);
 	}
 
 	download () {
@@ -146,16 +146,16 @@ class Images {
 			if (this.bitmap.normal) {
 				this.draw_blurred_image(gr);
 				DrawOverlay(gr, 0, 0, panel.w, panel.h, 180);
-				DrawImage(gr, this.bitmap.normal, this.x, this.y, this.w, this.h, image.top_align, 1.0, RGB(150, 150, 150));
+				DrawImage(gr, this.bitmap.normal, this.x, this.y, this.w, this.h, fit.top_align, 1.0, RGB(150, 150, 150));
 			} else {
 				DrawOverlay(gr, 0, 0, panel.w, panel.h);
 			}
 		} else if (this.bitmap.normal) {
-			if (this.properties.aspect.value == image.centre) {
+			if (this.properties.fit.value == fit.centre) {
 				this.draw_blurred_image(gr);
-				DrawImage(gr, this.bitmap.normal, this.x + 20, this.y + 20, this.w - 40, this.h - 40, this.properties.aspect.value, 1.0, RGB(150, 150, 150));
+				DrawImage(gr, this.bitmap.normal, this.x + 20, this.y + 20, this.w - 40, this.h - 40, this.properties.fit.value, 1.0, RGB(150, 150, 150));
 			} else {
-				DrawImage(gr, this.bitmap.normal, this.x, this.y, this.w, this.h, this.properties.aspect.value);
+				DrawImage(gr, this.bitmap.normal, this.x, this.y, this.w, this.h, this.properties.fit.value);
 			}
 		}
 	}
@@ -224,7 +224,7 @@ class Images {
 			panel.m.AppendMenuItem(MF_STRING, 1500, 'Crop (focus on centre)');
 			panel.m.AppendMenuItem(MF_STRING, 1501, 'Crop (focus on top)');
 			panel.m.AppendMenuItem(MF_STRING, 1502, 'Centre');
-			panel.m.CheckMenuRadioItem(1500, 1502, this.properties.aspect.value + 1500);
+			panel.m.CheckMenuRadioItem(1500, 1502, this.properties.fit.value + 1500);
 			panel.m.AppendMenuSeparator();
 		}
 
@@ -286,7 +286,7 @@ class Images {
 		case 1500:
 		case 1501:
 		case 1502:
-			this.properties.aspect.value = idx - 1500;
+			this.properties.fit.value = idx - 1500;
 			window.Repaint();
 			break;
 		case 1530:
@@ -387,7 +387,7 @@ class Images {
 	}
 
 	wheel (s) {
-		if (!this.is_bio_panel && utils.IsKeyPressed(VK_SHIFT) && this.properties.aspect.value == image.centre) {
+		if (!this.is_bio_panel && utils.IsKeyPressed(VK_SHIFT) && this.properties.fit.value == fit.centre) {
 			const value = Clamp(this.properties.blur_opacity.value + (s * 0.05), 0.2, 0.8);
 
 			if (value != this.properties.blur_opacity.value) {

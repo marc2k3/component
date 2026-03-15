@@ -26,7 +26,7 @@ class AlbumArt {
 		};
 
 		this.properties = {
-			aspect : new Property('2K3.ARTREADER.ASPECT', image.centre),
+			fit : new Property('2K3.ARTREADER.FIT', fit.centre),
 			id : new Property('2K3.ARTREADER.ID', 0),
 			double_click_mode : new Property('2K3.ARTREADER.DOUBLE.CLICK.MODE', 1), // 0 external viewer 1 fb2k viewer 2 explorer
 			mode : new Property('2K3.ARTREADER.MODE', 0), // 0 default, 1 custom
@@ -133,7 +133,7 @@ class AlbumArt {
 		if (!this.bitmap.normal)
 			return;
 
-		DrawImage(gr, this.bitmap.normal, this.x, this.y, this.w, this.h, this.properties.aspect.value);
+		DrawImage(gr, this.bitmap.normal, this.x, this.y, this.w, this.h, this.properties.fit.value);
 	}
 
 	rbtn_up (x, y) {
@@ -160,7 +160,7 @@ class AlbumArt {
 			panel.m.AppendMenuItem(MF_STRING, 1040, 'Crop (focus on centre)');
 			panel.m.AppendMenuItem(MF_STRING, 1041, 'Crop (focus on top)');
 			panel.m.AppendMenuItem(MF_STRING, 1042, 'Centre');
-			panel.m.CheckMenuRadioItem(1040, 1042, this.properties.aspect.value + 1040);
+			panel.m.CheckMenuRadioItem(1040, 1042, this.properties.fit.value + 1040);
 			panel.m.AppendMenuSeparator();
 		}
 
@@ -206,7 +206,7 @@ class AlbumArt {
 		case 1040:
 		case 1041:
 		case 1042:
-			this.properties.aspect.value = idx - 1040;
+			this.properties.fit.value = idx - 1040;
 			window.Repaint();
 			break;
 		case 1050:

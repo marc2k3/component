@@ -35,7 +35,7 @@ class Thumbs {
 			limit : new Property('2K3.THUMBS.DOWNLOAD.LIMIT', 10),
 			px : new Property('2K3.THUMBS.PX', 75),
 			cycle : new Property('2K3.THUMBS.CYCLE', 5),
-			aspect : new Property('2K3.THUMBS.ASPECT', image.centre),
+			fit : new Property('2K3.THUMBS.FIT', fit.centre),
 			auto_download : new Property('2K3.THUMBS.AUTO.DOWNLOAD', true),
 			circular : new Property('2K3.THUMBS.CIRCULAR', false),
 			size_limit : new Property('2K3.THUMBS.SIZE.LIMIT', 64 * 1024 * 1024),
@@ -169,7 +169,7 @@ class Thumbs {
 		}
 
 		gr.Clear(RGB(30, 30, 30));
-		DrawImage(gr, this.blurred_images[this.image_index], 0, 0, panel.w, panel.h, image.crop, this.properties.blur_opacity.value);
+		DrawImage(gr, this.blurred_images[this.image_index], 0, 0, panel.w, panel.h, fit.crop, this.properties.blur_opacity.value);
 	}
 
 	enable_overlay (b) {
@@ -362,11 +362,11 @@ class Thumbs {
 
 		switch (true) {
 		case this.properties.mode.value == 5: // off
-			if (this.properties.aspect.value == image.centre) {
+			if (this.properties.fit.value == fit.centre) {
 				this.draw_blurred_image(gr);
-				this.image_xywh = DrawImage(gr, this.images[this.image_index], 20, 20, panel.w - 40, panel.h - 40, this.properties.aspect.value, 1.0, RGB(150, 150, 150));
+				this.image_xywh = DrawImage(gr, this.images[this.image_index], 20, 20, panel.w - 40, panel.h - 40, this.properties.fit.value, 1.0, RGB(150, 150, 150));
 			} else {
-				this.image_xywh = DrawImage(gr, this.images[this.image_index], 0, 0, panel.w, panel.h, this.properties.aspect.value);
+				this.image_xywh = DrawImage(gr, this.images[this.image_index], 0, 0, panel.w, panel.h, this.properties.fit.value);
 			}
 			break;
 		case !this.img:
@@ -376,51 +376,51 @@ class Thumbs {
 
 			if (this.overlay) {
 				DrawOverlay(gr, this.x, this.y, this.w, this.h);
-				this.image_xywh = DrawImage(gr, this.images[this.image_index], 20, 20, panel.w - 40, panel.h - 40, image.centre, 1.0, RGB(150, 150, 150));
+				this.image_xywh = DrawImage(gr, this.images[this.image_index], 20, 20, panel.w - 40, panel.h - 40, fit.centre, 1.0, RGB(150, 150, 150));
 				this.close_btn.paint(gr, RGB(230, 230, 230));
 			} else {
 				this.image_xywh = [];
 			}
 			break;
 		case this.properties.mode.value == 1: // left
-			if (this.properties.aspect.value == image.centre) {
+			if (this.properties.fit.value == fit.centre) {
 				this.draw_blurred_image(gr);
-				this.image_xywh = DrawImage(gr, this.images[this.image_index], this.properties.px.value + 20, 20, panel.w - this.properties.px.value - 40, panel.h - 40, this.properties.aspect.value, 1.0, RGB(150, 150, 150));
+				this.image_xywh = DrawImage(gr, this.images[this.image_index], this.properties.px.value + 20, 20, panel.w - this.properties.px.value - 40, panel.h - 40, this.properties.fit.value, 1.0, RGB(150, 150, 150));
 			} else {
-				this.image_xywh = DrawImage(gr, this.images[this.image_index], 0, 0, panel.w, panel.h, this.properties.aspect.value);
+				this.image_xywh = DrawImage(gr, this.images[this.image_index], 0, 0, panel.w, panel.h, this.properties.fit.value);
 			}
 
 			DrawOverlay(gr, this.x, this.y, this.w, this.h);
 			gr.DrawImage(this.img, this.x, this.y, this.w, Math.min(this.img.Height - offset_px, this.h), 0, offset_px, this.w, Math.min(this.img.Height - offset_px, this.h));
 			break;
 		case this.properties.mode.value == 2: // right
-			if (this.properties.aspect.value == image.centre) {
+			if (this.properties.fit.value == fit.centre) {
 				this.draw_blurred_image(gr);
-				this.image_xywh = DrawImage(gr, this.images[this.image_index], 20, 20, panel.w - this.properties.px.value - 40, panel.h - 40, this.properties.aspect.value, 1.0, RGB(150, 150, 150));
+				this.image_xywh = DrawImage(gr, this.images[this.image_index], 20, 20, panel.w - this.properties.px.value - 40, panel.h - 40, this.properties.fit.value, 1.0, RGB(150, 150, 150));
 			} else {
-				this.image_xywh = DrawImage(gr, this.images[this.image_index], 0, 0, panel.w, panel.h, this.properties.aspect.value);
+				this.image_xywh = DrawImage(gr, this.images[this.image_index], 0, 0, panel.w, panel.h, this.properties.fit.value);
 			}
 
 			DrawOverlay(gr, this.x, this.y, this.w, this.h);
 			gr.DrawImage(this.img, this.x, this.y, this.w, Math.min(this.img.Height - offset_px, this.h), 0, offset_px, this.w, Math.min(this.img.Height - offset_px, this.h));
 			break;
 		case this.properties.mode.value == 3: // top
-			if (this.properties.aspect.value == image.centre) {
+			if (this.properties.fit.value == fit.centre) {
 				this.draw_blurred_image(gr);
-				this.image_xywh = DrawImage(gr, this.images[this.image_index], 20, this.properties.px.value + 20, panel.w - 40, panel.h - this.properties.px.value - 40, this.properties.aspect.value, 1.0, RGB(150, 150, 150));
+				this.image_xywh = DrawImage(gr, this.images[this.image_index], 20, this.properties.px.value + 20, panel.w - 40, panel.h - this.properties.px.value - 40, this.properties.fit.value, 1.0, RGB(150, 150, 150));
 			} else {
-				this.image_xywh = DrawImage(gr, this.images[this.image_index], 0, 0, panel.w, panel.h, this.properties.aspect.value);
+				this.image_xywh = DrawImage(gr, this.images[this.image_index], 0, 0, panel.w, panel.h, this.properties.fit.value);
 			}
 
 			DrawOverlay(gr, this.x, this.y, this.w, this.h);
 			gr.DrawImage(this.img, this.x, this.y, Math.min(this.img.Width - offset_px, this.w), this.img.Height, offset_px, 0, Math.min(this.img.Width - offset_px, this.w), this.img.Height);
 			break;
 		case this.properties.mode.value == 4: // bottom
-			if (this.properties.aspect.value == image.centre) {
+			if (this.properties.fit.value == fit.centre) {
 				this.draw_blurred_image(gr);
-				this.image_xywh = DrawImage(gr, this.images[this.image_index], 20, 20, panel.w - 40, panel.h - this.properties.px.value - 40, this.properties.aspect.value, 1.0, RGB(150, 150, 150));
+				this.image_xywh = DrawImage(gr, this.images[this.image_index], 20, 20, panel.w - 40, panel.h - this.properties.px.value - 40, this.properties.fit.value, 1.0, RGB(150, 150, 150));
 			} else {
-				this.image_xywh = DrawImage(gr, this.images[this.image_index], 0, 0, panel.w, panel.h, this.properties.aspect.value);
+				this.image_xywh = DrawImage(gr, this.images[this.image_index], 0, 0, panel.w, panel.h, this.properties.fit.value);
 			}
 
 			DrawOverlay(gr, this.x, this.y, this.w, this.h);
@@ -513,7 +513,7 @@ class Thumbs {
 				panel.m.AppendMenuItem(MF_STRING, 1500, 'Crop (focus on centre)');
 				panel.m.AppendMenuItem(MF_STRING, 1501, 'Crop (focus on top)');
 				panel.m.AppendMenuItem(MF_STRING, 1502, 'Centre');
-				panel.m.CheckMenuRadioItem(1500, 1502, this.properties.aspect.value + 1500);
+				panel.m.CheckMenuRadioItem(1500, 1502, this.properties.fit.value + 1500);
 				panel.m.AppendMenuSeparator();
 			}
 
@@ -606,7 +606,7 @@ class Thumbs {
 		case 1500:
 		case 1501:
 		case 1502:
-			this.properties.aspect.value = idx - 1500;
+			this.properties.fit.value = idx - 1500;
 			window.Repaint();
 			break;
 		case 1520:
@@ -782,7 +782,7 @@ class Thumbs {
 	}
 
 	wheel (s) {
-		if (utils.IsKeyPressed(VK_SHIFT) && this.properties.aspect.value == image.centre) {
+		if (utils.IsKeyPressed(VK_SHIFT) && this.properties.fit.value == fit.centre) {
 			const value = Clamp(this.properties.blur_opacity.value + (s * 0.05), 0.2, 0.8);
 
 			if (value != this.properties.blur_opacity.value) {

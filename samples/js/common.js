@@ -177,13 +177,13 @@ const DrawImage = (gr, img, dst_x, dst_y, dst_w, dst_h, mode, opacity, border) =
 	case (dst_w == dst_h && img.Width == img.Height) || (dst_w == img.Width && dst_h == img.Height):
 		DrawImageOrBitmap(gr, img, dst_x, dst_y, dst_w, dst_h, 0, 0, img.Width, img.Height, opacity || 1);
 		break;
-	case mode == image.crop:
-	case mode == image.crop_top:
+	case mode == fit.crop:
+	case mode == fit.crop_top:
 		if (img.Width / img.Height < dst_w / dst_h) {
 			src_x = 0;
 			src_w = img.Width;
 			src_h = Math.round(dst_h * img.Width / dst_w);
-			src_y = Math.round((img.Height - src_h) / (mode == image.crop_top ? 4 : 2));
+			src_y = Math.round((img.Height - src_h) / (mode == fit.crop_top ? 4 : 2));
 		} else {
 			src_y = 0;
 			src_w = Math.round(dst_w * img.Height / dst_h);
@@ -193,14 +193,14 @@ const DrawImage = (gr, img, dst_x, dst_y, dst_w, dst_h, mode, opacity, border) =
 
 		DrawImageOrBitmap(gr, img, dst_x, dst_y, dst_w, dst_h, src_x + 3, src_y + 3, src_w - 6, src_h - 6, opacity || 1);
 		break;
-	case mode == image.centre:
-	case mode == image.top_align:
+	case mode == fit.centre:
+	case mode == fit.top_align:
 	default:
 		const s = Math.min(dst_w / img.Width, dst_h / img.Height);
 		const w = Math.floor(img.Width * s);
 		const h = Math.floor(img.Height * s);
 		dst_x += Math.round((dst_w - w) / 2);
-		dst_y = mode == image.top_align ? dst_y : dst_y + Math.round((dst_h - h) / 2);
+		dst_y = mode == fit.top_align ? dst_y : dst_y + Math.round((dst_h - h) / 2);
 		dst_w = w;
 		dst_h = h;
 
@@ -373,7 +373,7 @@ const TM = Scale(22);
 const tooltip = window.CreateTooltip('Segoe UI', Scale(12));
 tooltip.SetMaxWidth(800);
 
-const image = {
+const fit = {
 	crop : 0,
 	crop_top : 1,
 	centre : 2,

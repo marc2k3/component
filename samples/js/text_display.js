@@ -112,17 +112,17 @@ class TextDisplay {
 	paint (gr) {
 		if (this.properties.albumart.enabled) {
 			if (this.properties.albumart_blur.enabled) {
-				DrawImage(gr, albumart.bitmap.blur, 0, 0, panel.w, panel.h, image.crop);
+				DrawImage(gr, albumart.bitmap.blur, 0, 0, panel.w, panel.h, fit.crop);
 				DrawOverlay(gr, 0, 0, panel.w, panel.h, 120);
 			} else {
-				DrawImage(gr, albumart.bitmap.normal, 0, 0, panel.w, panel.h, image.crop);
+				DrawImage(gr, albumart.bitmap.normal, 0, 0, panel.w, panel.h, fit.crop);
 				DrawOverlay(gr, 0, 0, panel.w, panel.h, 160);
 			}
 		}
 
 		if (this.properties.layout.value > 0) {
 			const border = this.properties.albumart.enabled ? RGB(150, 150, 150) : panel.colours.text;
-			DrawImage(gr, albumart.bitmap.normal, albumart.x, albumart.y, albumart.w, albumart.h, albumart.properties.aspect.value, 1.0, border);
+			DrawImage(gr, albumart.bitmap.normal, albumart.x, albumart.y, albumart.w, albumart.h, albumart.properties.fit.value, 1.0, border);
 		}
 
 		if (this.text_layout) {
