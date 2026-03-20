@@ -15,7 +15,7 @@ class TextDisplay {
 		this.my = 0;
 		this.offset = 0;
 		this.text = '';
-		this.help_url = 'https://marc2k3.github.io/rtfm/guides/font-rgb/';
+		this.help_url = 'https://javascript-panel.github.io/guides/font-rgb/';
 
 		this.properties = {
 			text_tf : new Property('2K3.DISPLAY.TF', ''),
