@@ -43,65 +43,27 @@ class Paths {
 
 Object.freeze(Paths);
 
-const includeJS = (filename) => {
-	return include(Paths.js + filename);
-};
-
-const pos2vol = (pos) => {
-	return Math.max(-100, 10 * Math.log(pos) / Math.LN2);
-}
-
-const vol2pos = (v) => {
-	return Math.pow(2, v / 10);
-}
-
-const Point2Pixel = (pt, dpi) => {
-	return pt * dpi / 72;
-}
-
-const RGB = (r, g, b) => {
-	return (0xff000000 | (r << 16) | (g << 8) | (b));
-}
-
-const RGBA = (r, g, b, a) => {
-	return ((a << 24) | (r << 16) | (g << 8) | (b));
-}
+const includeJS = (filename) => include(Paths.js + filename);
+const Scale = (size) => Math.round(size * DPI / 72);
+const IsFlagSet = (value, flags) => (value & flags) != 0;
+const EnableMenuIf = (condition) => condition ? MF_STRING : MF_GRAYED;
+const Point2Pixel = (pt, dpi) =>  pt * dpi / 72;
+const pos2vol = (pos) => Math.max(-100, 10 * Math.log(pos) / Math.LN2);
+const vol2pos = (v) => Math.pow(2, v / 10);
+const RGB = (r, g, b) => (0xff000000 | (r << 16) | (g << 8) | (b));
+const RGBA = (r, g, b, a) => ((a << 24) | (r << 16) | (g << 8) | (b));
+const getAlpha = (colour) => ((colour >> 24) & 0xff);
+const getRed = (colour) => ((colour >> 16) & 0xff);
+const getGreen = (colour) => ((colour >> 8) & 0xff);
+const getBlue = (colour) => (colour & 0xff);
+const setAlpha = (colour, a) => ((colour & 0x00ffffff) | (a << 24));
+const setRed = (colour, r) => ((colour & 0xff00ffff) | (r << 16));
+const setGreen = (colour, g) => ((colour & 0xffff00ff) | (g << 8));
+const setBlue = (colour, b) => ((colour & 0xffffff00) | b);
 
 const toRGB = (col) => {
 	const a = col - 0xFF000000;
 	return [a >> 16, a >> 8 & 0xFF, a & 0xFF];
-}
-
-const getAlpha = (colour) => {
-	return ((colour >> 24) & 0xff);
-}
-
-const getRed = (colour) => {
-	return ((colour >> 16) & 0xff);
-}
-
-const getGreen = (colour) => {
-	return ((colour >> 8) & 0xff);
-}
-
-const getBlue = (colour) => {
-	return (colour & 0xff);
-}
-
-const setAlpha = (colour, a) => {
-	return ((colour & 0x00ffffff) | (a << 24));
-}
-
-const setRed = (colour, r) => {
-	return ((colour & 0xff00ffff) | (r << 16));
-}
-
-const setGreen = (colour, g) => {
-	return ((colour & 0xffff00ff) | (g << 8));
-}
-
-const setBlue = (colour, b) => {
-	return ((colour & 0xffffff00) | b);
 }
 
 const blendColours = (c1, c2, factor) => {
@@ -153,10 +115,6 @@ const FillGradientRectangle = (gr, x, y, w, h, direction, colour1, colour2) => {
 		brush.End = [w, 0];
 
 	gr.FillRectangle(x, y, w, h, JSON.stringify(brush));
-}
-
-const EnableMenuIf = (condition) => {
-	return condition ? MF_STRING : MF_GRAYED;
 }
 
 const CheckMenuIf = (condition) => {
@@ -232,14 +190,6 @@ const GetNowPlayingColours = () => {
 	}
 
 	return [background_colour, text_colour, selected_background_colour, selected_text_colour];
-}
-
-const Scale = (size) => {
-	return Math.round(size * DPI / 72);
-}
-
-const IsFlagSet = (value, flags) => {
-	return (value & flags) != 0;
 }
 
 const PlaylistCanAddItems = (playlistIndex) => {
