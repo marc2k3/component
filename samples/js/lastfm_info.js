@@ -22,22 +22,6 @@ class LastFmInfo {
 		this.artist = '';
 		this.filename = '';
 		this.filenames = {};
-		this.time_elapsed = 0;
-
-		this.artist_methods = [{
-				method : 'artist.getSimilar',
-				json : 'similarartists.artist',
-				display : 'similar artists',
-			}, {
-				method : 'artist.getTopTracks',
-				json : 'toptracks.track',
-				display : 'top tracks',
-			}, {
-				method : 'artist.getTopTags',
-				json : 'toptags.tag',
-				display : 'top tags',
-			}
-		];
 
 		this.chart_methods = [{
 				method : 'user.getTopArtists',
@@ -77,8 +61,6 @@ class LastFmInfo {
 
 		this.properties = {
 			mode : new Property('2K3.LASTFM.MODE', 0), // 0 artist 1 user
-			artist_method : new Property('2K3.LASTFM.ARTIST.METHOD', 0), // 0 similar artists 1 top tracks 2 top tags
-			user_mode : new Property('2K3.LASTFM.USER.MODE', 0), // 0 charts 1 recent tracks
 			charts_method : new Property('2K3.LASTFM.CHARTS.METHOD', 0),
 			charts_period : new Property('2K3.LASTFM.CHARTS.PERIOD', 0),
 		};
@@ -116,14 +98,10 @@ class LastFmInfo {
 				return;
 			}
 
-			url = lastfm.base_url() + '&limit=100&method=' + this.artist_methods[this.properties.artist_method.value].method + '&artist=' + encodeURIComponent(this.artist);
+			url = lastfm.base_url() + '&limit=100&method=artist.getSimilar&artist=' + encodeURIComponent(this.artist);
 			break;
 		case 1:
-			if (this.properties.user_mode.value == 0) {
-				url = lastfm.base_url() + '&limit=100&method=' + this.chart_methods[this.properties.charts_method.value].method + '&period=' + this.chart_periods[this.properties.charts_period.value].period + '&user=' + lastfm.username;
-			} else {
-				url = lastfm.base_url() + '&limit=100&method=user.getRecentTracks&user=' + lastfm.username;
-			}
+			url = lastfm.base_url() + '&limit=100&method=' + this.chart_methods[this.properties.charts_method.value].method + '&period=' + this.chart_periods[this.properties.charts_period.value].period + '&user=' + lastfm.username;
 			break;
 		}
 
@@ -133,13 +111,9 @@ class LastFmInfo {
 
 	header_text () {
 		if (this.properties.mode.value == 0) {
-			return this.artist + ': ' + this.artist_methods[this.properties.artist_method.value].display;
+			return this.artist + ': similar artists';
 		} else {
-			if (this.properties.user_mode.value == 0) {
-				return lastfm.username + ': ' + this.chart_periods[this.properties.charts_period.value].display + ' ' + this.chart_methods[this.properties.charts_method.value].display + ' charts';
-			} else {
-				return lastfm.username + ': recent tracks';
-			}
+			return lastfm.username + ': ' + this.chart_periods[this.properties.charts_period.value].display + ' ' + this.chart_methods[this.properties.charts_method.value].display + ' charts';
 		}
 	}
 
@@ -247,7 +221,15 @@ class LastFmInfo {
 			return;
 
 		switch (true) {
-		case this.properties.mode.value == 1 && this.properties.user_mode.value == 0: // charts
+		case this.properties.mode.value == 0:
+			this.clickable_text_x = 0;
+			this.text_width = this.w;
+
+			for (let i = 0; i < Math.min(this.count, this.rows); i++) {
+				this.draw_row(gr, this.data[i + this.offset].name, panel.colours.text, this.x, this.y + Scale(12) + (i * panel.row_height), this.text_width, panel.row_height);
+			}
+			break;
+		case this.properties.mode.value == 1:
 			this.clickable_text_x = this.spacer_w + 5;
 			this.text_width = Math.round(this.w * 0.5);
 			const lastfm_charts_bar_x = this.x + this.clickable_text_x + this.text_width + 10;
@@ -262,66 +244,32 @@ class LastFmInfo {
 				this.draw_row(gr, FormatNumber(item.playcount, ','), panel.colours.text, lastfm_charts_bar_x + bar_width + 5, this.y + Scale(12) + (i * panel.row_height), Scale(60), panel.row_height);
 			}
 			break;
-		default: // other
-			this.clickable_text_x = 0;
-			this.text_width = this.w;
-
-			for (let i = 0; i < Math.min(this.count, this.rows); i++) {
-				this.draw_row(gr, this.data[i + this.offset].name, panel.colours.text, this.x, this.y + Scale(12) + (i * panel.row_height), this.text_width, panel.row_height);
-			}
-			break;
 		}
 
 		this.up_btn.paint(gr, panel.colours.text);
 		this.down_btn.paint(gr, panel.colours.text);
 	}
 
-	playback_new_track () {;
-		this.time_elapsed = 0;
-		this.refresh();
-	}
-
-	playback_time () {
-		this.time_elapsed++;
-
-		if (this.time_elapsed == 3 && this.properties.mode.value == 1 && this.properties.user_mode.value == 1 && lastfm.username.length) {
-			this.get();
-		}
-	}
-
 	rbtn_up (x, y) {
-		panel.m.AppendMenuItem(MF_STRING, 1100, 'Artist Info');
-		panel.m.AppendMenuItem(MF_STRING, 1101, 'User Info');
+		panel.m.AppendMenuItem(MF_STRING, 1100, 'Similar Artists');
+		panel.m.AppendMenuItem(MF_STRING, 1101, 'User Charts');
 		panel.m.CheckMenuRadioItem(1100, 1101, this.properties.mode.value + 1100);
 		panel.m.AppendMenuSeparator();
 
-		if (this.properties.mode.value == 0) {
-			panel.m.AppendMenuItem(MF_STRING, 1102, 'Similar Artists');
-			panel.m.AppendMenuItem(MF_STRING, 1103, 'Top Tracks');
-			panel.m.AppendMenuItem(MF_STRING, 1104, 'Top Tags');
-			panel.m.CheckMenuRadioItem(1102, 1104, this.properties.artist_method.value + 1102);
-			panel.m.AppendMenuSeparator();
-		} else {
-			panel.m.AppendMenuItem(MF_STRING, 1110, 'Charts');
-			panel.m.AppendMenuItem(MF_STRING, 1111, 'Recent Tracks');
-			panel.m.CheckMenuRadioItem(1110, 1111, this.properties.user_mode.value + 1110);
+		if (this.properties.mode.value == 1) {
+			this.chart_methods.forEach((item, i) => {
+				panel.m.AppendMenuItem(MF_STRING, i + 1120, _.capitalize(item.display));
+			});
+
+			panel.m.CheckMenuRadioItem(1120, 1122, this.properties.charts_method.value + 1120);
 			panel.m.AppendMenuSeparator();
 
-			if (this.properties.user_mode.value == 0) {
-				this.chart_methods.forEach((item, i) => {
-					panel.m.AppendMenuItem(MF_STRING, i + 1120, _.capitalize(item.display));
-				});
+			this.chart_periods.forEach((item, i) => {
+				panel.m.AppendMenuItem(MF_STRING, i + 1130, _.capitalize(item.display));
+			});
 
-				panel.m.CheckMenuRadioItem(1120, 1122, this.properties.charts_method.value + 1120);
-				panel.m.AppendMenuSeparator();
-
-				this.chart_periods.forEach((item, i) => {
-					panel.m.AppendMenuItem(MF_STRING, i + 1130, _.capitalize(item.display));
-				});
-
-				panel.m.CheckMenuRadioItem(1130, 1135, this.properties.charts_period.value + 1130);
-				panel.m.AppendMenuSeparator();
-			}
+			panel.m.CheckMenuRadioItem(1130, 1135, this.properties.charts_period.value + 1130);
+			panel.m.AppendMenuSeparator();
 		}
 
 		panel.m.AppendMenuItem(MF_STRING, 1150, 'Last.fm username...');
@@ -336,17 +284,6 @@ class LastFmInfo {
 		case 1100:
 		case 1101:
 			this.properties.mode.value = idx - 1100;
-			this.reset();
-			break;
-		case 1102:
-		case 1103:
-		case 1104:
-			this.properties.artist_method.value = idx - 1102;
-			this.reset();
-			break;
-		case 1110:
-		case 1111:
-			this.properties.user_mode.value = idx - 1110;
 			this.reset();
 			break;
 		case 1120:
@@ -377,8 +314,7 @@ class LastFmInfo {
 	}
 
 	refresh () {
-		// user mode
-		if (this.properties.mode.value == 1)
+		if (this.properties.mode.value == 1) // charts
 			return;
 
 		if (panel.metadb) {
@@ -402,9 +338,9 @@ class LastFmInfo {
 		this.data = [];
 		this.artist = '';
 
-		if (this.properties.mode.value == 0) { // artist
+		if (this.properties.mode.value == 0) { // similar artists
 			this.refresh();
-		} else { // user
+		} else { // charts
 			this.update();
 		}
 	}
@@ -426,9 +362,9 @@ class LastFmInfo {
 
 		switch (this.properties.mode.value) {
 		case 0:
-			this.filename = ArtistFolder(this.artist) + 'lastfm.' + this.artist_methods[this.properties.artist_method.value].method + '.json';
+			this.filename = ArtistFolder(this.artist) + 'lastfm.artist.getSimilar.json';
 			if (utils.IsFile(this.filename)) {
-				this.data = _(_.get(JsonParseFile(this.filename), this.artist_methods[this.properties.artist_method.value].json, []))
+				this.data = _(_.get(JsonParseFile(this.filename), 'similarartists.artist', []))
 					.map((item) => {
 						return {
 							name : item.name,
@@ -451,56 +387,35 @@ class LastFmInfo {
 				break;
 			}
 
-			if (this.properties.user_mode.value == 0) {
-				this.filename = Paths.lastfm + lastfm.username + '.' + this.chart_methods[this.properties.charts_method.value].method + '.' + this.chart_periods[this.properties.charts_period.value].period + '.json';
-				if (utils.IsFile(this.filename)) {
-					let data = _.get(JsonParseFile(this.filename), this.chart_methods[this.properties.charts_method.value].json, []);
+			this.filename = Paths.lastfm + lastfm.username + '.' + this.chart_methods[this.properties.charts_method.value].method + '.' + this.chart_periods[this.properties.charts_period.value].period + '.json';
+			if (utils.IsFile(this.filename)) {
+				let data = _.get(JsonParseFile(this.filename), this.chart_methods[this.properties.charts_method.value].json, []);
 
-					for (let i = 0; i < data.length; i++) {
-						let name, url;
+				for (let i = 0; i < data.length; i++) {
+					let name, url;
 
-						if (this.properties.charts_method.value == 0) {
-							name = data[i].name;
-							url = data[i].url;
-						} else {
-							name = data[i].artist.name + ' - ' + data[i].name;
-							url = data[i].url;
-						}
-
-						this.data[i] = {
-							name : name,
-							width : name.calc_width(panel.fonts.normal),
-							url : url,
-							playcount : data[i].playcount,
-							rank : i > 0 && data[i].playcount == data[i - 1].playcount ? this.data[i - 1].rank : i + 1
-						};
+					if (this.properties.charts_method.value == 0) {
+						name = data[i].name;
+						url = data[i].url;
+					} else {
+						name = data[i].artist.name + ' - ' + data[i].name;
+						url = data[i].url;
 					}
 
-					if (FileExpired(this.filename, ONE_DAY)) {
-						this.get();
-					}
-				} else {
+					this.data[i] = {
+						name : name,
+						width : name.calc_width(panel.fonts.normal),
+						url : url,
+						playcount : data[i].playcount,
+						rank : i > 0 && data[i].playcount == data[i - 1].playcount ? this.data[i - 1].rank : i + 1
+					};
+				}
+
+				if (FileExpired(this.filename, ONE_DAY)) {
 					this.get();
 				}
 			} else {
-				this.filename = Paths.lastfm + lastfm.username + '.user.getRecentTracks.json';
-
-				if (utils.IsFile(this.filename)) {
-					this.data = _(_.get(JsonParseFile(this.filename), 'recenttracks.track', []))
-						.filter('date')
-						.map((item) => {
-							const name = item.artist['#text'] + ' - ' + item.name;
-
-							return {
-								name : name,
-								width : name.calc_width(panel.fonts.normal),
-								url : item.url
-							};
-						})
-						.value();
-				} else {
-					this.get();
-				}
+				this.get();
 			}
 		}
 

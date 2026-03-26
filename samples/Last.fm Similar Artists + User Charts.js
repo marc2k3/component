@@ -1,6 +1,6 @@
 'use strict';
 
-window.DefineScript('Last.fm Artist Info + User Info', {author:'marc2003'});
+window.DefineScript('Last.fm Similar Artists + User Charts', {author:'marc2003'});
 include(fb.ComponentPath + 'helpers.js');
 includeJS('lodash.min.js');
 includeJS('common.js');
@@ -82,18 +82,13 @@ function on_playback_dynamic_info_track() {
 }
 
 function on_playback_new_track() {
-	panel.item_focus_change();
-	lastfm_info.playback_new_track();
+	refresh();
 }
 
 function on_playback_stop(reason) {
 	if (reason != 2) {
 		refresh();
 	}
-}
-
-function on_playback_time() {
-	lastfm_info.playback_time();
 }
 
 function on_playlist_switch() {
