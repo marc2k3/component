@@ -12,14 +12,7 @@ class Seekbar {
 		this.drag = false;
 		this.drag_seek = 0;
 
-		window.SetInterval(() => {
-			this.interval_func()
-		}, 150);
-	}
-
-	containsXY (x, y) {
-		const m = this.drag ? 200 : 0;
-		return x > this.x - m && x < this.x + this.w + (m * 2) && y > this.y - m && y < this.y + this.h + (m * 2);
+		window.SetInterval(this.interval_func, 150);
 	}
 
 	interval_func = () => {
@@ -27,6 +20,11 @@ class Seekbar {
 			this.repaint_rect();
 		}
 	};
+
+	containsXY (x, y) {
+		const m = this.drag ? 200 : 0;
+		return x > this.x - m && x < this.x + this.w + (m * 2) && y > this.y - m && y < this.y + this.h + (m * 2);
+	}
 
 	lbtn_down (x, y) {
 		if (!this.containsXY(x, y))
@@ -80,10 +78,6 @@ class Seekbar {
 
 	playback_seek () {
 		this.repaint_rect();
-	}
-
-	playback_stop (reason) {
-		this.playback_seek();
 	}
 
 	wheel (s) {

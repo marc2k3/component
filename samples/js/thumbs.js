@@ -46,12 +46,26 @@ class Thumbs {
 
 		this.close_btn = new SimpleButton(chars.close, 0, 0, Scale(10), Scale(10), () => { return this.properties.mode.value == 0 && this.overlay; }, () => { this.enable_overlay(false); });
 		this.create_mask();
-		utils.CreateFolder(Paths.artists);
 
-		window.SetInterval(() => {
-			this.interval_func();
-		}, 1000);
+		utils.CreateFolder(Paths.artists);
+		window.SetInterval(this.interval_func, 1000);
 	}
+
+	interval_func = () => {
+		this.time++;
+
+		if (this.properties.cycle.value > 0 && this.images.length > 1 && this.time % this.properties.cycle.value == 0) {
+			this.image_index++;
+			if (this.image_index == this.images.length) {
+				this.image_index = 0;
+			}
+			window.Repaint();
+		}
+
+		if (this.properties.source.value == 1 && this.time % 3 == 0 && GetFiles(this.folder, this.exts).length != this.images.length) {
+			this.update();
+		}
+	};
 
 	containsXY (x, y) {
 		return x > this.x && x < this.x + this.w && y > this.y && y < this.y + this.h;
@@ -250,22 +264,6 @@ class Thumbs {
 			return x > this.image_xywh[0] && x < this.image_xywh[0] + this.image_xywh[2] && y > this.image_xywh[1] && y < this.image_xywh[1] + this.image_xywh[3];
 		}
 	}
-
-	interval_func () {
-		this.time++;
-
-		if (this.properties.cycle.value > 0 && this.images.length > 1 && this.time % this.properties.cycle.value == 0) {
-			this.image_index++;
-			if (this.image_index == this.images.length) {
-				this.image_index = 0;
-			}
-			window.Repaint();
-		}
-
-		if (this.properties.source.value == 1 && this.time % 3 == 0 && GetFiles(this.folder, this.exts).length != this.images.length) {
-			this.update();
-		}
-	};
 
 	key_down (k) {
 		switch (k) {

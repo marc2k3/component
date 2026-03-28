@@ -47,10 +47,27 @@ class Images {
 		}
 
 		utils.CreateFolder(Paths.artists);
-		window.SetInterval(() => {
-			this.interval_func();
-		}, 1000);
+		window.SetInterval(this.interval_func, 1000);
 	}
+
+	interval_func = () => {
+		this.time++;
+
+		if (this.properties.cycle.value > 0 && this.image_paths.length > 1 && this.time % this.properties.cycle.value == 0) {
+			this.image_index++;
+
+			if (this.image_index == this.image_paths.length) {
+				this.image_index = 0;
+			}
+
+			this.update_image();
+			window.Repaint();
+		}
+
+		if (this.properties.source.value == 1 && this.time % 3 == 0 && GetFiles(this.folder, this.exts).length != this.image_paths.length) {
+			this.update();
+		}
+	};
 
 	containsXY (x, y) {
 		return x > this.x && x < this.x + this.w && y > this.y && y < this.y + this.h;
@@ -85,25 +102,6 @@ class Images {
 		const filename_base = ArtistFolder(artist) + utils.ReplaceIllegalChars(artist) + '_';
 		lastfm.download_images(response_text, filename_base, this.properties.limit.value);
 	}
-
-	interval_func () {
-		this.time++;
-
-		if (this.properties.cycle.value > 0 && this.image_paths.length > 1 && this.time % this.properties.cycle.value == 0) {
-			this.image_index++;
-
-			if (this.image_index == this.image_paths.length) {
-				this.image_index = 0;
-			}
-
-			this.update_image();
-			window.Repaint();
-		}
-
-		if (this.properties.source.value == 1 && this.time % 3 == 0 && GetFiles(this.folder, this.exts).length != this.image_paths.length) {
-			this.update();
-		}
-	};
 
 	key_down (k) {
 		switch (k) {

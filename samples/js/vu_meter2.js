@@ -80,7 +80,7 @@ class VUMeter {
 
 	start_timer () {
 		if (!this.timer_id) {
-			this.timer_id = window.SetInterval(() => { this.update_graph(); }, this.timer_interval);
+			this.timer_id = window.SetInterval(this.update_graph, this.timer_interval);
 		}
 	}
 
@@ -96,7 +96,7 @@ class VUMeter {
 		return 20 * Math.log(num) / Math.LN10;
 	}
 
-	update_graph () {
+	update_graph = () => {
 		let chunk = fb.GetAudioChunk(this.rms_window);
 
 		if (!chunk)
