@@ -137,6 +137,7 @@ class Properties {
 			});
 		}
 
+		this.data.push(..._.orderBy(tmp, 'name'));
 		this.add_separator();
 	}
 
