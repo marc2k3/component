@@ -6,10 +6,10 @@ class Property {
 
 	constructor (name, default_) {
 		Object.defineProperty(this, typeof default_ == 'boolean' ? 'enabled' : 'value', {
-			get : () => {
+			get () {
 				return this.#val;
 			},
-			set : (value) => {
+			set (value) {
 				this.#val = value;
 				window.SetProperty(this.#name, this.#val);
 			}
