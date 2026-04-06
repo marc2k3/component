@@ -2,9 +2,6 @@
 
 window.DefineScript('Images', {author:'marc2003'});
 include(fb.ComponentPath + 'helpers.js');
-includeJS('lodash.min.js');
-includeJS('himalaya.js');
-includeJS('common.js');
 includeJS('panel.js');
 includeJS('lastfm.js');
 includeJS('images.js');

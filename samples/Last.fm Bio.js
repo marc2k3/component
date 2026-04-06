@@ -2,8 +2,6 @@
 
 window.DefineScript('Last.fm Bio', {author:'marc2003'});
 include(fb.ComponentPath + 'helpers.js');
-includeJS('lodash.min.js');
-includeJS('common.js');
 includeJS('panel.js');
 includeJS('lastfm.js');
 includeJS('lastfm_bio.js');

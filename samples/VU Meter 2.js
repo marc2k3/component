@@ -1,4 +1,5 @@
 'use strict';
+
 window.DefineScript('VU Meter 2', {author:'Case + marc2003'});
 include(fb.ComponentPath + 'helpers.js');
 includeJS('vu_meter2.js');

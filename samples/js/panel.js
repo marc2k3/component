@@ -1,4 +1,5 @@
 'use strict';
+includeJS('common.js');
 
 class Panel {
 	constructor (options) {

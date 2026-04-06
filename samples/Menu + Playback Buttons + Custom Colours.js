@@ -2,8 +2,6 @@
 
 window.DefineScript('Menu + Playback Buttons + Custom Colours', {author:'marc2003'});
 include(fb.ComponentPath + 'helpers.js');
-includeJS('lodash.min.js');
-includeJS('common.js');
 includeJS('panel.js');
 
 let panel = new Panel();

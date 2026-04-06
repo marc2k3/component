@@ -2,7 +2,6 @@
 
 window.DefineScript('Minimal Seekbar', {author:'marc2003'});
 include(fb.ComponentPath + 'helpers.js');
-includeJS('lodash.min.js');
 includeJS('common.js');
 includeJS('seekbar.js');
 

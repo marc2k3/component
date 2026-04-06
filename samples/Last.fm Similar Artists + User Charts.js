@@ -2,8 +2,6 @@
 
 window.DefineScript('Last.fm Similar Artists + User Charts', {author:'marc2003'});
 include(fb.ComponentPath + 'helpers.js');
-includeJS('lodash.min.js');
-includeJS('common.js');
 includeJS('panel.js');
 includeJS('lastfm_info.js');
 includeJS('lastfm.js');

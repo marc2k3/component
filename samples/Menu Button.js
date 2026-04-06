@@ -2,8 +2,6 @@
 
 window.DefineScript('Menu Button', {author:'marc2003'});
 include(fb.ComponentPath + 'helpers.js');
-includeJS('lodash.min.js');
-includeJS('common.js');
 
 const colours = {
 	buttons : RGB(255, 255, 255),

@@ -2,8 +2,6 @@
 
 window.DefineScript('Text Display', {author:'marc2003'});
 include(fb.ComponentPath + 'helpers.js');
-includeJS('lodash.min.js');
-includeJS('common.js');
 includeJS('panel.js');
 includeJS('albumart.js');
 includeJS('text_display.js');

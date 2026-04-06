@@ -2,8 +2,6 @@
 
 window.DefineScript('Text Reader', {author:'marc2003'});
 include(fb.ComponentPath + 'helpers.js');
-includeJS('lodash.min.js');
-includeJS('common.js');
 includeJS('panel.js');
 includeJS('text_reader.js');
 

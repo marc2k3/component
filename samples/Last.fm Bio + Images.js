@@ -2,13 +2,10 @@
 
 window.DefineScript('Last.fm Bio + Images', {author:'marc2003'});
 include(fb.ComponentPath + 'helpers.js');
-includeJS('lodash.min.js');
-includeJS('himalaya.js');
-includeJS('common.js');
 includeJS('panel.js');
-includeJS('images.js');
 includeJS('lastfm.js');
 includeJS('lastfm_bio.js');
+includeJS('images.js');
 
 const margin = Scale(12);
 

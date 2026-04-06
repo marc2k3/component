@@ -1,4 +1,5 @@
 'use strict';
+includeJS('lodash.min.js');
 
 class Button {
 	constructor (x, y, w, h, normal, hover, fn, tiptext) {
