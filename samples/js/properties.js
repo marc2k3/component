@@ -51,6 +51,7 @@ class Properties {
 		for (let i = 0; i < f.MetaCount; i++) {
 			const name = f.MetaName(i).toUpperCase();
 			const num = f.MetaValueCount(i);
+
 			for (let j = 0; j < num; j++) {
 				const value = f.MetaValue(i, j).replace(/\s{2,}/g, ' ');
 				let url = '';
@@ -85,15 +86,15 @@ class Properties {
 	add_other_info () {
 		let tmp = JSON.parse(fb.CreateHandleList(panel.metadb).GetOtherInfo());
 
-		_.forEach(['Location', 'General'], (item) => {
+		_.forEach(['Location', 'General'], item => {
 			this.add_section(tmp[item], item);
 		});
 
-		for (let i in tmp) {
+		_.forEach(tmp, (item, i) => {
 			if (i != 'General' && i != 'Location') {
-				this.add_section(tmp[i], i);
+				this.add_section(item, i);
 			}
-		}
+		});
 	}
 
 	add_section (obj, name) {
@@ -102,12 +103,14 @@ class Properties {
 			value : 'SECTION_HEADER',
 		});
 
-		for (let i in obj) {
-			this.data.push({
-				name : i,
-				value : obj[i],
+		_(obj)
+			.orderBy('Priority')
+			.forEach(item => {
+				this.data.push({
+					name : item.Name,
+					value : item.Value,
+				});
 			});
-		}
 
 		this.add_separator();
 	}
