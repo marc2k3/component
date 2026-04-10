@@ -23,10 +23,10 @@ class LastFm {
 
 	extract_urls (obj) {
 		if (typeof obj === 'object') {
-			for (let key in obj) {
-				this.extract_urls(obj[key]);
-			}
-		} else {
+			_.forEach(obj, item => {
+				this.extract_urls(item);
+			});
+		} else if (typeof obj == 'string') {
 			if (obj.startsWith("https://lastfm.freetls.fastly.net/i/u/avatar170s/")) {
 				this.image_urls.push(obj.replace('avatar170s/', ''));
 			}
