@@ -94,7 +94,7 @@ class Buttons {
 	}
 
 	change_font (name) {
-		_.forEach(this.buttons, (item) => {
+		_.forEach(this.buttons, item => {
 			item.font = JSON.stringify({Name:name,Size:item.h - Scale(10)});
 		});
 	}
@@ -151,7 +151,7 @@ class SimpleButton {
 	}
 }
 
-const ArtistFolder = (artist) => {
+const ArtistFolder = artist => {
 	const folder = Paths.artists + utils.ReplaceIllegalChars(artist, true);
 	utils.CreateFolder(folder);
 	return folder + '\\';
@@ -220,7 +220,7 @@ const DrawOverlay = (gr, x, y, w, h, alpha) => {
 	gr.FillRectangle(x, y, w, h, RGBA(0, 0, 0, alpha || 230));
 }
 
-const Explorer = (file) => {
+const Explorer = file => {
 	if (utils.IsFile(file)) {
 		utils.Run('explorer', '/select,' + Q(file));
 	}
@@ -234,7 +234,7 @@ const FormatNumber = (number, separator) => {
 	return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, separator);
 }
 
-const GetExt = (path) => {
+const GetExt = path => {
 	return path.split('.').pop().toLowerCase();
 }
 
@@ -278,12 +278,12 @@ const Help = (x, y, flags) => {
 	return true;
 }
 
-const IsUUID = (value) => {
+const IsUUID = value => {
 	const re = /^[0-9a-f]{8}-[0-9a-f]{4}-[345][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/
 	return re.test(value);
 }
 
-const JsonParse = (value) => {
+const JsonParse = value => {
 	try {
 		return JSON.parse(value);
 	} catch (e) {
@@ -291,7 +291,7 @@ const JsonParse = (value) => {
 	}
 }
 
-const JsonParseFile = (file) => {
+const JsonParseFile = file => {
 	return JsonParse(utils.ReadUTF8(file));
 }
 
@@ -330,7 +330,7 @@ const Menu = (x, y, flags) => {
 	}
 }
 
-const Q = (value) => {
+const Q = value => {
 	return '"' + value + '"';
 }
 
@@ -346,18 +346,18 @@ const StringToArray = (str, sep) => {
 	if (typeof str != 'string' || typeof sep != 'string')
 		return [];
 
-	return str.split(sep).map((item) => { return item.trim(); }).filter((item) => { return !item.empty(); });
+	return str.split(sep).map(item => { return item.trim(); }).filter(item => { return !item.empty(); });
 }
 
-const StripTags = (str) => {
+const StripTags = str => {
 	return str.replace(/<br>/gi, "\n").replace(/<p.*>/gi, "\n").replace(/<(?:.|\s)*?>/g, "");
 }
 
-const Tagged = (value) => {
+const Tagged = value => {
 	return value != '' && value != '?';
 }
 
-const TT = (value) => {
+const TT = value => {
 	if (tooltip.Text != value) {
 		tooltip.Text = value;
 		tooltip.Activate();

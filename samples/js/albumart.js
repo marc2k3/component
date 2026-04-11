@@ -232,7 +232,7 @@ class AlbumArt {
 			if (this.properties.mode.value == 0) {
 				img = panel.metadb.GetAlbumArt(this.properties.id.value);
 			} else {
-				_.forEach(StringToArray(this.properties.edit.value, CRLF), (item) => {
+				_.forEach(StringToArray(this.properties.edit.value, CRLF), item => {
 					const id_type = StringToArray(item, '_');
 					if (id_type.length == 2) {
 						const id = this.ids.indexOf(id_type[0]);

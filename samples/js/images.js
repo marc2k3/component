@@ -200,7 +200,7 @@ class Images {
 		} else { // last.fm
 			panel.m.AppendMenuItem(EnableMenuIf(panel.metadb), 1003, 'Download now');
 			panel.m.AppendMenuItem(CheckMenuIf(this.properties.auto_download.enabled), 1004, 'Automatic downloads');
-			this.limits.forEach((item) => {
+			this.limits.forEach(item => {
 				panel.s10.AppendMenuItem(MF_STRING, item + 1010, item);
 			});
 			panel.s10.CheckMenuRadioItem(_.first(this.limits) + 1010, _.last(this.limits) + 1010, this.properties.limit.value + 1010);
@@ -374,7 +374,7 @@ class Images {
 		this.image_paths = [];
 
 		if (this.properties.source.value == 0 && _.includes(this.properties.tf.value, CRLF)) {
-			const folders = StringToArray(this.properties.tf.value, CRLF).map((item) => {
+			const folders = StringToArray(this.properties.tf.value, CRLF).map(item => {
 				return panel.tf(item);
 			});
 

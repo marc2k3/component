@@ -43,26 +43,26 @@ class Paths {
 
 Object.freeze(Paths);
 
-const includeJS = (filename) => include(Paths.js + filename);
-const Scale = (size) => Math.round(size * DPI / 72);
+const includeJS = filename => include(Paths.js + filename);
+const Scale = size => Math.round(size * DPI / 72);
 const IsFlagSet = (value, flags) => (value & flags) != 0;
-const EnableMenuIf = (condition) => condition ? MF_STRING : MF_GRAYED;
+const EnableMenuIf = condition => condition ? MF_STRING : MF_GRAYED;
 const Point2Pixel = (pt, dpi) =>  pt * dpi / 72;
-const pos2vol = (pos) => Math.max(-100, 10 * Math.log(pos) / Math.LN2);
-const vol2pos = (v) => Math.pow(2, v / 10);
+const pos2vol = pos => Math.max(-100, 10 * Math.log(pos) / Math.LN2);
+const vol2pos = volume => Math.pow(2, volume / 10);
 const RGB = (r, g, b) => (0xff000000 | (r << 16) | (g << 8) | (b));
 const RGBA = (r, g, b, a) => ((a << 24) | (r << 16) | (g << 8) | (b));
-const getAlpha = (colour) => ((colour >> 24) & 0xff);
-const getRed = (colour) => ((colour >> 16) & 0xff);
-const getGreen = (colour) => ((colour >> 8) & 0xff);
-const getBlue = (colour) => (colour & 0xff);
-const setAlpha = (colour, a) => ((colour & 0x00ffffff) | (a << 24));
+const getRed = colour => ((colour >> 16) & 0xff);
+const getGreen = colour => ((colour >> 8) & 0xff);
+const getBlue = colour => (colour & 0xff);
+const getAlpha = colour => ((colour >> 24) & 0xff);
 const setRed = (colour, r) => ((colour & 0xff00ffff) | (r << 16));
 const setGreen = (colour, g) => ((colour & 0xffff00ff) | (g << 8));
 const setBlue = (colour, b) => ((colour & 0xffffff00) | b);
+const setAlpha = (colour, a) => ((colour & 0x00ffffff) | (a << 24));
 
-const toRGB = (col) => {
-	const a = col - 0xFF000000;
+const toRGB = colour => {
+	const a = colour - 0xFF000000;
 	return [a >> 16, a >> 8 & 0xFF, a & 0xFF];
 }
 
@@ -85,14 +85,14 @@ const Clamp = (value, min, max) => {
 }
 
 // Lunminance and DetermineTextColour are based on code from the foobar2000 SDK.
-const Luminance = (colour) => {
+const Luminance = colour => {
 	const r = getRed(colour);
 	const g = getGreen(colour)
 	const b = getBlue(colour);
 	return (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255.0;
 }
 
-const DetermineTextColour = (background) => {
+const DetermineTextColour = background => {
 	if (Luminance(background) > 0.6) {
 		return RGB(0, 0, 0);
 	}
@@ -117,7 +117,7 @@ const FillGradientRectangle = (gr, x, y, w, h, direction, colour1, colour2) => {
 	gr.FillRectangle(x, y, w, h, JSON.stringify(brush));
 }
 
-const CheckMenuIf = (condition) => {
+const CheckMenuIf = condition => {
 	let flags = MF_STRING;
 
 	if (condition) {
@@ -154,7 +154,7 @@ const GetNowPlayingColours = () => {
 	if (!img)
 		return [];
 
-	const extracted_colours = img.GetColourScheme(10).map((item) => {
+	const extracted_colours = img.GetColourScheme(10).map(item => {
 		return {
 			colour: item,
 			luminance: Luminance(item),
@@ -192,32 +192,32 @@ const GetNowPlayingColours = () => {
 	return [background_colour, text_colour, selected_background_colour, selected_text_colour];
 }
 
-const PlaylistCanAddItems = (playlistIndex) => {
+const PlaylistCanAddItems = playlistIndex => {
 	const mask = plman.GetPlaylistLockFilterMask(playlistIndex);
 	return !IsFlagSet(mask, PlaylistLockFilterMask.filter_add);
 }
 
-const PlaylistCanRemoveItems = (playlistIndex) => {
+const PlaylistCanRemoveItems = playlistIndex => {
 	const mask = plman.GetPlaylistLockFilterMask(playlistIndex);
 	return !IsFlagSet(mask, PlaylistLockFilterMask.filter_remove);
 }
 
-const PlaylistCanReorder = (playlistIndex) => {
+const PlaylistCanReorder = playlistIndex => {
 	const mask = plman.GetPlaylistLockFilterMask(playlistIndex);
 	return !IsFlagSet(mask, PlaylistLockFilterMask.filter_reorder);
 }
 
-const PlaylistCanReplaceItems = (playlistIndex) => {
+const PlaylistCanReplaceItems = playlistIndex => {
 	const mask = plman.GetPlaylistLockFilterMask(playlistIndex);
 	return !IsFlagSet(mask, PlaylistLockFilterMask.filter_replace);
 }
 
-const PlaylistCanRename = (playlistIndex) => {
+const PlaylistCanRename = playlistIndex => {
 	const mask = plman.GetPlaylistLockFilterMask(playlistIndex);
 	return !IsFlagSet(mask, PlaylistLockFilterMask.filter_rename);
 }
 
-const PlaylistCanRemove = (playlistIndex) => {
+const PlaylistCanRemove = playlistIndex => {
 	const mask = plman.GetPlaylistLockFilterMask(playlistIndex);
 	return !IsFlagSet(mask, PlaylistLockFilterMask.filter_remove_playlist);
 }

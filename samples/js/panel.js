@@ -150,7 +150,7 @@ class Panel {
 		}
 
 		if (this.list_objects.length || this.text_objects.length || this.display_objects.length) {
-			_.forEach(this.fonts.sizes, (item) => {
+			_.forEach(this.fonts.sizes, item => {
 				this.s1.AppendMenuItem(MF_STRING, item, item);
 			});
 

@@ -159,7 +159,7 @@ class Thumbs {
 	create_thumbs () {
 		this.thumbs = [];
 
-		_.forEach(this.images, (image) => {
+		_.forEach(this.images, image => {
 			this.thumbs.push(this.create_thumb(image));
 		});
 	}
@@ -204,7 +204,7 @@ class Thumbs {
 		let files = [];
 
 		if (this.properties.source.value == 0 && _.includes(this.properties.tf.value, CRLF)) {
-			let folders = StringToArray(this.properties.tf.value, CRLF).map((item) => {
+			let folders = StringToArray(this.properties.tf.value, CRLF).map(item => {
 				return panel.tf(item);
 			});
 
@@ -460,7 +460,7 @@ class Thumbs {
 			panel.m.AppendMenuItem(EnableMenuIf(panel.metadb), 1003, 'Download now');
 			panel.m.AppendMenuItem(CheckMenuIf(this.properties.auto_download.enabled), 1004, 'Automatic downloads');
 
-			this.limits.forEach((item) => {
+			this.limits.forEach(item => {
 				panel.s10.AppendMenuItem(MF_STRING, item + 1010, item);
 			});
 
@@ -487,7 +487,7 @@ class Thumbs {
 
 			const flag = EnableMenuIf(this.properties.mode.value != 5);
 
-			this.pxs.forEach((item) => {
+			this.pxs.forEach(item => {
 				panel.s11.AppendMenuItem(flag, item + 1000, item + 'px');
 			});
 
@@ -761,7 +761,7 @@ class Thumbs {
 	update () {
 		this.reset();
 
-		_.forEach(this.get_files(), (item) => {
+		_.forEach(this.get_files(), item => {
 			let image = utils.LoadImage(item, this.properties.max_size.value);
 
 			if (image) {

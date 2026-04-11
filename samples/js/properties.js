@@ -360,7 +360,7 @@ class Properties {
 
 		this.data.pop();
 
-		_.forEach(this.data, (item) => {
+		_.forEach(this.data, item => {
 			item.width = item.value.calc_width(panel.fonts.normal);
 			if (item.value != 'SECTION_HEADER') {
 				this.properties_value_x = Math.max(this.properties_value_x, item.name.calc_width(panel.fonts.normal) + 20);

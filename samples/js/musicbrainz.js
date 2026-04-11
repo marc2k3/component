@@ -7,7 +7,7 @@ _.mixin({
 
 		return _(collection)
 			.groupBy(keys[0])
-			.mapValues((values) => {
+			.mapValues(values => {
 				return _.nest(values, keys.slice(1));
 			})
 			.value();
@@ -280,7 +280,7 @@ class MusicBrainz {
 				if (utils.IsFile(this.filename)) {
 					let data = _(JsonParseFile(this.filename))
 						.orderBy(['first-release-date', 'title'], ['desc', 'asc'])
-						.map((item) => {
+						.map(item => {
 							return {
 								name : item.title,
 								width : item.title.calc_width(panel.fonts.normal),
@@ -293,8 +293,8 @@ class MusicBrainz {
 						.nest(['primary', 'secondary'])
 						.value();
 
-					_.forEach(['Album', 'Single', 'EP', 'Other', 'Broadcast', 'null'], (primary) => {
-						_.forEach(['null', 'Audiobook', 'Compilation', 'Demo', 'DJ-mix', 'Interview', 'Live', 'Mixtape/Street', 'Remix', 'Spokenword', 'Soundtrack'], (secondary) => {
+					_.forEach(['Album', 'Single', 'EP', 'Other', 'Broadcast', 'null'], primary => {
+						_.forEach(['null', 'Audiobook', 'Compilation', 'Demo', 'DJ-mix', 'Interview', 'Live', 'Mixtape/Street', 'Remix', 'Spokenword', 'Soundtrack'], secondary => {
 							let group = _.get(data, primary + '.' + secondary);
 
 							if (group) {
@@ -321,7 +321,7 @@ class MusicBrainz {
 					const url = 'https://musicbrainz.org/artist/' + this.mb_id;
 
 					this.data = _(_.get(JsonParseFile(this.filename), 'relations', []))
-						.map((item) => {
+						.map(item => {
 							const url = decodeURIComponent(item.url.resource);
 							return {
 								name : url,
@@ -329,7 +329,7 @@ class MusicBrainz {
 								width : url.calc_width(panel.fonts.normal)
 							};
 						})
-						.sortBy((item) => {
+						.sortBy(item => {
 							return item.name.split('//')[1].replace('www.', '');
 						})
 						.value();

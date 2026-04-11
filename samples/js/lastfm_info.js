@@ -365,7 +365,7 @@ class LastFmInfo {
 			this.filename = ArtistFolder(this.artist) + 'lastfm.artist.getSimilar.json';
 			if (utils.IsFile(this.filename)) {
 				this.data = _(_.get(JsonParseFile(this.filename), 'similarartists.artist', []))
-					.map((item) => {
+					.map(item => {
 						return {
 							name : item.name,
 							width : item.name.calc_width(panel.fonts.normal),

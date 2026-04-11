@@ -46,11 +46,11 @@ class LastFm {
 					filename : filename_base + image_url.substring(image_url.lastIndexOf('/') + 1) + '.jpg'
 				};
 			})
-			.filter((item) => {
+			.filter(item => {
 				return !utils.IsFile(item.filename);
 			})
 			.take(limit)
-			.forEach((item) => {
+			.forEach(item => {
 				utils.DownloadFileAsync(item.url, item.filename, true);
 			});
 	}
@@ -59,13 +59,13 @@ class LastFm {
 		if (name == '2K3.NOTIFY.LASTFM') {
 			this.read_file();
 
-			_.forEach(panel.list_objects, (item) => {
+			_.forEach(panel.list_objects, item => {
 				if (item.name == 'lastfm_info') {
 					item.reset();
 				}
 			});
 
-			_.forEach(panel.text_objects, (item) => {
+			_.forEach(panel.text_objects, item => {
 				if (item.name == 'lastfm_bio') {
 					item.reset();
 					item.refresh();
