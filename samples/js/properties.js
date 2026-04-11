@@ -38,9 +38,9 @@ class Properties {
 
 		for (let i = 0; i < 7; i++) {
 			this.data.push({
-				name : names[i],
-				value : values[i],
-				url : urls[i] + values[i]
+				Name : names[i],
+				Value : values[i],
+				Url : urls[i] + values[i]
 			});
 		}
 
@@ -65,9 +65,9 @@ class Properties {
 				}
 
 				this.data.push({
-					name : j == 0 ? name : '',
-					value : value,
-					url : url
+					Name : j == 0 ? name : '',
+					Value : value,
+					Url : url
 				});
 			}
 		}
@@ -75,8 +75,8 @@ class Properties {
 		if (this.data.length) {
 			if (this.mode == 'properties_other_info') {
 				this.data.unshift({
-					name : 'Metadata',
-					value : 'SECTION_HEADER',
+					Name : 'Metadata',
+					Value : 'SECTION_HEADER',
 				});
 			}
 			this.add_separator();
@@ -99,16 +99,16 @@ class Properties {
 
 	add_section (obj, name) {
 		this.data.push({
-			name : name,
-			value : 'SECTION_HEADER',
+			Name : name,
+			Value : 'SECTION_HEADER',
 		});
 
 		_(obj)
-			.orderBy('Priority')
+			.sortBy(['Priority', 'Name'])
 			.forEach(item => {
 				this.data.push({
-					name : item.Name,
-					value : item.Value,
+					Name : item.Name,
+					Value : item.Value,
 				});
 			});
 
@@ -116,7 +116,7 @@ class Properties {
 	}
 
 	add_separator () {
-		this.data.push({ name : '', value : '' });
+		this.data.push({ Name : '', Value : '' });
 	}
 
 	add_tech (f) {
@@ -124,9 +124,9 @@ class Properties {
 		let tmp = [];
 
 		this.data.push({
-			name : 'DURATION',
-			value : duration,
-			url : '%length% IS ' + duration,
+			Name : 'DURATION',
+			Value : duration,
+			Url : '%length% IS ' + duration,
 		});
 
 		for (let i = 0; i < f.InfoCount; i++) {
@@ -134,13 +134,13 @@ class Properties {
 			const value = f.InfoValue(i).replace(/\s{2,}/g, ' ');
 
 			tmp.push({
-				name : name.toUpperCase(),
-				value : value,
-				url : '%__' + name.toLowerCase() + '% IS ' + value
+				Name : name.toUpperCase(),
+				Value : value,
+				Url : '%__' + name.toLowerCase() + '% IS ' + value
 			});
 		}
 
-		this.data.push(..._.orderBy(tmp, 'name'));
+		this.data.push(..._.orderBy(tmp, 'Name'));
 		this.add_separator();
 	}
 
@@ -213,11 +213,11 @@ class Properties {
 		default:
 			let item = this.data[this.index];
 
-			if (x > this.x + this.clickable_text_x && x < this.x + this.clickable_text_x + Math.min(item.width, this.text_width) && typeof item.url == 'string') {
-				if (item.url.startsWith('http')) {
-					utils.Run(item.url);
+			if (x > this.x + this.clickable_text_x && x < this.x + this.clickable_text_x + Math.min(item.Width, this.text_width) && typeof item.Url == 'string') {
+				if (item.Url.startsWith('http')) {
+					utils.Run(item.Url);
 				} else {
-					plman.ActivePlaylist = plman.CreateAutoPlaylist(plman.PlaylistCount, item.value, item.url);
+					plman.ActivePlaylist = plman.CreateAutoPlaylist(plman.PlaylistCount, item.Value, item.Url);
 				}
 			}
 
@@ -246,13 +246,13 @@ class Properties {
 		default:
 			let item = this.data[this.index];
 
-			if (x > this.x + this.clickable_text_x && x < this.x + this.clickable_text_x + Math.min(item.width, this.text_width) && typeof item.url == 'string') {
+			if (x > this.x + this.clickable_text_x && x < this.x + this.clickable_text_x + Math.min(item.Width, this.text_width) && typeof item.Url == 'string') {
 				window.SetCursor(IDC_HAND);
 
-				if (item.url.startsWith('http')) {
-					TT(item.url);
+				if (item.Url.startsWith('http')) {
+					TT(item.Url);
 				} else {
-					TT('Autoplaylist: ' + item.url);
+					TT('Autoplaylist: ' + item.Url);
 				}
 			} else {
 				TT('');
@@ -273,11 +273,11 @@ class Properties {
 		for (let i = 0; i < Math.min(this.count, this.rows); i++) {
 			let item = this.data[i + this.offset];
 
-			if (item.value == 'SECTION_HEADER') {
-				this.draw_row(gr, item.name, panel.colours.highlight, this.x, this.y + Scale(12) + (i * panel.row_height), this.w, panel.row_height);
+			if (item.Value == 'SECTION_HEADER') {
+				this.draw_row(gr, item.Name, panel.colours.highlight, this.x, this.y + Scale(12) + (i * panel.row_height), this.w, panel.row_height);
 			} else {
-				this.draw_row(gr, item.name, panel.colours.text, this.x, this.y + Scale(12) + (i * panel.row_height), this.clickable_text_x - 10, panel.row_height);
-				this.draw_row(gr, item.value, panel.colours.highlight, this.x + this.clickable_text_x, this.y + Scale(12) + (i * panel.row_height), this.text_width, panel.row_height);
+				this.draw_row(gr, item.Name, panel.colours.text, this.x, this.y + Scale(12) + (i * panel.row_height), this.clickable_text_x - 10, panel.row_height);
+				this.draw_row(gr, item.Value, panel.colours.highlight, this.x + this.clickable_text_x, this.y + Scale(12) + (i * panel.row_height), this.text_width, panel.row_height);
 			}
 		}
 
@@ -361,9 +361,9 @@ class Properties {
 		this.data.pop();
 
 		_.forEach(this.data, item => {
-			item.width = item.value.calc_width(panel.fonts.normal);
-			if (item.value != 'SECTION_HEADER') {
-				this.properties_value_x = Math.max(this.properties_value_x, item.name.calc_width(panel.fonts.normal) + 20);
+			item.Width = item.Value.calc_width(panel.fonts.normal);
+			if (item.Value != 'SECTION_HEADER') {
+				this.properties_value_x = Math.max(this.properties_value_x, item.Name.calc_width(panel.fonts.normal) + 20);
 			}
 		});
 
