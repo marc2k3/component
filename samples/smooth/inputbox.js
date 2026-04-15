@@ -695,11 +695,13 @@ function oInputbox(w, h, live_update, default_text, empty_text, func) {
 		}
 
 		if (this.live_update && this.text != this.prev_text) {
-			if (this.launch_timer) window.ClearTimeout(this.launch_timer);
-			this.launch_timer = window.SetTimeout((function () {
+			if (this.launch_timer)
+				window.ClearTimeout(this.launch_timer);
+
+			this.launch_timer = window.SetTimeout(() => {
 				this.lanch_timer = false;
 				this.func();
-			}).bind(this), 500);
+			}, 500);
 			this.prev_text = this.text;
 		}
 	}
