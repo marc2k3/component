@@ -279,7 +279,7 @@ function oBrowser() {
 				var previous = "";
 				var handles = fb.CreateHandleList();
 
-				track_tfs.forEach((function (track_tf, i) {
+				track_tfs.forEach((track_tf, i) => {
 					var parts = track_tf.split(" ^^^ ");
 					var cachekey = utils.HashString(parts[0]);
 					var meta = parts[1];
@@ -296,7 +296,7 @@ function oBrowser() {
 						this.groups.push(new oGroup(g, i, handle, meta, cachekey));
 					}
 					handles.AddItem(handle);
-				}).bind(this));
+				});
 
 				this.groups[g - 1].finalise(handles);
 			}
@@ -562,9 +562,9 @@ function oBrowser() {
 					}
 
 					this.selected_handles.RemoveAll();
-					this.selected_indexes.forEach((function (item) {
+					this.selected_indexes.forEach(item => {
 						this.selected_handles.AddItems(this.groups[item].handles);
-					}).bind(this));
+					});
 
 					window.SetSelection(this.selected_handles, 6);
 				} else {

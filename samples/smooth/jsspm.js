@@ -480,11 +480,11 @@ function oBrowser() {
 							}
 						} else if (y > this.y + this.h) {
 							if (!timers.movePlaylist) {
-								timers.movePlaylist = window.SetInterval((function () {
+								timers.movePlaylist = window.SetInterval(() => {
 									scroll += ppt.rowHeight;
 									scroll = check_scroll(scroll);
 									cPlaylistManager.drag_target_id = cPlaylistManager.drag_target_id < this.rows.length - 1 ? cPlaylistManager.drag_target_id + 1 : this.rows.length - 1;
-								}).bind(this), 100);
+								}, 100);
 							}
 						}
 					}

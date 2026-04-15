@@ -441,7 +441,7 @@ function ScrollBar(parent, x, y, w, h, total_items, item_height) {
 							eval(this.parent).offset = this.offset;
 							full_repaint();
 							if (!cScrollBar.timerID) {
-								cScrollBar.timerID = window.SetInterval((function () {
+								cScrollBar.timerID = window.SetInterval(() => {
 									if (cScrollBar.timer_counter > 7) {
 										if (this.offset > 0)
 											this.offset--;
@@ -452,7 +452,7 @@ function ScrollBar(parent, x, y, w, h, total_items, item_height) {
 									} else {
 										cScrollBar.timer_counter++;
 									}
-								}).bind(this), 60);
+								}, 60);
 							}
 						}
 						break;
@@ -465,7 +465,7 @@ function ScrollBar(parent, x, y, w, h, total_items, item_height) {
 							eval(this.parent).offset = this.offset;
 							full_repaint();
 							if (!cScrollBar.timerID) {
-								cScrollBar.timerID = window.SetInterval((function () {
+								cScrollBar.timerID = window.SetInterval(() => {
 									if (cScrollBar.timer_counter > 7) {
 										var max_offset = this.total - this.totalRowsFull;
 										this.offset = (this.offset + 1 >= max_offset ? max_offset : this.offset + 1);
@@ -475,7 +475,7 @@ function ScrollBar(parent, x, y, w, h, total_items, item_height) {
 									} else {
 										cScrollBar.timer_counter++;
 									}
-								}).bind(this), 60);
+								}, 60);
 							}
 						}
 						break;
@@ -506,7 +506,7 @@ function ScrollBar(parent, x, y, w, h, total_items, item_height) {
 						this.reSet(this.total, this.itemHeight, this.offset);
 						full_repaint();
 						if (!cScrollBar.timerID) {
-							cScrollBar.timerID = window.SetInterval((function () {
+							cScrollBar.timerID = window.SetInterval(() => {
 								if (cScrollBar.timer_counter > 7 && mouse_y < this.cursorY) {
 									this.offset = this.offset > this.totalRowsFull ? this.offset - this.totalRowsFull : 0;
 									this.reSet(this.total, this.itemHeight, this.offset);
@@ -514,7 +514,7 @@ function ScrollBar(parent, x, y, w, h, total_items, item_height) {
 								} else {
 									cScrollBar.timer_counter++;
 								}
-							}).bind(this), 60);
+							}, 60);
 						}
 						break;
 					case false: // down
@@ -523,7 +523,7 @@ function ScrollBar(parent, x, y, w, h, total_items, item_height) {
 						this.reSet(this.total, this.itemHeight, this.offset);
 						full_repaint();
 						if (!cScrollBar.timerID) {
-							cScrollBar.timerID = window.SetInterval((function () {
+							cScrollBar.timerID = window.SetInterval(() => {
 								if (cScrollBar.timer_counter > 7 && mouse_y > this.cursorY + this.cursorHeight) {
 									var max_offset = this.total - this.totalRowsFull;
 									this.offset = (this.offset + this.totalRowsFull >= max_offset ? max_offset : this.offset + this.totalRowsFull);
@@ -532,7 +532,7 @@ function ScrollBar(parent, x, y, w, h, total_items, item_height) {
 								} else {
 									cScrollBar.timer_counter++;
 								}
-							}).bind(this), 60);
+							}, 60);
 						}
 						break;
 					}

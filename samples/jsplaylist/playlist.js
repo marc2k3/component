@@ -463,14 +463,14 @@ function oList(object_name) {
 	this.saveGroupBy = function () {
 		var data = ["ref", "label", "tf", "expandedHeight", "showCover", "l1", "r1", "l2", "r2"];
 
-		data.forEach((function (item) {
+		data.forEach(item => {
 			var arr = [];
 			for (var i = 0; i < this.groupby.length; i++) {
 				arr.push(this.groupby[i][item]);
 			}
 			var str = arr.join("^^");
 			window.SetProperty("JSPLAYLIST.GROUPBY2." + item, str);
-		}).bind(this));
+		});
 	}
 
 	this.initGroupBy = function () {

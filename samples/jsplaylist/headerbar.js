@@ -257,7 +257,7 @@ function oHeaderBar() {
 	this.saveColumns = function () {
 		var data = ["label", "tf", "tf2", "percent", "ref", "align", "sortOrder"];
 
-		data.forEach((function (item) {
+		data.forEach(item => {
 			var arr = [];
 			for (var i = 0; i < this.columns.length; i++) {
 				arr.push(this.columns[i][item]);
@@ -268,7 +268,7 @@ function oHeaderBar() {
 			else if (item == "tf2") g_tf2_pattern = str;
 
 			window.SetProperty("JSPLAYLIST.HEADERBAR2." + item, str);
-		}).bind(this));
+		});
 	}
 
 	this.initColumns = function () {

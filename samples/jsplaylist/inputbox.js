@@ -164,10 +164,11 @@ function oInputbox(w, h, default_text, empty_text, func) {
 			cInputbox.cursor_interval = false;
 			cInputbox.cursor_state = true;
 		}
-		cInputbox.cursor_interval = window.SetInterval((function () {
+
+		cInputbox.cursor_interval = window.SetInterval(() => {
 			cInputbox.cursor_state = !cInputbox.cursor_state;
 			this.repaint();
-		}).bind(this), 500);
+		}, 500);
 	}
 
 	this.check = function (callback, x, y, delta) {
