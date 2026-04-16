@@ -552,7 +552,7 @@ function oBrowser() {
 								this.selected_indexes.splice(idx, 1);
 							} else {
 								this.selected_indexes.push(active_index);
-								this.selected_indexes.sort(function (a, b) { return a - b; });
+								this.selected_indexes.sort((a, b) => { return a - b; });
 							}
 						} else {
 							if (this.selected_indexes.indexOf(active_index) == -1) {
@@ -868,7 +868,7 @@ function oBrowser() {
 		return true;
 	}
 
-	window.SetInterval(function () {
+	window.SetInterval(() => {
 		if (!window.IsVisible) {
 			need_repaint = true;
 			return;
@@ -903,7 +903,7 @@ function oBrowser() {
 
 	}, ppt.refreshRate);
 
-	window.SetTimeout(function () {
+	window.SetTimeout(() => {
 		brw.populate();
 	}, 100);
 

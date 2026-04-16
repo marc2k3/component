@@ -230,7 +230,7 @@ function on_key_down(vkey) {
 					}
 					break;
 				case VK_F5:
-					p.list.groups.forEach(function (item) {
+					p.list.groups.forEach(item => {
 						item.cover_img = null;
 					});
 					g_image_cache.reset();
@@ -250,11 +250,11 @@ function on_key_down(vkey) {
 
 						if (p.list.focusedTrackId == 0 && p.list.offset > 0) {
 							p.list.scrollItems(1, scrollstep);
-							cScrollBar.timeout = window.SetTimeout(function () {
+							cScrollBar.timeout = window.SetTimeout(() => {
 								cScrollBar.timeout = false;
 								p.list.scrollItems(1, scrollstep);
 								if (cScrollBar.interval) window.ClearInterval(cScrollBar.interval);
-								cScrollBar.interval = window.SetInterval(function () {
+								cScrollBar.interval = window.SetInterval(() => {
 									p.list.scrollItems(1, scrollstep);
 								}, 50);
 							}, 400);
@@ -262,10 +262,10 @@ function on_key_down(vkey) {
 							plman.SetPlaylistFocusItem(g_active_playlist, new_focus_id);
 							plman.ClearPlaylistSelection(g_active_playlist);
 							plman.SetPlaylistSelectionSingle(g_active_playlist, new_focus_id, true);
-							cScrollBar.timeout = window.SetTimeout(function () {
+							cScrollBar.timeout = window.SetTimeout(() => {
 								cScrollBar.timeout = false;
 								if (cScrollBar.interval) window.ClearInterval(cScrollBar.interval);
-								cScrollBar.interval = window.SetInterval(function () {
+								cScrollBar.interval = window.SetInterval(() => {
 									new_focus_id = (p.list.focusedTrackId > 0) ? p.list.focusedTrackId - scrollstep : 0;
 									var grpId = p.list.getGroupIdfromTrackId(new_focus_id);
 									plman.SetPlaylistFocusItem(g_active_playlist, new_focus_id);
@@ -284,10 +284,10 @@ function on_key_down(vkey) {
 						plman.SetPlaylistFocusItem(g_active_playlist, new_focus_id);
 						plman.ClearPlaylistSelection(g_active_playlist);
 						plman.SetPlaylistSelectionSingle(g_active_playlist, new_focus_id, true);
-						cScrollBar.timeout = window.SetTimeout(function () {
+						cScrollBar.timeout = window.SetTimeout(() => {
 							cScrollBar.timeout = false;
 							if (cScrollBar.interval) window.ClearInterval(cScrollBar.interval);
-							cScrollBar.interval = window.SetInterval(function () {
+							cScrollBar.interval = window.SetInterval(() => {
 								new_focus_id = (p.list.focusedTrackId < p.list.count - 1) ? p.list.focusedTrackId + 1 : p.list.count - 1;
 								var grpId = p.list.getGroupIdfromTrackId(new_focus_id);
 								plman.SetPlaylistFocusItem(g_active_playlist, new_focus_id);
@@ -503,11 +503,11 @@ function on_mouse_lbtn_down(x, y) {
 					if (!p.list.buttonclicked && !cScrollBar.timeout) {
 						p.list.buttonclicked = true;
 						p.list.scrollItems(1, scrollstep);
-						cScrollBar.timeout = window.SetTimeout(function () {
+						cScrollBar.timeout = window.SetTimeout(() => {
 							cScrollBar.timeout = false;
 							p.list.scrollItems(1, scrollstep);
 							if (cScrollBar.interval) window.ClearInterval(cScrollBar.interval);
-							cScrollBar.interval = window.SetInterval(function () {
+							cScrollBar.interval = window.SetInterval(() => {
 								if (p.scrollbar.hover) {
 									if (mouse_x > p.scrollbar.x && p.scrollbar.cursorPos > mouse_y) {
 										p.list.scrollItems(1, scrollstep);
@@ -520,11 +520,11 @@ function on_mouse_lbtn_down(x, y) {
 					if (!p.list.buttonclicked && !cScrollBar.timeout) {
 						p.list.buttonclicked = true;
 						p.list.scrollItems(-1, scrollstep);
-						cScrollBar.timeout = window.SetTimeout(function () {
+						cScrollBar.timeout = window.SetTimeout(() => {
 							cScrollBar.timeout = false;
 							p.list.scrollItems(-1, scrollstep);
 							if (cScrollBar.interval) window.ClearInterval(cScrollBar.interval);
-							cScrollBar.interval = window.SetInterval(function () {
+							cScrollBar.interval = window.SetInterval(() => {
 								if (p.scrollbar.hover) {
 									if (mouse_x > p.scrollbar.x && p.scrollbar.cursorPos + p.scrollbar.cursorHeight < mouse_y) {
 										p.list.scrollItems(-1, scrollstep);
@@ -592,7 +592,7 @@ function on_mouse_mbtn_down(x, y, mask) {
 
 function on_mouse_mbtn_up(x, y, mask) {
 	if (g_middle_click_timeout) window.ClearTimeout(g_middle_click_timeout);
-	g_middle_click_timeout = window.SetTimeout(function () {
+	g_middle_click_timeout = window.SetTimeout(() => {
 		g_middle_click_timeout = false;
 		g_middle_clicked = false;
 	}, 250);
@@ -660,7 +660,7 @@ function on_mouse_wheel(delta) {
 	if (cSettings.visible) {
 		p.settings.on_mouse("wheel", mouse_x, mouse_y, delta);
 		if (cSettings.wheel_timeout) window.ClearTimeout(cSettings.wheel_timeout);
-		cSettings.wheel_timeout = window.SetTimeout(function () {
+		cSettings.wheel_timeout = window.SetTimeout(() => {
 			cSettings.wheel_timeout = false;
 			on_mouse_move(mouse_x + 1, mouse_y + 1);
 		}, 50);
@@ -668,7 +668,7 @@ function on_mouse_wheel(delta) {
 
 	if (p.list.ishover || cScrollBar.timeout) {
 		if (!g_mouse_wheel_timeout) {
-			g_mouse_wheel_timeout = window.SetTimeout(function () {
+			g_mouse_wheel_timeout = window.SetTimeout(() => {
 				g_mouse_wheel_timeout = false;
 				p.list.scrollItems(delta, cList.scrollstep);
 			}, 20);

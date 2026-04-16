@@ -411,7 +411,7 @@ function oItem(row_index, type, metadb, track_index, group_index, track_index_in
 
 					if (!cList.interval) {
 						window.SetCursor(IDC_HAND);
-						cList.interval = window.SetInterval(function () {
+						cList.interval = window.SetInterval(() => {
 							if (mouse_y < p.list.y + cRow.playlist_h) {
 								p.list.selEndId = p.list.selEndId > 0 ? p.list.items[0].track_index : 0;
 								if (p.scrollbar.visible)

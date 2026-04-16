@@ -472,7 +472,7 @@ function oBrowser() {
 					} else {
 						if (y < this.y) {
 							if (!timers.movePlaylist) {
-								timers.movePlaylist = window.SetInterval(function () {
+								timers.movePlaylist = window.SetInterval(() => {
 									scroll -= ppt.rowHeight;
 									scroll = check_scroll(scroll);
 									cPlaylistManager.drag_target_id = cPlaylistManager.drag_target_id > 0 ? cPlaylistManager.drag_target_id - 1 : 0;
@@ -748,7 +748,7 @@ function oBrowser() {
 		return true;
 	}
 
-	window.SetInterval(function () {
+	window.SetInterval(() => {
 		if (!window.IsVisible) {
 			need_repaint = true;
 			return;
@@ -779,7 +779,7 @@ function oBrowser() {
 
 	}, ppt.refreshRate);
 
-	window.SetTimeout(function () {
+	window.SetTimeout(() => {
 		brw.populate();
 		brw.showSelectedPlaylist();
 	}, 100);

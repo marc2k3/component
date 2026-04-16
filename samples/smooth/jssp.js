@@ -95,7 +95,7 @@ function on_key_down(vkey) {
 
 				vk_up();
 				if (!cScrollBar.timerID) {
-					cScrollBar.timerID = window.SetTimeout(function () {
+					cScrollBar.timerID = window.SetTimeout(() => {
 						cScrollBar.timerID = window.SetInterval(vk_up, 100);
 					}, 400);
 				}
@@ -107,7 +107,7 @@ function on_key_down(vkey) {
 
 				vk_down();
 				if (!cScrollBar.timerID) {
-					cScrollBar.timerID = window.SetTimeout(function () {
+					cScrollBar.timerID = window.SetTimeout(() => {
 						cScrollBar.timerID = window.SetInterval(vk_down, 100);
 					}, 400);
 				}
@@ -1113,7 +1113,7 @@ function oBrowser() {
 		plman.InsertPlaylistItems(g_active_playlist, pos, clipboard_contents);
 	}
 
-	window.SetInterval(function () {
+	window.SetInterval(() => {
 		if (!window.IsVisible) {
 			need_repaint = true;
 			return;
@@ -1151,7 +1151,7 @@ function oBrowser() {
 
 	}, ppt.refreshRate);
 
-	window.SetTimeout(function () {
+	window.SetTimeout(() => {
 		brw.populate();
 		brw.showFocusedItem();
 	}, 100);

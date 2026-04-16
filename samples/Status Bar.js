@@ -203,7 +203,7 @@ function on_playback_starting() {
 	starting = true;
 	window.Repaint();
 
-	window.SetTimeout(function () {
+	window.SetTimeout(() => {
 		starting = false;
 		window.Repaint();
 	}, 500);

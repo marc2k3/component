@@ -115,7 +115,7 @@ function PlaylistScrollBar() {
 
 				p.list.offset = this.setOffsetFromCursorPos();
 				if (!g_mouse_wheel_timeout) {
-					g_mouse_wheel_timeout = window.SetTimeout(function () {
+					g_mouse_wheel_timeout = window.SetTimeout(() => {
 						g_mouse_wheel_timeout = false;
 						p.list.setItems(false);
 						full_repaint();
@@ -152,7 +152,7 @@ function PlaylistScrollBar() {
 						p.scrollbar.setCursor(p.list.totalRowVisible, p.list.totalRows, p.list.offset);
 						full_repaint();
 						if (!cScrollBar.interval) {
-							cScrollBar.interval = window.SetInterval(function () {
+							cScrollBar.interval = window.SetInterval(() => {
 								cScrollBar.timer_counter++;
 								if (cScrollBar.timer_counter > 7) {
 									p.list.offset = p.list.offset > 0 ? p.list.offset - 1 : 0;
@@ -175,7 +175,7 @@ function PlaylistScrollBar() {
 						p.scrollbar.setCursor(p.list.totalRowVisible, p.list.totalRows, p.list.offset);
 						full_repaint();
 						if (!cScrollBar.interval) {
-							cScrollBar.interval = window.SetInterval(function () {
+							cScrollBar.interval = window.SetInterval(() => {
 								cScrollBar.timer_counter++;
 								if (cScrollBar.timer_counter > 7) {
 									p.list.offset = p.list.offset >= (p.list.totalRows - p.list.totalRowVisible) ? (p.list.totalRows - p.list.totalRowVisible) : p.list.offset + 1;
@@ -201,7 +201,7 @@ function PlaylistScrollBar() {
 						p.scrollbar.setCursor(p.list.totalRowVisible, p.list.totalRows, p.list.offset);
 						full_repaint();
 						if (!cScrollBar.interval) {
-							cScrollBar.interval = window.SetInterval(function () {
+							cScrollBar.interval = window.SetInterval(() => {
 								cScrollBar.timer_counter++;
 								if (cScrollBar.timer_counter > 7) {
 									p.list.offset = p.list.offset > 0 ? p.list.offset - 1 : 0;
@@ -223,7 +223,7 @@ function PlaylistScrollBar() {
 						p.scrollbar.setCursor(p.list.totalRowVisible, p.list.totalRows, p.list.offset);
 						full_repaint();
 						if (!cScrollBar.interval) {
-							cScrollBar.interval = window.SetInterval(function () {
+							cScrollBar.interval = window.SetInterval(() => {
 								cScrollBar.timer_counter++;
 								if (cScrollBar.timer_counter > 7) {
 									p.list.offset = p.list.offset >= (p.list.totalRows - p.list.totalRowVisible) ? (p.list.totalRows - p.list.totalRowVisible) : p.list.offset + 1;
@@ -406,7 +406,7 @@ function ScrollBar(parent, x, y, w, h, total_items, item_height) {
 				eval(this.parent).offset = this.offset;
 
 				if (!cScrollBar.repaint_timeout) {
-					cScrollBar.repaint_timeout = window.SetTimeout(function () {
+					cScrollBar.repaint_timeout = window.SetTimeout(() => {
 						cScrollBar.repaint_timeout = false;
 						full_repaint();
 					}, 32);

@@ -371,7 +371,7 @@ function oHeaderBar() {
 	}
 
 	this.split = function (str) {
-		return str.split("^^").map(function (item) {
+		return str.split("^^").map(item => {
 			if (item == "null")
 				return "";
 

@@ -182,7 +182,7 @@ function oScrollbar() {
 							scroll = scroll - scroll_step;
 							scroll = check_scroll(scroll);
 							if (!cScrollBar.timerID) {
-								cScrollBar.timerID = window.SetInterval(function () {
+								cScrollBar.timerID = window.SetInterval(() => {
 									if (cScrollBar.timerCounter > 6) {
 										scroll = scroll - scroll_step;
 										scroll = check_scroll(scroll);
@@ -200,7 +200,7 @@ function oScrollbar() {
 							scroll = scroll + scroll_step;
 							scroll = check_scroll(scroll);
 							if (!cScrollBar.timerID) {
-								cScrollBar.timerID = window.SetInterval(function () {
+								cScrollBar.timerID = window.SetInterval(() => {
 									if (cScrollBar.timerCounter > 6) {
 										scroll = scroll + scroll_step;
 										scroll = check_scroll(scroll);
@@ -219,7 +219,7 @@ function oScrollbar() {
 						scroll = scroll - scroll_step_page;
 						scroll = check_scroll(scroll);
 						if (!cScrollBar.timerID) {
-							cScrollBar.timerID = window.SetInterval(function () {
+							cScrollBar.timerID = window.SetInterval(() => {
 								if (cScrollBar.timerCounter > 6 && m_y < brw.scrollbar.cursory) {
 									scroll = scroll - scroll_step_page;
 									scroll = check_scroll(scroll);
@@ -233,7 +233,7 @@ function oScrollbar() {
 						scroll = scroll + scroll_step_page;
 						scroll = check_scroll(scroll);
 						if (!cScrollBar.timerID) {
-							cScrollBar.timerID = window.SetInterval(function () {
+							cScrollBar.timerID = window.SetInterval(() => {
 								if (cScrollBar.timerCounter > 6 && m_y > brw.scrollbar.cursory + brw.scrollbar.cursorh) {
 									scroll = scroll + scroll_step_page;
 									scroll = check_scroll(scroll);

@@ -304,7 +304,7 @@ function oPlaylistManager() {
 						cPlaylistManager.hscroll_interval = false;
 					}
 					if (p.playlistManager.woffset > 0) { // if panel opened
-						cPlaylistManager.hscroll_interval = window.SetInterval(function () {
+						cPlaylistManager.hscroll_interval = window.SetInterval(() => {
 							full_repaint();
 							if (!cPlaylistManager.blink_interval) {
 								p.playlistManager.woffset -= cPlaylistManager.step;

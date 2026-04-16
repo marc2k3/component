@@ -147,7 +147,7 @@ function inputboxPlaylistManager_activate() {
 function togglePlaylistManager() {
 	if (!cPlaylistManager.hscroll_interval) {
 		if (cPlaylistManager.visible) {
-			cPlaylistManager.hscroll_interval = window.SetInterval(function () {
+			cPlaylistManager.hscroll_interval = window.SetInterval(() => {
 				p.playlistManager.repaint();
 				p.playlistManager.woffset -= cPlaylistManager.step;
 				if (p.playlistManager.woffset <= 0) {
@@ -161,7 +161,7 @@ function togglePlaylistManager() {
 			}, 16);
 		} else {
 			p.playlistManager.refresh();
-			cPlaylistManager.hscroll_interval = window.SetInterval(function () {
+			cPlaylistManager.hscroll_interval = window.SetInterval(() => {
 				p.playlistManager.woffset += cPlaylistManager.step;
 				if (p.playlistManager.woffset >= cPlaylistManager.width) {
 					p.playlistManager.woffset = cPlaylistManager.width;
@@ -186,7 +186,7 @@ function image_cache() {
 
 		if (!this.requested[group_key]) {
 			this.requested[group_key] = true;
-			window.SetTimeout(function () {
+			window.SetTimeout(() => {
 				metadb.GetAlbumArtThumbAsync(cGroup.art_id);
 			}, 20);
 		}
@@ -261,7 +261,7 @@ function init() {
 	p.playlistManager = new oPlaylistManager();
 	p.settings = new oSettings();
 
-	window.SetInterval(function () {
+	window.SetInterval(() => {
 		if (!window.IsVisible) {
 			need_repaint = true;
 			return;

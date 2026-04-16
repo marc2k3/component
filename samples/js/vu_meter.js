@@ -282,7 +282,7 @@ function on_mouse_rbtn_up(x, y) {
 		style_menu.AppendMenuSeparator();
 		style_menu.AppendMenuItem(MF_GRAYED, 0, 'Block width (dB)');
 
-		rms_block_dbs.forEach(function (item, index) {
+		rms_block_dbs.forEach((item, index) => {
 			style_menu.AppendMenuItem(MF_STRING, 20 + index, item);
 		});
 

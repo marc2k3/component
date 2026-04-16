@@ -122,7 +122,7 @@ function get_art(metadb, cachekey, art_id) {
 		return img;
 	}
 
-	window.SetTimeout(function () {
+	window.SetTimeout(() => {
 		metadb.GetAlbumArtThumbAsync(art_id);
 	}, 10);
 

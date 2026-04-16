@@ -136,7 +136,7 @@ function oInputbox(w, h, live_update, default_text, empty_text, func) {
 			cInputbox.timer_cursor = false;
 			cInputbox.cursor_state = true;
 		}
-		cInputbox.timer_cursor = window.SetInterval(function () {
+		cInputbox.timer_cursor = window.SetInterval(() => {
 			cInputbox.cursor_state = !cInputbox.cursor_state;
 			brw.repaint();
 		}, 500);
