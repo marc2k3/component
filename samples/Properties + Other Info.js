@@ -1,6 +1,6 @@
 'use strict';
 
-window.DefineScript('Properties + Other Info', {author:'marc2003'});
+window.DefineScript('Properties + Other Info', { author : 'marc2003', features : { grab_focus : true }});
 include(fb.ComponentPath + 'helpers.js');
 includeJS('panel.js');
 includeJS('properties.js');

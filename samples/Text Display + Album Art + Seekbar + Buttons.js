@@ -1,6 +1,6 @@
 'use strict';
 
-window.DefineScript('Text Display + Album Art + Seekbar + Buttons', {author:'marc2003'});
+window.DefineScript('Text Display + Album Art + Seekbar + Buttons', { author : 'marc2003', features : { grab_focus : true }});
 include(fb.ComponentPath + 'helpers.js');
 includeJS('panel.js');
 includeJS('albumart.js');

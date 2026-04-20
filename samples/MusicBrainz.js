@@ -1,6 +1,6 @@
 'use strict';
 
-window.DefineScript('MusicBrainz', {author:'marc2003'});
+window.DefineScript('MusicBrainz', { author : 'marc2003', features : { grab_focus : true }});
 include(fb.ComponentPath + 'helpers.js');
 includeJS('panel.js');
 includeJS('musicbrainz.js');

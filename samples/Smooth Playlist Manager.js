@@ -1,15 +1,12 @@
 'use strict';
 
-window.DefineScript(
-	'Smooth Playlist Manager',
-	{
-		author : 'Br3tt aka Falstaff',
-		features : {
-			drag_n_drop : true,
-			grab_focus : true
-		}
+window.DefineScript('Smooth Playlist Manager', {
+	author : 'Br3tt aka Falstaff',
+	features : {
+		drag_n_drop : true,
+		grab_focus : true
 	}
-);
+});
 
 include(fb.ComponentPath + 'helpers.js');
 include(Paths.smooth + 'common.js');

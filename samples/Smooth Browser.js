@@ -1,5 +1,11 @@
 'use strict';
-window.DefineScript('Smooth Browser', {author:'Br3tt aka Falstaff'});
+
+window.DefineScript('Smooth Browser', {
+	author : 'Br3tt aka Falstaff',
+	features : {
+		grab_focus : true
+	}
+});
 
 include(fb.ComponentPath + 'helpers.js');
 include(Paths.smooth + 'common.js');

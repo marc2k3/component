@@ -1,6 +1,6 @@
 'use strict';
 
-window.DefineScript('Menu + Playback Buttons + Custom Colours', {author:'marc2003'});
+window.DefineScript('Menu + Playback Buttons + Custom Colours', { author : 'marc2003' });
 include(fb.ComponentPath + 'helpers.js');
 includeJS('panel.js');
 

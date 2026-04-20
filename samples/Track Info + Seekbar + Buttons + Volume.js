@@ -1,6 +1,6 @@
 'use strict';
 
-window.DefineScript('Track Info + Seekbar + Buttons + Volume', {author:'marc2003'});
+window.DefineScript('Track Info + Seekbar + Buttons + Volume', { author : 'marc2003' });
 include(fb.ComponentPath + 'helpers.js');
 includeJS('panel.js');
 includeJS('seekbar.js');

@@ -1,6 +1,6 @@
 'use strict';
 
-window.DefineScript('Playback Buttons + PBO', {author:'marc2003'});
+window.DefineScript('Playback Buttons + PBO', { author : 'marc2003' });
 include(fb.ComponentPath + 'helpers.js');
 includeJS('panel.js');
 

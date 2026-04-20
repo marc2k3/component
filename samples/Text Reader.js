@@ -1,6 +1,6 @@
 'use strict';
 
-window.DefineScript('Text Reader', {author:'marc2003'});
+window.DefineScript('Text Reader', { author : 'marc2003', features : { grab_focus : true }});
 include(fb.ComponentPath + 'helpers.js');
 includeJS('panel.js');
 includeJS('text_reader.js');
