@@ -248,7 +248,7 @@ const GetFiles = (folder, exts) => {
 		return files;
 };
 
-const Help = (x, y, flags) => {
+const Help = (x, y, flags = 0) => {
 	let menu = window.CreatePopupMenu();
 
 	_.forEach(HaLinks, (item, i) => {
@@ -295,7 +295,7 @@ const JsonParseFile = file => {
 	return JsonParse(utils.ReadUTF8(file));
 }
 
-const Menu = (x, y, flags) => {
+const Menu = (x, y, flags = 0) => {
 	let menu = window.CreatePopupMenu();
 	let file = new MainMenuHelper('File', 10000, menu);
 	let edit = new MainMenuHelper('Edit', 20000, menu);
