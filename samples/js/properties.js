@@ -53,7 +53,7 @@ class Properties {
 			const num = f.MetaValueCount(i);
 
 			for (let j = 0; j < num; j++) {
-				const value = f.MetaValue(i, j).replace(/\s{2,}/g, ' ');
+				const value = f.MetaValue(i, j).replace(/[\n\r\t]/gm, ' ');
 				let url = '';
 
 				if (IsUUID(value)) {
@@ -131,7 +131,7 @@ class Properties {
 
 		for (let i = 0; i < f.InfoCount; i++) {
 			const name = f.InfoName(i);
-			const value = f.InfoValue(i).replace(/\s{2,}/g, ' ');
+			const value = f.InfoValue(i).replace(/[\n\r\t]/gm, ' ');
 
 			tmp.push({
 				Name : name.toUpperCase(),
