@@ -26,24 +26,23 @@ class LastFm {
 			_.forEach(obj, item => {
 				this.extract_urls(item);
 			});
-		} else if (typeof obj == 'string') {
-			if (obj.startsWith("https://lastfm.freetls.fastly.net/i/u/avatar170s/")) {
-				this.image_urls.push(obj.replace('avatar170s/', ''));
-			}
+		} else if (typeof obj == 'string' && obj.startsWith("https://lastfm-img.freetls.fastly.net/i/u/avatar170s")) {
+			const image_url = obj.replace('avatar170s/', '') + '.jpg';
+			this.image_urls.push(image_url);
 		}
 	}
 
 	download_images (response_text, filename_base, limit) {
-		let json = window.himalaya.parse(response_text);
+		const json = window.himalaya.parse(response_text);
 
 		this.image_urls = [];
 		this.extract_urls(json);
 
 		_(this.image_urls)
-			.map((image_url) => {
+			.map(image_url => {
 				return {
 					url : image_url,
-					filename : filename_base + image_url.substring(image_url.lastIndexOf('/') + 1) + '.jpg'
+					filename : filename_base + image_url.substring(image_url.lastIndexOf('/') + 1)
 				};
 			})
 			.filter(item => {
