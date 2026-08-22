@@ -12,4 +12,4 @@ include(fb.ComponentPath + 'helpers.js');
 include(Paths.smooth + 'common.js');
 include(Paths.smooth + 'inputbox.js');
 include(Paths.smooth + 'scrollbar.js');
-include(Paths.smooth + 'jssp.js');
+include(Paths.smooth + 'playlist.js');
